@@ -425,7 +425,7 @@
   ═══════════════════════════════════════ */
   #blog-filter {
     background: var(--bg-base); padding: 52px 0 0;
-    position: sticky; top: 72px; z-index: 100;
+   top: 72px; z-index: 100;
   }
   #blog-filter::after {
     content: ''; display: block; height: 1px; margin-top: 28px;
@@ -744,6 +744,10 @@
     width: 44px; height: 44px; border-radius: 12px; margin: 0 auto 12px;
     display: flex; align-items: center; justify-content: center;
     font-size: 1.3rem;
+    color: var(--text-primary);
+  }
+  .topic-icon svg {
+    width: 22px; height: 22px;
   }
   .topic-icon.gold  { background: var(--gold-dim);  }
   .topic-icon.green { background: var(--green-dim); }
@@ -1070,7 +1074,7 @@
             src="img/blog-featured.jpg"
             alt="غلاف المقال المميز"
             loading="lazy"
-            onerror="this.parentElement.innerHTML='<div class=\'featured-img-ph\'><div class=\'featured-img-ph-icon\'>📝</div><p class=\'featured-img-ph-text\'>blog-featured.jpg</p></div>'"
+            onerror="this.parentElement.innerHTML='<div class=\'featured-img-ph\'><div class=\'featured-img-ph-icon\'></div><p class=\'featured-img-ph-text\'>blog-featured.jpg</p></div>'"
           />
           <div class="featured-ribbon" aria-label="مقال مميز">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -1115,11 +1119,11 @@
           </div>
 
           <div class="featured-footer">
-            <a href="post.html" class="btn btn-gold">
+            <a href="post.html?id=featured" class="btn btn-gold">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
               اقرأ المقال
             </a>
-            <a href="post.html" class="btn-text" aria-label="شارك المقال">
+            <a href="#" class="btn-text" aria-label="شارك المقال" onclick="event.preventDefault()">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
               مشاركة
             </a>
@@ -1146,7 +1150,7 @@
       <div class="posts-grid" id="postsGrid" role="list">
 
         <!-- ───── Post Card 1 ───── -->
-        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="برمجة" style="transition-delay:.05s" aria-label="اقرأ المقال">
+        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="برمجة" style="transition-delay:.05s" aria-label="اقرأ المقال" data-id="post-1">
           <div class="blog-cover">
             <!--
               IMAGE OPTIONAL: img/blog-post-1.jpg
@@ -1155,7 +1159,7 @@
             <img
               src="img/blog-post-1.jpg" alt="غلاف المقال"
               loading="lazy"
-              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'>💻</div><p class=\'blog-cover-ph-label\'>blog-post-1.jpg</p></div>'"
+              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'></div><p class=\'blog-cover-ph-label\'>blog-post-1.jpg</p></div>'"
             />
             <div class="blog-cat-bar">
               <span class="badge badge-gold">برمجة</span>
@@ -1181,16 +1185,14 @@
                 <span class="badge badge-silver">React</span>
                 <span class="badge badge-blue">Frontend</span>
               </div>
-              <a href="post.html" class="btn-text" aria-label="اقرأ مقدمة إلى React 19">
-                اقرأ
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              <a href="post.html?id=post-1" class="btn-text" aria-label="اقرأ المقال">اقرأ المقال<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
               </a>
             </div>
           </div>
         </article>
 
         <!-- ───── Post Card 2 ───── -->
-        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="تصميم" style="transition-delay:.10s">
+        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="تصميم" style="transition-delay:.10s" data-id="post-2">
           <div class="blog-cover">
             <!--
               IMAGE OPTIONAL: img/blog-post-2.jpg
@@ -1199,7 +1201,7 @@
             <img
               src="img/blog-post-2.jpg" alt="غلاف المقال"
               loading="lazy"
-              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'>🎨</div><p class=\'blog-cover-ph-label\'>blog-post-2.jpg</p></div>'"
+              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'></div><p class=\'blog-cover-ph-label\'>blog-post-2.jpg</p></div>'"
             />
             <div class="blog-cat-bar">
               <span class="badge badge-purple">تصميم</span>
@@ -1225,16 +1227,14 @@
                 <span class="badge badge-purple">UI/UX</span>
                 <span class="badge badge-silver">Figma</span>
               </div>
-              <a href="post.html" class="btn-text">
-                اقرأ
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              <a href="post.html?id=post-2" class="btn-text" aria-label="اقرأ المقال">اقرأ المقال<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
               </a>
             </div>
           </div>
         </article>
 
         <!-- ───── Post Card 3 ───── -->
-        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="ذكاء اصطناعي" style="transition-delay:.15s">
+        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="ذكاء اصطناعي" style="transition-delay:.15s" data-id="post-3">
           <div class="blog-cover">
             <!--
               IMAGE OPTIONAL: img/blog-post-3.jpg
@@ -1243,7 +1243,7 @@
             <img
               src="img/blog-post-3.jpg" alt="غلاف المقال"
               loading="lazy"
-              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'>🤖</div><p class=\'blog-cover-ph-label\'>blog-post-3.jpg</p></div>'"
+              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'></div><p class=\'blog-cover-ph-label\'>blog-post-3.jpg</p></div>'"
             />
             <div class="blog-cat-bar">
               <span class="badge badge-green">ذكاء اصطناعي</span>
@@ -1269,16 +1269,14 @@
                 <span class="badge badge-green">AI</span>
                 <span class="badge badge-silver">Python</span>
               </div>
-              <a href="post.html" class="btn-text">
-                اقرأ
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              <a href="post.html?id=post-3" class="btn-text" aria-label="اقرأ المقال">اقرأ المقال<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
               </a>
             </div>
           </div>
         </article>
 
         <!-- ───── Post Card 4 ───── -->
-        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="أمن سيبراني" style="transition-delay:.20s">
+        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="أمن سيبراني" style="transition-delay:.20s" data-id="post-4">
           <div class="blog-cover">
             <!--
               IMAGE OPTIONAL: img/blog-post-4.jpg
@@ -1287,7 +1285,7 @@
             <img
               src="img/blog-post-4.jpg" alt="غلاف المقال"
               loading="lazy"
-              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'>🔒</div><p class=\'blog-cover-ph-label\'>blog-post-4.jpg</p></div>'"
+              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'></div><p class=\'blog-cover-ph-label\'>blog-post-4.jpg</p></div>'"
             />
             <div class="blog-cat-bar">
               <span class="badge badge-gold">أمن سيبراني</span>
@@ -1313,16 +1311,14 @@
                 <span class="badge badge-gold">Security</span>
                 <span class="badge badge-silver">OWASP</span>
               </div>
-              <a href="post.html" class="btn-text">
-                اقرأ
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              <a href="post.html?id=post-4" class="btn-text" aria-label="اقرأ المقال">اقرأ المقال<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
               </a>
             </div>
           </div>
         </article>
 
         <!-- ───── Post Card 5 ───── -->
-        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="تجارب" style="transition-delay:.25s">
+        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="تجارب" style="transition-delay:.25s" data-id="post-5">
           <div class="blog-cover">
             <!--
               IMAGE OPTIONAL: img/blog-post-5.jpg
@@ -1331,7 +1327,7 @@
             <img
               src="img/blog-post-5.jpg" alt="غلاف المقال"
               loading="lazy"
-              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'>🌟</div><p class=\'blog-cover-ph-label\'>blog-post-5.jpg</p></div>'"
+              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'></div><p class=\'blog-cover-ph-label\'>blog-post-5.jpg</p></div>'"
             />
             <div class="blog-cat-bar">
               <span class="badge badge-silver">تجارب</span>
@@ -1357,16 +1353,14 @@
                 <span class="badge badge-silver">Hackathon</span>
                 <span class="badge badge-blue">تجارب</span>
               </div>
-              <a href="post.html" class="btn-text">
-                اقرأ
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              <a href="post.html?id=post-5" class="btn-text" aria-label="اقرأ المقال">اقرأ المقال<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
               </a>
             </div>
           </div>
         </article>
 
         <!-- ───── Post Card 6 ───── -->
-        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="برمجة" style="transition-delay:.30s">
+        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="برمجة" style="transition-delay:.30s" data-id="post-6">
           <div class="blog-cover">
             <!--
               IMAGE OPTIONAL: img/blog-post-6.jpg
@@ -1401,16 +1395,14 @@
                 <span class="badge badge-green">Node.js</span>
                 <span class="badge badge-silver">API</span>
               </div>
-              <a href="post.html" class="btn-text">
-                اقرأ
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              <a href="post.html?id=post-6" class="btn-text" aria-label="اقرأ المقال">اقرأ المقال<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
               </a>
             </div>
           </div>
         </article>
 
         <!-- ───── Post Card 7 ───── -->
-        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="تصميم" style="transition-delay:.05s">
+        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="تصميم" style="transition-delay:.05s" data-id="post-7">
           <div class="blog-cover">
             <!--
               IMAGE OPTIONAL: img/blog-post-7.jpg
@@ -1445,16 +1437,14 @@
                 <span class="badge badge-purple">Mobile</span>
                 <span class="badge badge-silver">CSS</span>
               </div>
-              <a href="post.html" class="btn-text">
-                اقرأ
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              <a href="post.html?id=post-7" class="btn-text" aria-label="اقرأ المقال">اقرأ المقال<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
               </a>
             </div>
           </div>
         </article>
 
         <!-- ───── Post Card 8 ───── -->
-        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="ذكاء اصطناعي" style="transition-delay:.10s">
+        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="ذكاء اصطناعي" style="transition-delay:.10s" data-id="post-8">
           <div class="blog-cover">
             <!--
               IMAGE OPTIONAL: img/blog-post-8.jpg
@@ -1463,7 +1453,7 @@
             <img
               src="img/blog-post-8.jpg" alt="غلاف المقال"
               loading="lazy"
-              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'>🧠</div><p class=\'blog-cover-ph-label\'>blog-post-8.jpg</p></div>'"
+              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'></div><p class=\'blog-cover-ph-label\'>blog-post-8.jpg</p></div>'"
             />
             <div class="blog-cat-bar">
               <span class="badge badge-green">ذكاء اصطناعي</span>
@@ -1489,16 +1479,14 @@
                 <span class="badge badge-green">LLM</span>
                 <span class="badge badge-silver">Prompting</span>
               </div>
-              <a href="post.html" class="btn-text">
-                اقرأ
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              <a href="post.html?id=post-8" class="btn-text" aria-label="اقرأ المقال">اقرأ المقال<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
               </a>
             </div>
           </div>
         </article>
 
         <!-- ───── Post Card 9 ───── -->
-        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="تجارب" style="transition-delay:.15s">
+        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="تجارب" style="transition-delay:.15s" data-id="post-9">
           <div class="blog-cover">
             <!--
               IMAGE OPTIONAL: img/blog-post-9.jpg
@@ -1507,7 +1495,7 @@
             <img
               src="img/blog-post-9.jpg" alt="غلاف المقال"
               loading="lazy"
-              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'>🏆</div><p class=\'blog-cover-ph-label\'>blog-post-9.jpg</p></div>'"
+              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'></div><p class=\'blog-cover-ph-label\'>blog-post-9.jpg</p></div>'"
             />
             <div class="blog-cat-bar">
               <span class="badge badge-silver">تجارب</span>
@@ -1533,9 +1521,7 @@
                 <span class="badge badge-blue">قصص</span>
                 <span class="badge badge-silver">نمو</span>
               </div>
-              <a href="post.html" class="btn-text">
-                اقرأ
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              <a href="post.html?id=post-9" class="btn-text" aria-label="اقرأ المقال">اقرأ المقال<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
               </a>
             </div>
           </div>
@@ -1545,7 +1531,7 @@
 
       <!-- No Results -->
       <div class="no-results" id="noResults" role="status" aria-live="polite">
-        <div class="no-results-icon">🔍</div>
+        <div class="no-results-icon"></div>
         <p class="no-results-text">لا توجد مقالات تطابق بحثك أو التصنيف المختار.</p>
       </div>
 
@@ -1576,37 +1562,77 @@
       <div class="topics-grid" role="list">
 
         <button class="topic-card reveal" role="listitem" style="transition-delay:.05s" data-filter="برمجة" aria-label="تصفية مقالات البرمجة">
-          <div class="topic-icon gold">💻</div>
+          <div class="topic-icon gold">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 18 22 12 16 6" />
+              <polyline points="8 6 2 12 8 18" />
+            </svg>
+          </div>
           <div class="topic-name">برمجة</div>
           <div class="topic-count">١٢ مقال</div>
         </button>
 
         <button class="topic-card reveal" role="listitem" style="transition-delay:.10s" data-filter="تصميم">
-          <div class="topic-icon purple">🎨</div>
+          <div class="topic-icon purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 20h5l9-9-5-5-9 9v5z" />
+              <path d="M13 7l4 4" />
+            </svg>
+          </div>
           <div class="topic-name">تصميم</div>
           <div class="topic-count">٨ مقالات</div>
         </button>
 
         <button class="topic-card reveal" role="listitem" style="transition-delay:.15s" data-filter="ذكاء اصطناعي">
-          <div class="topic-icon green">🤖</div>
+          <div class="topic-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3" />
+              <path d="M12 5V3" />
+              <path d="M12 21v-2" />
+              <path d="M5 12H3" />
+              <path d="M21 12h-2" />
+              <path d="M7.5 7.5l-1.5-1.5" />
+              <path d="M18.5 7.5l1.5-1.5" />
+              <path d="M7.5 16.5l-1.5 1.5" />
+              <path d="M18.5 16.5l1.5 1.5" />
+            </svg>
+          </div>
           <div class="topic-name">ذكاء اصطناعي</div>
           <div class="topic-count">٦ مقالات</div>
         </button>
 
         <button class="topic-card reveal" role="listitem" style="transition-delay:.20s" data-filter="أمن سيبراني">
-          <div class="topic-icon gold">🔒</div>
+          <div class="topic-icon gold">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3l7 4v5c0 3.5-2.5 6.8-7 8-4.5-1.2-7-4.5-7-8V7l7-4z" />
+              <path d="M12 11v3" />
+              <path d="M10 14h4" />
+            </svg>
+          </div>
           <div class="topic-name">أمن سيبراني</div>
           <div class="topic-count">٤ مقالات</div>
         </button>
 
         <button class="topic-card reveal" role="listitem" style="transition-delay:.25s" data-filter="تجارب">
-          <div class="topic-icon blue">🌟</div>
+          <div class="topic-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5" />
+              <path d="M12 8l3 2-2 3-3-2 2-3z" />
+            </svg>
+          </div>
           <div class="topic-name">تجارب</div>
           <div class="topic-count">٩ مقالات</div>
         </button>
 
         <button class="topic-card reveal" role="listitem" style="transition-delay:.30s" data-filter="all">
-          <div class="topic-icon green">📚</div>
+          <div class="topic-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+            </svg>
+          </div>
           <div class="topic-name">عرض الكل</div>
           <div class="topic-count">٣٤ مقال</div>
         </button>

@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="عرض مقال واحد من مدونة شرق تك. يتم تحميل المحتوى ديناميكيًا من الواجهة الخلفية." />
+  <meta property="og:title" content="مقال — شرق تك" />
+  <meta property="og:description" content="صفحة مقالات قابلة للتحميل من الواجهة الخلفية." />
+  <meta property="og:type" content="article" />
+  <title>مقال — شرق تك</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root,
+    [data-theme="dark"] {
+      --bg-base:        #080E1A;
+      --bg-surface:     #0F172A;
+      --bg-card:        #131F35;
+      --bg-card-hover:  #172540;
+      --bg-subtle:      #1a2744;
+
+      --gold:           #C9A84C;
+      --gold-bright:    #E8C76B;
+      --gold-dim:       rgba(201,168,76,0.10);
+      --gold-border:    rgba(201,168,76,0.22);
+      --gold-glow:      rgba(201,168,76,0.15);
+
+      --green:          #1A5C45;
+      --green-light:    #22735A;
+      --green-dim:      rgba(26,92,69,0.18);
+      --green-border:   rgba(26,92,69,0.35);
+
+      --text-primary:   #EEF2F7;
+      --text-secondary: #94A3B8;
+      --text-muted:     #475569;
+      --text-gold:      var(--gold);
+
+      --border-subtle:  rgba(255,255,255,0.05);
+      --border-mid:     rgba(255,255,255,0.09);
+
+      --shadow-card:    0 4px 40px rgba(0,0,0,0.45);
+      --shadow-hover:   0 12px 56px rgba(0,0,0,0.6);
+      --shadow-gold:    0 0 48px rgba(201,168,76,0.12);
+
+      --nav-bg:         transparent;
+      --nav-bg-scroll:  rgba(8,14,26,0.92);
+    }
+
+    [data-theme="light"] {
+      --bg-base:        #F7F5F0;
+      --bg-surface:     #FFFFFF;
+      --bg-card:        #FFFFFF;
+      --bg-card-hover:  #FAFAF8;
+      --bg-subtle:      #F0EDE6;
+
+      --gold:           #B8922A;
+      --gold-bright:    #D4AF37;
+      --gold-dim:       rgba(184,146,42,0.08);
+      --gold-border:    rgba(184,146,42,0.28);
+      --gold-glow:      rgba(184,146,42,0.12);
+
+      --green:          #1A5C45;
+      --green-light:    #22735A;
+      --green-dim:      rgba(26,92,69,0.08);
+      --green-border:   rgba(26,92,69,0.25);
+
+      --text-primary:   #0F1923;
+      --text-secondary: #3D4F61;
+      --text-muted:     #8A96A3;
+      --text-gold:      var(--gold);
+
+      --border-subtle:  rgba(0,0,0,0.06);
+      --border-mid:     rgba(0,0,0,0.10);
+
+      --shadow-card:    0 2px 24px rgba(0,0,0,0.08);
+      --shadow-hover:   0 8px 40px rgba(0,0,0,0.14);
+      --shadow-gold:    0 0 40px rgba(184,146,42,0.10);
+
+      --nav-bg:         rgba(247,245,240,0.80);
+      --nav-bg-scroll:  rgba(255,255,255,0.95);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      margin: 0; min-height: 100vh;
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      direction: rtl;
+      -webkit-font-smoothing: antialiased;
+    }
+    main { margin-top: 72px; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    button { font-family: inherit; }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background: radial-gradient(circle at top left, rgba(201,168,76,0.12), transparent 24%),
+                  radial-gradient(circle at bottom right, rgba(59,130,246,0.12), transparent 26%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .container {
+      width: 100%; max-width: 1240px;
+      margin: 0 auto; padding: 0 20px;
+    }
+    @media (min-width: 768px) { .container { padding: 0 36px; } }
+    @media (min-width: 1024px) { .container { padding: 0 56px; } }
+    main.container { padding: 24px 20px 60px; }
+    @media (min-width: 768px) { main.container { padding: 36px 32px 72px; } }
+
+    @media (max-width: 768px) {
+      .container { padding: 18px 16px 48px; }
+      .nav-inner {
+        gap: 12px;
+        padding: 12px 0;
+      }
+      .nav-links {
+        justify-content: center;
+        gap: 10px;
+      }
+      .nav-link {
+        padding: 9px 12px;
+      }
+      .theme-toggle {
+        width: 36px;
+        height: 36px;
+      }
+      .nav-logo-img {
+        height: 140px;
+        width: 140px;
+      }
+      .nav-auth {
+        padding: 8px 12px;
+        font-size: 0.82rem;
+        min-width: 0;
+      }
+      .nav-actions {
+        gap: 8px;
+      }
+      .nav-inner {
+        height: 40px;
+        gap: 14px;
+      }
+      .post-hero {
+        padding: 24px;
+        border-radius: 20px;
+      }
+      .post-meta {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .post-body { gap: 22px; }
+      .tag-list {
+        justify-content: flex-start;
+      }
+      .post-footer {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .back-link {
+        justify-content: center;
+        width: 100%;
+      }
+    }
+
+    header {
+      position: fixed; top: 0; right: 0; left: 0;
+      z-index: 1000; height: 72px;
+      background: var(--nav-bg);
+      backdrop-filter: blur(0px);
+      transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+    }
+    header.scrolled {
+      background: var(--nav-bg-scroll);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 var(--border-subtle);
+    }
+    .nav-inner {
+      height: 72px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 32px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 11px;
+      flex-shrink: 0;
+    }
+    .nav-logo-img {
+      height: 140px;
+      width: 140px;
+    }
+    .nav-logo-dark {
+      display: block;
+    }
+    .nav-logo-light {
+      display: none;
+    }
+    [data-theme="light"] .nav-logo-dark {
+      display: none;
+    }
+    [data-theme="light"] .nav-logo-light {
+      display: block;
+    }
+    .nav-logo-fallback {
+      height: 42px; width: 52px;
+      background: var(--green);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; font-weight: 900;
+      color: #F8FAFC; letter-spacing: -0.5px;
+      flex-shrink: 0;
+      display: none;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 2px;
+      flex: 1; justify-content: center;
+        list-style: none;
+    }
+    .nav-link {
+      position: relative;
+      padding: 8px 18px;
+      font-size: 0.9rem; font-weight: 600;
+      color: var(--text-secondary);
+      border-radius: 8px;
+      transition: color 0.2s ease, background 0.2s ease;
+      white-space: nowrap;
+    }
+    .nav-link::after {
+      content: ''; position: absolute;
+      bottom: 3px; right: 18px; left: 18px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+      border-radius: 999px;
+      transform: scaleX(0); transform-origin: right;
+      transition: transform 0.25s ease;
+    }
+    .nav-link:hover               { color: var(--text-primary); }
+    .nav-link.active              { color: var(--gold); }
+    .nav-link:hover::after,
+    .nav-link.active::after       { transform: scaleX(1); }
+
+    .nav-actions {
+      display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+    }
+
+    .theme-toggle {
+      width: 38px; height: 38px;
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border-mid);
+      color: var(--text-secondary);
+      transition: all 0.25s ease;
+      background: transparent;
+    }
+    .theme-toggle:hover {
+      border-color: var(--gold-border);
+      color: var(--gold);
+    }
+    .theme-toggle svg { width: 17px; height: 17px; }
+    .icon-sun  { display: none; }
+    .icon-moon { display: block; }
+    [data-theme="light"] .icon-sun  { display: block; }
+    [data-theme="light"] .icon-moon { display: none; }
+
+    .nav-auth {
+      display: flex; align-items: center; gap: 7px;
+      padding: 9px 20px;
+      border-radius: 9px;
+      font-size: 0.87rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+      color: #0F1923;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 12px var(--gold-glow);
+    }
+    .nav-auth:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(201,168,76,0.3);
+      filter: brightness(1.07);
+    }
+    .nav-auth svg { width: 15px; height: 15px; }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      bottom: 0; right: 0; left: 0;
+      z-index: 999;
+      background: var(--nav-bg-scroll);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border-subtle);
+      padding: 10px 16px;
+      gap: 0;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .mob-link {
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      padding: 6px 10px; border-radius: 10px;
+      color: var(--text-muted);
+      font-size: 0.6rem; font-weight: 600;
+      transition: color 0.2s ease;
+      min-width: 52px;
+    }
+    .mob-link svg { width: 20px; height: 20px; margin-bottom: 1px; }
+    .mob-link.active, .mob-link:hover { color: var(--gold); }
+
+    @media (max-width: 1023px) {
+      .nav-links { display: none; }
+      .mobile-nav { display: flex; }
+      .nav-logo-img {
+        height: 140px;
+        width: 140px;
+      }
+      .theme-toggle {
+        width: 36px;
+        height: 36px;
+      }
+      .nav-auth {
+        padding: 8px 12px;
+        font-size: 0.82rem;
+        min-width: 0;
+      }
+      .nav-actions {
+        gap: 8px;
+      }
+      .nav-inner {
+        gap: 14px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 18px 16px 48px; }
+      .nav-inner {
+        gap: 12px;
+        padding: 12px 0;
+      }
+      .nav-links {
+        justify-content: center;
+        gap: 10px;
+      }
+      .nav-link {
+        padding: 9px 12px;
+      }
+      .theme-toggle {
+        width: 36px;
+        height: 36px;
+      }
+      .nav-logo-img {
+        height: 140px;
+        width: 140px;
+      }
+      .nav-auth {
+        padding: 8px 12px;
+        font-size: 0.82rem;
+        min-width: 0;
+      }
+      .nav-actions {
+        gap: 8px;
+      }
+      .nav-inner {
+        height: 40px;
+        gap: 14px;
+      }
+    }
+
+    .post-hero {
+      margin-top: 60px;
+      padding: 32px; border-radius: 24px;
+      background: var(--bg-card);
+      box-shadow: var(--shadow-card);
+    }
+    .post-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.82rem; color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+    .post-tag span {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px; border-radius: 8px;
+      background: rgba(201,168,76,0.12);
+      color: var(--gold);
+      font-weight: 700;
+    }
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800;
+      line-height: 1.1; margin: 0 0 18px;
+    }
+    .post-excerpt { max-width: 840px; margin: 0 0 24px; color: var(--text-secondary); line-height: 1.9; }
+    .post-meta {
+      display: flex; flex-wrap: wrap; gap: 16px;
+      color: var(--text-muted); font-size: 0.93rem;
+      align-items: center;
+    }
+    .post-meta span { display: inline-flex; align-items: center; gap: 8px; }
+    .post-meta span::before {
+      content: '';
+      display: inline-block; width: 6px; height: 6px;
+      border-radius: 50%; background: var(--text-muted);
+    }
+    .post-meta span:first-child::before { display: none; }
+
+    .post-cover {
+      margin: 28px 0 0;
+      border-radius: 24px; overflow: hidden;
+      background: var(--bg-surface);
+    }
+    .post-cover img { width: 100%; height: auto; display: block; }
+
+    .post-body {
+      margin-top: 34px; display: grid; gap: 28px;
+      line-height: 2; color: var(--text-secondary);
+    }
+    .post-body p {
+      margin: 0; font-size: 1rem;
+    }
+    .post-body h2 {
+      font-size: 1.35rem; color: var(--text-primary); margin: 0 0 16px;
+    }
+    .post-body ul {
+      padding-inline-start: 20px; margin: 0;
+    }
+    .post-body li { margin: 0 0 12px; }
+
+    .tag-list {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px;
+    }
+    .tag-pill {
+      padding: 10px 14px; border-radius: 999px;
+      background: rgba(255,255,255,0.06); color: var(--text-secondary);
+      font-size: 0.88rem; font-weight: 600;
+    }
+
+    .post-footer {
+      display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between;
+      margin-top: 44px; align-items: center;
+    }
+    .back-link {
+      color: var(--gold); font-weight: 700;
+      display: inline-flex; align-items: center; gap: 9px;
+    }
+    .back-link svg { width: 16px; height: 16px; }
+
+    .status-box {
+      margin-top: 28px; padding: 26px 24px;
+      border-radius: 18px; background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06); color: var(--text-secondary);
+    }
+    .status-box--error { color: #F8B4B4; border-color: rgba(248,180,180,0.18); }
+    .status-box--hidden { display: none; }
+  </style>
+</head>
+<body>
+  <header id="navbar" role="banner">
+    <div class="container">
+      <nav class="nav-inner" aria-label="التنقل الرئيسي">
+
+        <a href="index.html" class="nav-logo" aria-label="الصفحة الرئيسية">
+          <img
+            src="img/logo-dark.png" alt="شعار شرق تك"
+            class="nav-logo-img nav-logo-dark" width="42" height="42"
+            onerror="this.style.display='none';document.querySelector('.nav-logo-fallback').style.display='flex';"
+          />
+          <img
+            src="img/logo-light.png" alt="شعار شرق تك"
+            class="nav-logo-img nav-logo-light" width="42" height="42"
+            onerror="this.style.display='none';document.querySelector('.nav-logo-fallback').style.display='flex';"
+          />
+          <div class="nav-logo-fallback" style="display:none" aria-hidden="true">شرق</div>
+        </a>
+
+        <ul class="nav-links" role="list">
+          <li><a href="index.html" class="nav-link">الرئيسية</a></li>
+          <li><a href="team.html" class="nav-link">الفريق</a></li>
+          <li><a href="projects.html" class="nav-link">المشاريع</a></li>
+          <li><a href="blog.html" class="nav-link active" aria-current="page">المدونة</a></li>
+          <li><a href="hall-of-fame.html" class="nav-link">قاعة المجد</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <button class="theme-toggle" id="themeToggle" aria-label="تبديل المظهر">
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5" />
+              <line x1="12" y1="1" x2="12" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="23" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="1" y1="12" x2="3" y2="12" />
+              <line x1="21" y1="12" x2="23" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </button>
+          <a href="auth.html" class="nav-auth" aria-label="تسجيل الدخول">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+              <polyline points="10 17 15 12 10 7"/>
+              <line x1="15" y1="12" x2="3" y2="12"/>
+            </svg>
+            تسجيل الدخول
+          </a>
+        </div>
+
+      </nav>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" id="mobileNav" aria-label="قائمة التنقل">
+    <a href="index.html" class="mob-link" aria-label="الرئيسية">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      الرئيسية
+    </a>
+    <a href="team.html" class="mob-link" aria-label="الفريق">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+      الفريق
+    </a>
+    <a href="projects.html" class="mob-link" aria-label="المشاريع">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+      </svg>
+      المشاريع
+    </a>
+    <a href="blog.html" class="mob-link active" aria-current="page" aria-label="المدونة">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+      </svg>
+      المدونة
+    </a>
+    <a href="hall-of-fame.html" class="mob-link" aria-label="قاعة المجد">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
+      </svg>
+      المجد
+    </a>
+  </nav>
+
+  <main class="container">
+    <section class="post-hero" aria-labelledby="post-title">
+      <div class="post-tag">
+        <span>ت</span>
+        <span id="postCategory">–</span>
+      </div>
+      <h1 id="postTitle">تحميل المقال...</h1>
+      <p id="postExcerpt" class="post-excerpt">سيتم تحميل محتوى المقال من الواجهة الخلفية بعد ربط الخدمة.</p>
+      <div class="post-meta" aria-label="معلومات المقال">
+        <span id="postAuthor">كاتب غير معروف</span>
+        <span id="postDate">تاريخ غير متوفر</span>
+        <span id="postReadTime">وقت قراءة غير متوفر</span>
+      </div>
+      <div class="post-cover" id="postCoverWrapper">
+        <img id="postCover" src="img/blog-post-1.jpg" alt="صورة غلاف المقال" />
+      </div>
+      <div id="postError" class="status-box status-box--hidden"></div>
+    </section>
+
+    <article class="post-body" id="postBody">
+      <p>الصفحة تربط نفسها بالواجهة الخلفية لتحميل بيانات المقال عند فتحها باستخدام معرّف المقال.</p>
+    </article>
+
+    <div class="tag-list" id="postTags"></div>
+
+    <div class="post-footer">
+      <a href="blog.html" class="back-link" aria-label="العودة إلى المدونة">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+        العودة إلى المدونة
+      </a>
+      <div id="backendNote" class="status-box status-box--hidden"></div>
+    </div>
+  </main>
+
+  <script>
+    const html = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const navbar = document.getElementById('navbar');
+    const THEME_KEY = 'sharq-theme';
+
+    function applyTheme(theme) {
+      html.setAttribute('data-theme', theme);
+      localStorage.setItem(THEME_KEY, theme);
+    }
+
+    const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
+    applyTheme(savedTheme);
+
+    themeToggle?.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme');
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+
+    const postTitle = document.getElementById('postTitle');
+    const postExcerpt = document.getElementById('postExcerpt');
+    const postCategory = document.getElementById('postCategory');
+    const postAuthor = document.getElementById('postAuthor');
+    const postDate = document.getElementById('postDate');
+    const postReadTime = document.getElementById('postReadTime');
+    const postCover = document.getElementById('postCover');
+    const postBody = document.getElementById('postBody');
+    const postTags = document.getElementById('postTags');
+    const postError = document.getElementById('postError');
+    const backendNote = document.getElementById('backendNote');
+
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return isNaN(date.getTime()) ? dateString : date.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
+    function setError(message) {
+      postError.textContent = message;
+      postError.classList.remove('status-box--hidden');
+    }
+
+    function setPost(post) {
+      postError.classList.add('status-box--hidden');
+      postTitle.textContent = post.title || 'عنوان المقال غير متوفر';
+      postExcerpt.textContent = post.excerpt || 'هذا المقال سيتم تقديمه من الواجهة الخلفية.';
+      postCategory.textContent = post.category || 'عام';
+      postAuthor.textContent = post.author ? `بواسطة ${post.author}` : 'كاتب غير معروف';
+      postDate.textContent = post.date ? formatDate(post.date) : 'تاريخ غير متوفر';
+      postReadTime.textContent = post.readTime ? `${post.readTime} دقيقة قراءة` : 'وقت قراءة غير متوفر';
+      if (post.image) {
+        postCover.src = post.image;
+        postCover.alt = post.title || 'صورة المقال';
+      }
+      if (post.tags && post.tags.length) {
+        postTags.innerHTML = post.tags.map(tag => `<span class="tag-pill">${tag}</span>`).join('');
+      }
+      if (post.content) {
+        postBody.innerHTML = post.content;
+      }
+    }
+
+    function displayBackendNote() {
+      backendNote.textContent = 'هذه الصفحة جاهزة للاتصال بالواجهة الخلفية عبر /api/posts/{id}.';
+      backendNote.classList.remove('status-box--hidden');
+    }
+
+    const postId = new URLSearchParams(window.location.search).get('id');
+    if (!postId) {
+      setError('لم يتم تحديد المقال. الرجاء فتح هذه الصفحة عبر رابط مقال صالح.');
+    } else {
+      const endpoint = `/api/posts/${encodeURIComponent(postId)}`;
+      displayBackendNote();
+
+      fetch(endpoint, { headers: { 'Accept': 'application/json' } })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('لم يتم العثور على المقال');
+          }
+          return response.json();
+        })
+        .then(post => {
+          if (!post || !post.title) {
+            throw new Error('البيانات المرسلة من الخادم غير صحيحة.');
+          }
+          setPost(post);
+        })
+        .catch(() => {
+          setError('تعذر تحميل المقال من الخادم. تأكد من أن واجهة الخلفية تعمل أو قم بتحديث الرابط.');
+          const fallback = {
+            title: 'مقال تجريبي',
+            excerpt: 'هذه صفحة عرض مقالات قابلة للربط بواجهة الخلفية لاحقًا.',
+            category: 'عام',
+            author: 'فريق شرق تك',
+            date: '2026-06-08',
+            readTime: 5,
+            image: 'img/blog-post-1.jpg',
+            tags: ['Backend', 'في انتظار الخدمة'],
+            content: `
+              <h2>كيف تعمل هذه الصفحة</h2>
+              <p>يتم قراءة معرف المقال من رابط الصفحة واستخدامه لاستدعاء الواجهة الخلفية.</p>
+              <p>عندما تكون واجهة الخلفية متاحة، يجب أن تعيد البيانات بصيغة JSON من مسار <code>/api/posts/{id}</code>.</p>
+              <p>سيتم استبدال هذا النص تلقائيًا بالمحتوى الذي يرسله الخادم.</p>
+            `
+          };
+          setPost(fallback);
+        });
+    }
+  </script>
+</body>
+</html>
