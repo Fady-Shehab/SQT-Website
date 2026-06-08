@@ -1,0 +1,1920 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="مدونة شرق تك — مقالات، تجارب، وأفكار تقنية من فريق شرق الإسكندرية" />
+  <meta name="keywords" content="مدونة شرق تك, مقالات تقنية, برمجة, تكنولوجيا, الإسكندرية" />
+  <meta property="og:title" content="المدونة — شرق تك" />
+  <meta property="og:description" content="مقالات وأفكار تقنية من فريق شرق تك بالإسكندرية" />
+  <meta property="og:type" content="website" />
+  <title>المدونة — شرق تك</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+  /* ═══════════════════════════════════════
+     DESIGN TOKENS — DARK MODE (default)
+  ═══════════════════════════════════════ */
+  :root,
+  [data-theme="dark"] {
+    --bg-base:        #080E1A;
+    --bg-surface:     #0F172A;
+    --bg-card:        #131F35;
+    --bg-card-hover:  #172540;
+    --bg-subtle:      #1a2744;
+
+    --gold:           #C9A84C;
+    --gold-bright:    #E8C76B;
+    --gold-dim:       rgba(201,168,76,0.10);
+    --gold-border:    rgba(201,168,76,0.22);
+    --gold-glow:      rgba(201,168,76,0.15);
+
+    --green:          #1A5C45;
+    --green-light:    #22735A;
+    --green-dim:      rgba(26,92,69,0.18);
+    --green-border:   rgba(26,92,69,0.35);
+
+    --text-primary:   #EEF2F7;
+    --text-secondary: #94A3B8;
+    --text-muted:     #475569;
+    --text-gold:      var(--gold);
+
+    --border-subtle:  rgba(255,255,255,0.05);
+    --border-mid:     rgba(255,255,255,0.09);
+
+    --shadow-card:    0 4px 40px rgba(0,0,0,0.45);
+    --shadow-hover:   0 12px 56px rgba(0,0,0,0.6);
+    --shadow-gold:    0 0 48px rgba(201,168,76,0.12);
+
+    --nav-bg:         transparent;
+    --nav-bg-scroll:  rgba(8,14,26,0.92);
+  }
+
+  /* ═══════════════════════════════════════
+     LIGHT MODE
+  ═══════════════════════════════════════ */
+  [data-theme="light"] {
+    --bg-base:        #F7F5F0;
+    --bg-surface:     #FFFFFF;
+    --bg-card:        #FFFFFF;
+    --bg-card-hover:  #FAFAF8;
+    --bg-subtle:      #F0EDE6;
+
+    --gold:           #B8922A;
+    --gold-bright:    #D4AF37;
+    --gold-dim:       rgba(184,146,42,0.08);
+    --gold-border:    rgba(184,146,42,0.28);
+    --gold-glow:      rgba(184,146,42,0.12);
+
+    --green:          #1A5C45;
+    --green-light:    #22735A;
+    --green-dim:      rgba(26,92,69,0.08);
+    --green-border:   rgba(26,92,69,0.25);
+
+    --text-primary:   #0F1923;
+    --text-secondary: #3D4F61;
+    --text-muted:     #8A96A3;
+    --text-gold:      var(--gold);
+
+    --border-subtle:  rgba(0,0,0,0.06);
+    --border-mid:     rgba(0,0,0,0.10);
+
+    --shadow-card:    0 2px 24px rgba(0,0,0,0.08);
+    --shadow-hover:   0 8px 40px rgba(0,0,0,0.14);
+    --shadow-gold:    0 0 40px rgba(184,146,42,0.10);
+
+    --nav-bg:         rgba(247,245,240,0.80);
+    --nav-bg-scroll:  rgba(255,255,255,0.95);
+  }
+
+  /* ═══════════════════════════════════════
+     BASE RESET
+  ═══════════════════════════════════════ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg-base);
+    color: var(--text-primary);
+    direction: rtl;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.35s ease, color 0.35s ease;
+  }
+  img   { max-width: 100%; display: block; }
+  a     { text-decoration: none; color: inherit; }
+  ul    { list-style: none; }
+  button { font-family: 'Cairo', sans-serif; cursor: pointer; border: none; background: none; }
+
+  /* ═══════════════════════════════════════
+     LAYOUT UTILITIES
+  ═══════════════════════════════════════ */
+  .container {
+    width: 100%; max-width: 1240px;
+    margin: 0 auto; padding: 0 20px;
+  }
+  @media (min-width: 768px)  { .container { padding: 0 36px; } }
+  @media (min-width: 1024px) { .container { padding: 0 56px; } }
+
+  .section-pad { padding: 88px 0; }
+  @media (min-width: 1024px) { .section-pad { padding: 128px 0; } }
+
+  /* ═══════════════════════════════════════
+     SECTION TITLE SYSTEM (identical to home)
+  ═══════════════════════════════════════ */
+  .stb { text-align: center; margin-bottom: 60px; }
+  .stb-eye {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.22em;
+    color: var(--gold); text-transform: uppercase; margin-bottom: 16px;
+  }
+  .stb-eye::before, .stb-eye::after {
+    content: ''; display: block; width: 28px; height: 1px;
+    background: var(--gold); opacity: 0.5;
+  }
+  .stb-h {
+    font-family: 'Cairo', sans-serif;
+    font-size: clamp(1.7rem, 4vw, 2.6rem); font-weight: 800;
+    color: var(--text-primary); line-height: 1.25;
+  }
+  .stb-h em { font-style: normal; color: var(--gold); }
+  .stb-sub {
+    margin-top: 14px; font-size: 0.95rem; color: var(--text-secondary);
+    max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.9;
+  }
+  .gold-rule {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; margin-top: 20px;
+  }
+  .gold-rule::before, .gold-rule::after {
+    content: ''; display: block; width: 40px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .gold-rule::after { background: linear-gradient(90deg, var(--gold), transparent); }
+  .gold-rule-diamond {
+    width: 7px; height: 7px; background: var(--gold);
+    transform: rotate(45deg); flex-shrink: 0;
+  }
+
+  /* ═══════════════════════════════════════
+     BUTTONS
+  ═══════════════════════════════════════ */
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 13px 30px; border-radius: 10px;
+    font-family: 'Cairo', sans-serif; font-size: 0.93rem; font-weight: 700;
+    transition: all 0.25s ease; cursor: pointer; white-space: nowrap;
+  }
+  .btn-gold {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
+    color: #0F1923; box-shadow: 0 4px 20px var(--gold-glow);
+  }
+  .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,168,76,0.35); filter: brightness(1.08); }
+  .btn-outline {
+    background: transparent; color: var(--text-primary);
+    border: 1px solid var(--border-mid);
+  }
+  .btn-outline:hover { border-color: var(--gold-border); color: var(--gold); transform: translateY(-2px); }
+  .btn-text {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--gold); font-size: 0.88rem; font-weight: 600;
+    padding: 0; transition: gap 0.25s ease;
+  }
+  .btn-text:hover { gap: 13px; }
+  .btn-text svg { transition: transform 0.25s ease; flex-shrink: 0; }
+  .btn-text:hover svg { transform: translateX(-4px); }
+
+  /* ═══════════════════════════════════════
+     BADGES
+  ═══════════════════════════════════════ */
+  .badge {
+    display: inline-flex; align-items: center;
+    padding: 3px 11px; border-radius: 999px;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em;
+  }
+  .badge-gold   { background: var(--gold-dim);  color: var(--gold);  border: 1px solid var(--gold-border); }
+  .badge-green  { background: var(--green-dim); color: #4ADE80;      border: 1px solid var(--green-border); }
+  .badge-silver { background: rgba(148,163,184,0.08); color: var(--text-secondary); border: 1px solid var(--border-mid); }
+  .badge-blue   { background: rgba(59,130,246,0.08); color: #60A5FA; border: 1px solid rgba(59,130,246,0.2); }
+  .badge-purple { background: rgba(168,85,247,0.08); color: #C084FC; border: 1px solid rgba(168,85,247,0.2); }
+
+  /* ═══════════════════════════════════════
+     REVEAL ANIMATION
+  ═══════════════════════════════════════ */
+  .reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.65s cubic-bezier(0,0,0.2,1), transform 0.65s cubic-bezier(0,0,0.2,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ═══════════════════════════════════════
+     EGYPTIAN GEOMETRIC BACKGROUND PATTERN
+  ═══════════════════════════════════════ */
+  .eg-pattern {
+    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  }
+  .eg-pattern::before {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg,  var(--gold-border) 0px, var(--gold-border) 1px, transparent 1px, transparent 56px),
+      repeating-linear-gradient(-45deg, var(--gold-border) 0px, var(--gold-border) 1px, transparent 1px, transparent 56px);
+    opacity: 0.18;
+  }
+
+  /* ═══════════════════════════════════════
+     NAVBAR
+  ═══════════════════════════════════════ */
+  #navbar {
+    position: fixed; top: 0; right: 0; left: 0;
+    z-index: 1000; height: 72px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(0px);
+    transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+  }
+  #navbar.scrolled {
+    background: var(--nav-bg-scroll);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 1px 0 var(--border-subtle);
+  }
+  .nav-inner {
+    height: 72px; display: flex; align-items: center;
+    justify-content: space-between; gap: 32px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 11px; flex-shrink: 0; }
+  .nav-logo-img { height: 140px; width: 140px; }
+  .nav-logo-dark  { display: block; }
+  .nav-logo-light { display: none; }
+  [data-theme="light"] .nav-logo-dark  { display: none; }
+  [data-theme="light"] .nav-logo-light { display: block; }
+  .nav-logo-fallback {
+    height: 42px; width: 52px; background: var(--green);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; font-weight: 900; color: #F8FAFC; letter-spacing: -0.5px; flex-shrink: 0;
+  }
+  .nav-links { display: flex; align-items: center; gap: 2px; flex: 1; justify-content: center; }
+  .nav-link {
+    position: relative; padding: 8px 18px;
+    font-size: 0.9rem; font-weight: 600; color: var(--text-secondary);
+    border-radius: 8px; transition: color 0.2s ease, background 0.2s ease; white-space: nowrap;
+  }
+  .nav-link::after {
+    content: ''; position: absolute; bottom: 3px; right: 18px; left: 18px;
+    height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+    border-radius: 999px; transform: scaleX(0); transform-origin: right; transition: transform 0.25s ease;
+  }
+  .nav-link:hover { color: var(--text-primary); }
+  .nav-link.active { color: var(--gold); }
+  .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+  .nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .theme-toggle {
+    width: 38px; height: 38px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border-mid); color: var(--text-secondary);
+    transition: all 0.25s ease; background: transparent;
+  }
+  .theme-toggle:hover { border-color: var(--gold-border); color: var(--gold); }
+  .theme-toggle svg { width: 17px; height: 17px; }
+  .icon-sun  { display: none; }
+  .icon-moon { display: block; }
+  [data-theme="light"] .icon-sun  { display: block; }
+  [data-theme="light"] .icon-moon { display: none; }
+  .nav-auth {
+    display: flex; align-items: center; gap: 7px;
+    padding: 9px 20px; border-radius: 9px;
+    font-size: 0.87rem; font-weight: 700;
+    background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+    color: #0F1923; transition: all 0.25s ease; box-shadow: 0 2px 12px var(--gold-glow);
+  }
+  .nav-auth:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(201,168,76,0.3); filter: brightness(1.07); }
+  .nav-auth svg { width: 15px; height: 15px; }
+
+  /* Mobile bottom nav */
+  .mobile-nav {
+    display: none; position: fixed; bottom: 0; right: 0; left: 0;
+    z-index: 999; background: var(--nav-bg-scroll);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border-subtle);
+    padding: 10px 16px; gap: 0; justify-content: space-around; align-items: center;
+  }
+  @media (max-width: 1023px) { .nav-links { display: none; } .mobile-nav { display: flex; } }
+  .mob-link {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    padding: 6px 10px; border-radius: 10px; color: var(--text-muted);
+    font-size: 0.6rem; font-weight: 600; transition: color 0.2s ease; min-width: 52px;
+  }
+  .mob-link svg { width: 20px; height: 20px; margin-bottom: 1px; }
+  .mob-link.active, .mob-link:hover { color: var(--gold); }
+
+  /* ═══════════════════════════════════════
+     BLOG HERO / PAGE HEADER
+  ═══════════════════════════════════════ */
+  #blog-hero {
+    position: relative; overflow: hidden;
+    padding: 160px 0 80px;
+    background: var(--bg-base);
+  }
+  #blog-hero::before {
+    content: '';
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 900px; height: 500px;
+    background: radial-gradient(ellipse at center,
+      rgba(201,168,76,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  #blog-hero::after {
+    content: '';
+    position: absolute; bottom: 0; left: 15%; right: 15%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
+  }
+  .hero-gems { position: absolute; inset: 0; pointer-events: none; }
+  .gem {
+    position: absolute; background: var(--gold); transform: rotate(45deg);
+    opacity: 0.15; animation: gemFloat 0s ease-in-out infinite alternate;
+  }
+  .gem-1 { width:8px; height:8px; top:18%; right:9%;  animation-duration:6s; }
+  .gem-2 { width:5px; height:5px; top:55%; left:7%;   animation-duration:8s; animation-delay:1s; }
+  .gem-3 { width:4px; height:4px; top:30%; right:22%; animation-duration:7s; animation-delay:2s; opacity:0.09; }
+  .gem-4 { width:6px; height:6px; bottom:28%; left:14%; animation-duration:9s; animation-delay:0.5s; opacity:0.1; }
+  @keyframes gemFloat {
+    from { transform: rotate(45deg) translateY(0px); }
+    to   { transform: rotate(45deg) translateY(-14px); }
+  }
+
+  .blog-hero-inner {
+    position: relative; z-index: 2; text-align: center; max-width: 720px; margin: 0 auto;
+  }
+  .blog-hero-pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 7px 20px; border: 1px solid var(--gold-border);
+    border-radius: 999px; font-size: 0.78rem; font-weight: 600;
+    color: var(--gold); margin-bottom: 28px;
+    background: var(--gold-dim);
+    animation: fadeDown 0.7s cubic-bezier(0,0,0.2,1) both;
+  }
+  .blog-hero-pill-dot {
+    width: 6px; height: 6px; background: var(--gold);
+    border-radius: 50%; animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50%      { opacity:0.5; transform:scale(0.7); }
+  }
+  .blog-hero-title {
+    font-family: 'Cairo', sans-serif;
+    font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 900;
+    line-height: 1.15; color: var(--text-primary);
+    margin-bottom: 20px;
+    animation: fadeUp 0.8s cubic-bezier(0,0,0.2,1) 0.1s both;
+  }
+  .blog-hero-title em { font-style: normal; color: var(--gold); }
+  .blog-hero-sub {
+    font-size: 1rem; color: var(--text-secondary); line-height: 1.9;
+    max-width: 560px; margin: 0 auto 36px;
+    animation: fadeUp 0.8s cubic-bezier(0,0,0.2,1) 0.2s both;
+  }
+  .blog-hero-ornament {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    margin-bottom: 0;
+    animation: fadeUp 0.8s cubic-bezier(0,0,0.2,1) 0.3s both;
+  }
+  .blog-hero-ornament::before, .blog-hero-ornament::after {
+    content: ''; display: block; width: 60px; height: 1px; background: var(--gold-border);
+  }
+  .blog-hero-orn-diamond {
+    width: 8px; height: 8px; background: var(--gold); transform: rotate(45deg);
+  }
+
+  /* ═══════════════════════════════════════
+     BLOG STATS BAR
+  ═══════════════════════════════════════ */
+  #blog-stats {
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0; position: relative; overflow: hidden;
+  }
+  #blog-stats::before {
+    content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 3px;
+    background: linear-gradient(to bottom, transparent, var(--green), transparent);
+  }
+  #blog-stats::after {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  }
+  .blog-stats-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--border-subtle);
+  }
+  @media (min-width: 768px) { .blog-stats-row { grid-template-columns: repeat(4,1fr); } }
+  .blog-stat-cell {
+    background: var(--bg-surface); padding: 32px 24px;
+    text-align: center; transition: background 0.25s ease;
+  }
+  .blog-stat-cell:hover { background: var(--bg-card); }
+  .blog-stat-num {
+    font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 900;
+    color: var(--gold); line-height: 1;
+  }
+  .blog-stat-lbl { margin-top: 8px; font-size: 0.78rem; color: var(--text-muted); font-weight: 500; }
+
+  /* ═══════════════════════════════════════
+     FILTER + SEARCH BAR
+  ═══════════════════════════════════════ */
+  #blog-filter {
+    background: var(--bg-base); padding: 52px 0 0;
+    position: sticky; top: 72px; z-index: 100;
+  }
+  #blog-filter::after {
+    content: ''; display: block; height: 1px; margin-top: 28px;
+    background: linear-gradient(90deg, transparent, var(--border-mid), transparent);
+  }
+
+  .filter-wrap {
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  @media (min-width: 768px) { .filter-wrap { flex-direction: row; align-items: center; justify-content: space-between; } }
+
+  /* Search box */
+  .blog-search-wrap {
+    position: relative; flex: 1; max-width: 380px;
+  }
+  .blog-search-icon {
+    position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    pointer-events: none; color: var(--text-muted);
+  }
+  .blog-search-icon svg { width: 16px; height: 16px; }
+  .blog-search-input {
+    width: 100%; padding: 10px 44px 10px 16px;
+    background: var(--bg-card); border: 1px solid var(--border-mid);
+    border-radius: 10px; color: var(--text-primary);
+    font-family: 'Cairo', sans-serif; font-size: 0.88rem;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    outline: none;
+  }
+  .blog-search-input::placeholder { color: var(--text-muted); }
+  .blog-search-input:focus {
+    border-color: var(--gold-border);
+    box-shadow: 0 0 0 3px var(--gold-dim);
+  }
+
+  /* Category filter pills */
+  .cat-pills {
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  }
+  .cat-pill {
+    padding: 7px 16px; border-radius: 999px;
+    font-size: 0.78rem; font-weight: 600;
+    border: 1px solid var(--border-mid);
+    color: var(--text-muted); background: transparent;
+    cursor: pointer; transition: all 0.22s ease;
+    font-family: 'Cairo', sans-serif;
+  }
+  .cat-pill:hover { border-color: var(--gold-border); color: var(--gold); }
+  .cat-pill.active {
+    background: var(--gold-dim); border-color: var(--gold-border); color: var(--gold);
+  }
+
+  /* ═══════════════════════════════════════
+     FEATURED POST
+  ═══════════════════════════════════════ */
+  #blog-featured {
+    padding: 60px 0 80px;
+    position: relative;
+  }
+  .featured-card {
+    display: grid; grid-template-columns: 1fr;
+    background: var(--bg-card); border: 1px solid var(--border-subtle);
+    border-radius: 20px; overflow: hidden;
+    transition: all 0.35s ease;
+    position: relative;
+  }
+  @media (min-width: 1024px) { .featured-card { grid-template-columns: 1.1fr 0.9fr; } }
+  .featured-card::before {
+    content: ''; position: absolute; top: 0; right: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-bright), var(--green-light));
+    z-index: 1;
+  }
+  .featured-card:hover {
+    border-color: var(--gold-border);
+    box-shadow: var(--shadow-hover), var(--shadow-gold);
+    transform: translateY(-4px);
+  }
+
+  .featured-img {
+    aspect-ratio: 16/9; overflow: hidden; position: relative;
+    background: var(--bg-subtle);
+  }
+  @media (min-width: 1024px) { .featured-img { aspect-ratio: auto; min-height: 380px; } }
+  .featured-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .featured-card:hover .featured-img img { transform: scale(1.04); }
+  .featured-img-ph {
+    width: 100%; height: 100%; min-height: 280px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 12px;
+  }
+  .featured-img-ph-icon { font-size: 3rem; opacity: 0.12; }
+  .featured-img-ph-text { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* Featured label ribbon */
+  .featured-ribbon {
+    position: absolute; top: 20px; right: 20px; z-index: 2;
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 6px 14px; border-radius: 999px;
+    background: rgba(201,168,76,0.92); color: #0F1923;
+    font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em;
+    backdrop-filter: blur(8px);
+  }
+  .featured-ribbon svg { width: 12px; height: 12px; }
+
+  .featured-body {
+    padding: 36px 32px 40px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  @media (max-width: 1023px) { .featured-body { padding: 28px 24px 32px; } }
+
+  .featured-meta {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 18px; flex-wrap: wrap;
+  }
+  .featured-author-thumb {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--bg-subtle); border: 1.5px solid var(--gold-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 800; color: var(--gold);
+    overflow: hidden; flex-shrink: 0;
+  }
+  .featured-author-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .featured-author-name { font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); }
+  .meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-muted); opacity: 0.5; }
+  .featured-date { font-size: 0.75rem; color: var(--text-muted); }
+  .featured-read-time { font-size: 0.75rem; color: var(--text-muted); }
+
+  .featured-title {
+    font-family: 'Cairo', sans-serif;
+    font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 800;
+    color: var(--text-primary); line-height: 1.35; margin-bottom: 14px;
+  }
+  .featured-excerpt {
+    font-size: 0.9rem; color: var(--text-secondary); line-height: 1.9;
+    margin-bottom: 28px;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .featured-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 28px; }
+  .featured-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+  /* ═══════════════════════════════════════
+     BLOG GRID (All Posts)
+  ═══════════════════════════════════════ */
+  #blog-grid { padding: 0 0 100px; }
+
+  .blog-section-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 36px; gap: 16px;
+  }
+  .blog-section-title {
+    font-family: 'Cairo', sans-serif;
+    font-size: 1.25rem; font-weight: 800; color: var(--text-primary);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .blog-section-title::after {
+    content: ''; flex: 1; height: 1px; min-width: 40px;
+    background: linear-gradient(90deg, var(--gold-border), transparent);
+  }
+  .post-count {
+    font-size: 0.75rem; color: var(--text-muted); font-weight: 500;
+    background: var(--bg-card); border: 1px solid var(--border-subtle);
+    padding: 4px 12px; border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .posts-grid {
+    display: grid; grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  @media (min-width: 640px)  { .posts-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (min-width: 1024px) { .posts-grid { grid-template-columns: repeat(3,1fr); } }
+
+  /* Regular Blog Card */
+  .blog-card {
+    background: var(--bg-card); border: 1px solid var(--border-subtle);
+    border-radius: 16px; overflow: hidden;
+    transition: all 0.3s ease; cursor: pointer;
+    display: flex; flex-direction: column;
+  }
+  .blog-card:hover {
+    border-color: var(--gold-border); transform: translateY(-5px);
+    box-shadow: var(--shadow-hover), 0 0 32px rgba(201,168,76,0.07);
+  }
+
+  .blog-cover {
+    aspect-ratio: 16/9; background: var(--bg-subtle); overflow: hidden; position: relative;
+  }
+  .blog-cover img {
+    width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;
+  }
+  .blog-card:hover .blog-cover img { transform: scale(1.04); }
+  .blog-cover-ph {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  }
+  .blog-cover-ph-icon { font-size: 2.2rem; opacity: 0.12; }
+  .blog-cover-ph-label {
+    font-size: 0.62rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  /* Category top bar on card */
+  .blog-cat-bar {
+    position: absolute; top: 14px; right: 14px;
+  }
+
+  .blog-body { padding: 22px 20px 26px; flex: 1; display: flex; flex-direction: column; }
+  .blog-meta {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;
+  }
+  .blog-author-mini {
+    display: flex; align-items: center; gap: 7px;
+  }
+  .blog-author-av {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--bg-subtle); border: 1px solid var(--border-mid);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.62rem; font-weight: 800; color: var(--text-muted);
+    overflow: hidden; flex-shrink: 0;
+  }
+  .blog-author-av img { width: 100%; height: 100%; object-fit: cover; }
+  .blog-author-mini-name { font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; }
+  .blog-date { font-size: 0.7rem; color: var(--text-muted); }
+  .blog-dot  { width: 3px; height: 3px; border-radius: 50%; background: var(--text-muted); opacity: 0.5; }
+  .blog-rt   { font-size: 0.7rem; color: var(--text-muted); }
+
+  .blog-title {
+    font-size: 0.97rem; font-weight: 700; color: var(--text-primary);
+    line-height: 1.55; margin-bottom: 9px;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    flex: 0;
+  }
+  .blog-excerpt {
+    font-size: 0.81rem; color: var(--text-muted); line-height: 1.8;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    margin-bottom: 18px; flex: 1;
+  }
+  .blog-card-foot {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    margin-top: auto;
+  }
+  .blog-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  /* ═══════════════════════════════════════
+     NEWSLETTER / CTA BANNER
+  ═══════════════════════════════════════ */
+  #blog-newsletter {
+    background: var(--bg-surface); position: relative; overflow: hidden;
+  }
+  #blog-newsletter::before {
+    content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
+  }
+  #blog-newsletter::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.05) 0%, transparent 55%);
+    pointer-events: none;
+  }
+
+  .nl-inner {
+    position: relative; z-index: 1;
+    max-width: 620px; margin: 0 auto; text-align: center;
+  }
+  .nl-icon {
+    width: 64px; height: 64px; border-radius: 18px; margin: 0 auto 24px;
+    background: var(--gold-dim); border: 1px solid var(--gold-border);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nl-icon svg { width: 28px; height: 28px; stroke: var(--gold); fill: none; stroke-width: 1.8; }
+  .nl-title {
+    font-family: 'Cairo', sans-serif; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 800;
+    color: var(--text-primary); margin-bottom: 14px; line-height: 1.3;
+  }
+  .nl-title em { font-style: normal; color: var(--gold); }
+  .nl-sub {
+    font-size: 0.9rem; color: var(--text-secondary); line-height: 1.9; margin-bottom: 32px;
+  }
+  .nl-form {
+    display: flex; gap: 10px; max-width: 440px; margin: 0 auto 16px;
+  }
+  @media (max-width: 480px) { .nl-form { flex-direction: column; } }
+  .nl-input {
+    flex: 1; padding: 12px 18px;
+    background: var(--bg-card); border: 1px solid var(--border-mid);
+    border-radius: 10px; color: var(--text-primary);
+    font-family: 'Cairo', sans-serif; font-size: 0.88rem;
+    outline: none; transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .nl-input::placeholder { color: var(--text-muted); }
+  .nl-input:focus { border-color: var(--gold-border); box-shadow: 0 0 0 3px var(--gold-dim); }
+  .nl-note { font-size: 0.72rem; color: var(--text-muted); }
+
+  /* ═══════════════════════════════════════
+     TOPICS SIDEBAR STRIP
+  ═══════════════════════════════════════ */
+  #blog-topics {
+    padding: 64px 0; border-top: 1px solid var(--border-subtle);
+  }
+  .topics-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  @media (min-width: 640px)  { .topics-grid { grid-template-columns: repeat(3,1fr); } }
+  @media (min-width: 1024px) { .topics-grid { grid-template-columns: repeat(6,1fr); } }
+
+  .topic-card {
+    background: var(--bg-card); border: 1px solid var(--border-subtle);
+    border-radius: 14px; padding: 22px 16px; text-align: center;
+    transition: all 0.3s ease; cursor: pointer;
+  }
+  .topic-card:hover {
+    border-color: var(--gold-border); transform: translateY(-3px);
+    box-shadow: var(--shadow-card);
+  }
+  .topic-icon {
+    width: 44px; height: 44px; border-radius: 12px; margin: 0 auto 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+  }
+  .topic-icon.gold  { background: var(--gold-dim);  }
+  .topic-icon.green { background: var(--green-dim); }
+  .topic-icon.blue  { background: rgba(59,130,246,0.08); }
+  .topic-icon.purple{ background: rgba(168,85,247,0.08); }
+  .topic-name { font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px; }
+  .topic-count { font-size: 0.68rem; color: var(--text-muted); }
+
+  /* ═══════════════════════════════════════
+     LOAD MORE
+  ═══════════════════════════════════════ */
+  .load-more-wrap { text-align: center; margin-top: 52px; }
+  .btn-load-more {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 36px; border-radius: 12px;
+    background: var(--bg-card); border: 1px solid var(--border-mid);
+    color: var(--text-secondary); font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem; font-weight: 700; cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .btn-load-more:hover {
+    border-color: var(--gold-border); color: var(--gold);
+    transform: translateY(-2px); box-shadow: var(--shadow-card);
+  }
+  .btn-load-more svg { width: 18px; height: 18px; }
+
+  /* ═══════════════════════════════════════
+     FOOTER
+  ═══════════════════════════════════════ */
+  footer {
+    background: var(--bg-surface); border-top: 1px solid var(--border-subtle);
+    padding: 64px 0 0; margin-bottom: 60px;
+  }
+  @media (min-width: 1024px) { footer { margin-bottom: 0; } }
+  .footer-grid {
+    display: grid; grid-template-columns: 1fr; gap: 48px; margin-bottom: 48px;
+  }
+  @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+  .footer-brand-tagline {
+    font-size: 0.85rem; color: var(--text-muted); line-height: 1.9;
+    max-width: 280px; margin-top: 14px;
+  }
+  .social-row { display: flex; gap: 10px; margin-top: 22px; }
+  .social-a {
+    width: 38px; height: 38px; border-radius: 9px; border: 1px solid var(--border-mid);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); transition: all 0.25s ease;
+  }
+  .social-a svg { width: 17px; height: 17px; }
+  .social-a:hover { border-color: var(--gold-border); color: var(--gold); background: var(--gold-dim); }
+  .foot-col-h {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+    color: var(--text-primary); text-transform: uppercase; margin-bottom: 18px;
+  }
+  .foot-links { display: flex; flex-direction: column; gap: 11px; }
+  .foot-link { font-size: 0.85rem; color: var(--text-muted); transition: color 0.2s ease; }
+  .foot-link:hover { color: var(--gold); }
+  .footer-bottom {
+    border-top: 1px solid var(--border-subtle); padding: 24px 0 28px;
+    display: flex; flex-direction: column; gap: 8px; align-items: center; text-align: center;
+  }
+  @media (min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; } }
+  .foot-copy { font-size: 0.77rem; color: var(--text-muted); }
+  .footer-stripe { height: 3px; background: linear-gradient(90deg, var(--green), var(--gold), var(--green)); }
+  .sec-cta { text-align: center; }
+
+  /* ═══════════════════════════════════════
+     KEYFRAMES
+  ═══════════════════════════════════════ */
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(24px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  @keyframes fadeDown {
+    from { opacity:0; transform:translateY(-16px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  /* ═══════════════════════════════════════
+     REDUCED MOTION
+  ═══════════════════════════════════════ */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+    .reveal { opacity:1 !important; transform:none !important; }
+  }
+
+  /* ═══════════════════════════════════════
+     SEARCH HIGHLIGHT
+  ═══════════════════════════════════════ */
+  .hl { color: var(--gold); background: var(--gold-dim); border-radius: 3px; padding: 0 2px; }
+
+  /* ═══════════════════════════════════════
+     NO RESULTS STATE
+  ═══════════════════════════════════════ */
+  .no-results {
+    text-align: center; padding: 80px 20px; display: none;
+  }
+  .no-results.visible { display: block; }
+  .no-results-icon { font-size: 3rem; opacity: 0.2; margin-bottom: 16px; }
+  .no-results-text { font-size: 1rem; color: var(--text-muted); }
+
+  </style>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════ -->
+<header id="navbar" role="banner">
+  <div class="container">
+    <nav class="nav-inner" aria-label="التنقل الرئيسي">
+
+      <a href="index.html" class="nav-logo" aria-label="الصفحة الرئيسية">
+        <img src="img/logo-dark.png" alt="شعار شرق تك"
+          class="nav-logo-img nav-logo-dark" width="42" height="42"
+          onerror="this.style.display='none';document.querySelector('.nav-logo-fallback').style.display='flex';" />
+        <img src="img/logo-light.png" alt="شعار شرق تك"
+          class="nav-logo-img nav-logo-light" width="42" height="42"
+          onerror="this.style.display='none';document.querySelector('.nav-logo-fallback').style.display='flex';" />
+        <div class="nav-logo-fallback" style="display:none" aria-hidden="true">شرق</div>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="index.html"        class="nav-link">الرئيسية</a></li>
+        <li><a href="team.html"         class="nav-link">الفريق</a></li>
+        <li><a href="projects.html"     class="nav-link">المشاريع</a></li>
+        <li><a href="blog.html"         class="nav-link active" aria-current="page">المدونة</a></li>
+        <li><a href="hall-of-fame.html" class="nav-link">قاعة المجد</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="تبديل المظهر">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+        <a href="auth.html" class="nav-auth" aria-label="تسجيل الدخول">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+            <polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
+          </svg>
+          تسجيل الدخول
+        </a>
+      </div>
+
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile Bottom Nav -->
+<nav class="mobile-nav" id="mobileNav" aria-label="قائمة التنقل">
+  <a href="index.html" class="mob-link" aria-label="الرئيسية">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+    الرئيسية
+  </a>
+  <a href="team.html" class="mob-link" aria-label="الفريق">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+    </svg>
+    الفريق
+  </a>
+  <a href="projects.html" class="mob-link" aria-label="المشاريع">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+    </svg>
+    المشاريع
+  </a>
+  <a href="blog.html" class="mob-link active" aria-current="page" aria-label="المدونة">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+    </svg>
+    المدونة
+  </a>
+  <a href="hall-of-fame.html" class="mob-link" aria-label="قاعة المجد">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
+    </svg>
+    المجد
+  </a>
+</nav>
+
+
+<!-- ═══════════════════════════════════════
+     MAIN
+═══════════════════════════════════════ -->
+<main id="main-content">
+
+  <!-- ══════════════════ BLOG HERO ══════════════════ -->
+  <section id="blog-hero" aria-labelledby="blog-h1">
+    <div class="eg-pattern" aria-hidden="true"></div>
+    <div class="hero-gems" aria-hidden="true">
+      <div class="gem gem-1"></div><div class="gem gem-2"></div>
+      <div class="gem gem-3"></div><div class="gem gem-4"></div>
+    </div>
+
+    <div class="container">
+      <div class="blog-hero-inner">
+
+        <div class="blog-hero-pill" aria-hidden="true">
+          <span class="blog-hero-pill-dot"></span>
+          المدونة التقنية لشرق تك
+        </div>
+
+        <h1 id="blog-h1" class="blog-hero-title">
+          أفكار، تجارب،<br><em>وقصص</em> من الميدان
+        </h1>
+
+        <p class="blog-hero-sub">
+          نكتب عما نبنيه ونتعلمه — مقالات تقنية صادقة من قلب فريق شرق تك
+          في الإسكندرية، لكل مهتم بالتكنولوجيا والإبداع.
+        </p>
+
+        <div class="blog-hero-ornament" aria-hidden="true">
+          <div class="blog-hero-orn-diamond"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════ BLOG STATS BAR ══════════════════ -->
+  <section id="blog-stats" aria-label="إحصائيات المدونة">
+    <div class="container">
+      <div class="blog-stats-row" role="list">
+
+        <div class="blog-stat-cell reveal" role="listitem">
+          <div class="blog-stat-num">
+            <span class="counter" data-target="34">0</span>+
+          </div>
+          <div class="blog-stat-lbl">مقال منشور</div>
+        </div>
+
+        <div class="blog-stat-cell reveal" role="listitem" style="transition-delay:.08s">
+          <div class="blog-stat-num">
+            <span class="counter" data-target="12">0</span>
+          </div>
+          <div class="blog-stat-lbl">كاتب من الفريق</div>
+        </div>
+
+        <div class="blog-stat-cell reveal" role="listitem" style="transition-delay:.16s">
+          <div class="blog-stat-num">
+            <span class="counter" data-target="6">0</span>
+          </div>
+          <div class="blog-stat-lbl">تخصص ومجال</div>
+        </div>
+
+        <div class="blog-stat-cell reveal" role="listitem" style="transition-delay:.24s">
+          <div class="blog-stat-num">
+            <span class="counter" data-target="1200">0</span>+
+          </div>
+          <div class="blog-stat-lbl">قارئ شهرياً</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════ FILTER + SEARCH ══════════════════ -->
+  <div id="blog-filter" role="search" aria-label="تصفية المقالات">
+    <div class="container">
+      <div class="filter-wrap">
+
+        <div class="blog-search-wrap">
+          <span class="blog-search-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </span>
+          <input
+            type="search" id="blogSearch"
+            class="blog-search-input"
+            placeholder="ابحث في المقالات…"
+            aria-label="البحث في المقالات"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="cat-pills" role="group" aria-label="تصفية بالتصنيف" id="catPills">
+          <button class="cat-pill active" data-cat="all">الكل</button>
+          <button class="cat-pill" data-cat="برمجة">برمجة</button>
+          <button class="cat-pill" data-cat="تصميم">تصميم</button>
+          <button class="cat-pill" data-cat="ذكاء اصطناعي">ذكاء اصطناعي</button>
+          <button class="cat-pill" data-cat="أمن سيبراني">أمن سيبراني</button>
+          <button class="cat-pill" data-cat="تجارب">تجارب</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════ FEATURED POST ══════════════════ -->
+  <section id="blog-featured" aria-labelledby="featured-h2">
+    <div class="container">
+
+      <div class="stb reveal" style="margin-bottom:32px">
+        <div class="stb-eye">أبرز المقالات</div>
+        <h2 id="featured-h2" class="stb-h">المقال <em>المميز</em></h2>
+        <div class="gold-rule"><div class="gold-rule-diamond"></div></div>
+      </div>
+
+      <article class="featured-card reveal" tabindex="0" data-cat="برمجة" aria-label="اقرأ المقال المميز">
+
+        <!-- Cover Image -->
+        <div class="featured-img">
+          <!--
+            IMAGE REQUIRED: img/blog-featured.jpg
+            صورة غلاف المقال المميز — يُفضَّل أبعاد 800×500 px أو أكبر
+          -->
+          <img
+            src="img/blog-featured.jpg"
+            alt="غلاف المقال المميز"
+            loading="lazy"
+            onerror="this.parentElement.innerHTML='<div class=\'featured-img-ph\'><div class=\'featured-img-ph-icon\'>📝</div><p class=\'featured-img-ph-text\'>blog-featured.jpg</p></div>'"
+          />
+          <div class="featured-ribbon" aria-label="مقال مميز">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            مميز
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="featured-body">
+          <div class="featured-meta">
+            <div class="featured-author-thumb" aria-hidden="true">
+              <!--
+                IMAGE OPTIONAL: img/author-featured.jpg
+                صورة الكاتب في المقال المميز — دائرة 32×32 px
+              -->
+              <img
+                src="img/author-featured.jpg"
+                alt="صورة الكاتب"
+                onerror="this.parentElement.innerHTML='م'"
+              />
+            </div>
+            <span class="featured-author-name">اسم الكاتب</span>
+            <span class="meta-dot" aria-hidden="true"></span>
+            <time class="featured-date" datetime="2026-05-20">٢٠ مايو ٢٠٢٦</time>
+            <span class="meta-dot" aria-hidden="true"></span>
+            <span class="featured-read-time">٨ دقائق قراءة</span>
+          </div>
+
+          <h3 class="featured-title">
+            عنوان المقال المميز: كيف بنينا مشروعنا من الصفر باستخدام أحدث التقنيات؟
+          </h3>
+          <p class="featured-excerpt">
+            في هذا المقال نحكي تجربتنا الكاملة في بناء مشروع تقني من الفكرة حتى الإطلاق —
+            التحديات التي واجهناها، القرارات التقنية التي اتخذناها، والدروس التي تعلمناها على الطريق.
+            رحلة حقيقية بأرقام وتفاصيل من قلب فريق شرق تك.
+          </p>
+
+          <div class="featured-tags" aria-label="تصنيفات المقال">
+            <span class="badge badge-gold">برمجة</span>
+            <span class="badge badge-blue">تجارب</span>
+            <span class="badge badge-silver">هندسة البرمجيات</span>
+          </div>
+
+          <div class="featured-footer">
+            <a href="post.html" class="btn btn-gold">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              اقرأ المقال
+            </a>
+            <a href="post.html" class="btn-text" aria-label="شارك المقال">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+              مشاركة
+            </a>
+          </div>
+        </div>
+
+      </article>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════ BLOG GRID ══════════════════ -->
+  <section id="blog-grid" aria-labelledby="grid-h2">
+    <div class="container">
+
+      <div class="blog-section-head">
+        <h2 id="grid-h2" class="blog-section-title">
+          جميع المقالات
+        </h2>
+        <span class="post-count" id="postCount" aria-live="polite">٩ مقالات</span>
+      </div>
+
+      <div class="posts-grid" id="postsGrid" role="list">
+
+        <!-- ───── Post Card 1 ───── -->
+        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="برمجة" style="transition-delay:.05s" aria-label="اقرأ المقال">
+          <div class="blog-cover">
+            <!--
+              IMAGE OPTIONAL: img/blog-post-1.jpg
+              صورة غلاف المقال الأول — 640×360 px
+            -->
+            <img
+              src="img/blog-post-1.jpg" alt="غلاف المقال"
+              loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'>💻</div><p class=\'blog-cover-ph-label\'>blog-post-1.jpg</p></div>'"
+            />
+            <div class="blog-cat-bar">
+              <span class="badge badge-gold">برمجة</span>
+            </div>
+          </div>
+          <div class="blog-body">
+            <div class="blog-meta">
+              <div class="blog-author-mini">
+                <div class="blog-author-av" aria-hidden="true">أ</div>
+                <span class="blog-author-mini-name">اسم الكاتب</span>
+              </div>
+              <span class="blog-dot" aria-hidden="true"></span>
+              <time class="blog-date" datetime="2026-05-10">١٠ مايو ٢٠٢٦</time>
+              <span class="blog-dot" aria-hidden="true"></span>
+              <span class="blog-rt">٥ دقائق</span>
+            </div>
+            <h3 class="blog-title">مقدمة إلى React 19: أبرز المميزات الجديدة</h3>
+            <p class="blog-excerpt">
+              استعراض شامل لأهم التحديثات في React 19 وكيف تؤثر على طريقة بنائنا للتطبيقات.
+            </p>
+            <div class="blog-card-foot">
+              <div class="blog-tags">
+                <span class="badge badge-silver">React</span>
+                <span class="badge badge-blue">Frontend</span>
+              </div>
+              <a href="post.html" class="btn-text" aria-label="اقرأ مقدمة إلى React 19">
+                اقرأ
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ───── Post Card 2 ───── -->
+        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="تصميم" style="transition-delay:.10s">
+          <div class="blog-cover">
+            <!--
+              IMAGE OPTIONAL: img/blog-post-2.jpg
+              صورة غلاف المقال الثاني — 640×360 px
+            -->
+            <img
+              src="img/blog-post-2.jpg" alt="غلاف المقال"
+              loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'>🎨</div><p class=\'blog-cover-ph-label\'>blog-post-2.jpg</p></div>'"
+            />
+            <div class="blog-cat-bar">
+              <span class="badge badge-purple">تصميم</span>
+            </div>
+          </div>
+          <div class="blog-body">
+            <div class="blog-meta">
+              <div class="blog-author-mini">
+                <div class="blog-author-av" aria-hidden="true">م</div>
+                <span class="blog-author-mini-name">اسم الكاتب</span>
+              </div>
+              <span class="blog-dot" aria-hidden="true"></span>
+              <time class="blog-date" datetime="2026-05-03">٣ مايو ٢٠٢٦</time>
+              <span class="blog-dot" aria-hidden="true"></span>
+              <span class="blog-rt">٦ دقائق</span>
+            </div>
+            <h3 class="blog-title">مبادئ تصميم UI التي غيّرت طريقة تفكيري</h3>
+            <p class="blog-excerpt">
+              دروس عملية من بناء واجهات مستخدم حقيقية: ما يعمل، ما لا يعمل، وما لم أتوقعه.
+            </p>
+            <div class="blog-card-foot">
+              <div class="blog-tags">
+                <span class="badge badge-purple">UI/UX</span>
+                <span class="badge badge-silver">Figma</span>
+              </div>
+              <a href="post.html" class="btn-text">
+                اقرأ
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ───── Post Card 3 ───── -->
+        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="ذكاء اصطناعي" style="transition-delay:.15s">
+          <div class="blog-cover">
+            <!--
+              IMAGE OPTIONAL: img/blog-post-3.jpg
+              صورة غلاف المقال الثالث — 640×360 px
+            -->
+            <img
+              src="img/blog-post-3.jpg" alt="غلاف المقال"
+              loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'>🤖</div><p class=\'blog-cover-ph-label\'>blog-post-3.jpg</p></div>'"
+            />
+            <div class="blog-cat-bar">
+              <span class="badge badge-green">ذكاء اصطناعي</span>
+            </div>
+          </div>
+          <div class="blog-body">
+            <div class="blog-meta">
+              <div class="blog-author-mini">
+                <div class="blog-author-av" aria-hidden="true">ك</div>
+                <span class="blog-author-mini-name">اسم الكاتب</span>
+              </div>
+              <span class="blog-dot" aria-hidden="true"></span>
+              <time class="blog-date" datetime="2026-04-28">٢٨ أبريل ٢٠٢٦</time>
+              <span class="blog-dot" aria-hidden="true"></span>
+              <span class="blog-rt">٧ دقائق</span>
+            </div>
+            <h3 class="blog-title">كيف دمجنا نماذج الذكاء الاصطناعي في مشروعنا</h3>
+            <p class="blog-excerpt">
+              تجربتنا العملية في دمج LLMs داخل تطبيق حقيقي: الأدوات، التحديات، والنتائج.
+            </p>
+            <div class="blog-card-foot">
+              <div class="blog-tags">
+                <span class="badge badge-green">AI</span>
+                <span class="badge badge-silver">Python</span>
+              </div>
+              <a href="post.html" class="btn-text">
+                اقرأ
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ───── Post Card 4 ───── -->
+        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="أمن سيبراني" style="transition-delay:.20s">
+          <div class="blog-cover">
+            <!--
+              IMAGE OPTIONAL: img/blog-post-4.jpg
+              صورة غلاف المقال الرابع — 640×360 px
+            -->
+            <img
+              src="img/blog-post-4.jpg" alt="غلاف المقال"
+              loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'>🔒</div><p class=\'blog-cover-ph-label\'>blog-post-4.jpg</p></div>'"
+            />
+            <div class="blog-cat-bar">
+              <span class="badge badge-gold">أمن سيبراني</span>
+            </div>
+          </div>
+          <div class="blog-body">
+            <div class="blog-meta">
+              <div class="blog-author-mini">
+                <div class="blog-author-av" aria-hidden="true">س</div>
+                <span class="blog-author-mini-name">اسم الكاتب</span>
+              </div>
+              <span class="blog-dot" aria-hidden="true"></span>
+              <time class="blog-date" datetime="2026-04-20">٢٠ أبريل ٢٠٢٦</time>
+              <span class="blog-dot" aria-hidden="true"></span>
+              <span class="blog-rt">١٠ دقائق</span>
+            </div>
+            <h3 class="blog-title">أساسيات أمان تطبيقات الويب لكل مطوّر</h3>
+            <p class="blog-excerpt">
+              دليل عملي في أهم ثغرات OWASP وكيف تحمي تطبيقك منها بخطوات بسيطة.
+            </p>
+            <div class="blog-card-foot">
+              <div class="blog-tags">
+                <span class="badge badge-gold">Security</span>
+                <span class="badge badge-silver">OWASP</span>
+              </div>
+              <a href="post.html" class="btn-text">
+                اقرأ
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ───── Post Card 5 ───── -->
+        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="تجارب" style="transition-delay:.25s">
+          <div class="blog-cover">
+            <!--
+              IMAGE OPTIONAL: img/blog-post-5.jpg
+              صورة غلاف المقال الخامس — 640×360 px
+            -->
+            <img
+              src="img/blog-post-5.jpg" alt="غلاف المقال"
+              loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'>🌟</div><p class=\'blog-cover-ph-label\'>blog-post-5.jpg</p></div>'"
+            />
+            <div class="blog-cat-bar">
+              <span class="badge badge-silver">تجارب</span>
+            </div>
+          </div>
+          <div class="blog-body">
+            <div class="blog-meta">
+              <div class="blog-author-mini">
+                <div class="blog-author-av" aria-hidden="true">ه</div>
+                <span class="blog-author-mini-name">اسم الكاتب</span>
+              </div>
+              <span class="blog-dot" aria-hidden="true"></span>
+              <time class="blog-date" datetime="2026-04-14">١٤ أبريل ٢٠٢٦</time>
+              <span class="blog-dot" aria-hidden="true"></span>
+              <span class="blog-rt">٤ دقائق</span>
+            </div>
+            <h3 class="blog-title">ما تعلمته من أول هاكاثون شاركت فيه</h3>
+            <p class="blog-excerpt">
+              قصة حقيقية عن ٤٨ ساعة من الضغط والإبداع — ما نجح، ما فشل، وماذا أخذت معي.
+            </p>
+            <div class="blog-card-foot">
+              <div class="blog-tags">
+                <span class="badge badge-silver">Hackathon</span>
+                <span class="badge badge-blue">تجارب</span>
+              </div>
+              <a href="post.html" class="btn-text">
+                اقرأ
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ───── Post Card 6 ───── -->
+        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="برمجة" style="transition-delay:.30s">
+          <div class="blog-cover">
+            <!--
+              IMAGE OPTIONAL: img/blog-post-6.jpg
+              صورة غلاف المقال السادس — 640×360 px
+            -->
+            <img
+              src="img/blog-post-6.jpg" alt="غلاف المقال"
+              loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'>⚙️</div><p class=\'blog-cover-ph-label\'>blog-post-6.jpg</p></div>'"
+            />
+            <div class="blog-cat-bar">
+              <span class="badge badge-gold">برمجة</span>
+            </div>
+          </div>
+          <div class="blog-body">
+            <div class="blog-meta">
+              <div class="blog-author-mini">
+                <div class="blog-author-av" aria-hidden="true">ع</div>
+                <span class="blog-author-mini-name">اسم الكاتب</span>
+              </div>
+              <span class="blog-dot" aria-hidden="true"></span>
+              <time class="blog-date" datetime="2026-04-08">٨ أبريل ٢٠٢٦</time>
+              <span class="blog-dot" aria-hidden="true"></span>
+              <span class="blog-rt">٦ دقائق</span>
+            </div>
+            <h3 class="blog-title">بناء REST API احترافي مع Node.js وExpress</h3>
+            <p class="blog-excerpt">
+              الطريق من الصفر إلى API جاهز للإنتاج: الهيكل، الأمان، التوثيق، والأداء.
+            </p>
+            <div class="blog-card-foot">
+              <div class="blog-tags">
+                <span class="badge badge-green">Node.js</span>
+                <span class="badge badge-silver">API</span>
+              </div>
+              <a href="post.html" class="btn-text">
+                اقرأ
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ───── Post Card 7 ───── -->
+        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="تصميم" style="transition-delay:.05s">
+          <div class="blog-cover">
+            <!--
+              IMAGE OPTIONAL: img/blog-post-7.jpg
+              صورة غلاف المقال السابع — 640×360 px
+            -->
+            <img
+              src="img/blog-post-7.jpg" alt="غلاف المقال"
+              loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'>✏️</div><p class=\'blog-cover-ph-label\'>blog-post-7.jpg</p></div>'"
+            />
+            <div class="blog-cat-bar">
+              <span class="badge badge-purple">تصميم</span>
+            </div>
+          </div>
+          <div class="blog-body">
+            <div class="blog-meta">
+              <div class="blog-author-mini">
+                <div class="blog-author-av" aria-hidden="true">ن</div>
+                <span class="blog-author-mini-name">اسم الكاتب</span>
+              </div>
+              <span class="blog-dot" aria-hidden="true"></span>
+              <time class="blog-date" datetime="2026-04-01">١ أبريل ٢٠٢٦</time>
+              <span class="blog-dot" aria-hidden="true"></span>
+              <span class="blog-rt">٥ دقائق</span>
+            </div>
+            <h3 class="blog-title">الفرق بين تصميم الموبايل أولاً وسطح المكتب أولاً</h3>
+            <p class="blog-excerpt">
+              لماذا Mobile-First ليست مجرد ترتيب CSS — فلسفة كاملة في كيفية تفكيرك في التصميم.
+            </p>
+            <div class="blog-card-foot">
+              <div class="blog-tags">
+                <span class="badge badge-purple">Mobile</span>
+                <span class="badge badge-silver">CSS</span>
+              </div>
+              <a href="post.html" class="btn-text">
+                اقرأ
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ───── Post Card 8 ───── -->
+        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="ذكاء اصطناعي" style="transition-delay:.10s">
+          <div class="blog-cover">
+            <!--
+              IMAGE OPTIONAL: img/blog-post-8.jpg
+              صورة غلاف المقال الثامن — 640×360 px
+            -->
+            <img
+              src="img/blog-post-8.jpg" alt="غلاف المقال"
+              loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'>🧠</div><p class=\'blog-cover-ph-label\'>blog-post-8.jpg</p></div>'"
+            />
+            <div class="blog-cat-bar">
+              <span class="badge badge-green">ذكاء اصطناعي</span>
+            </div>
+          </div>
+          <div class="blog-body">
+            <div class="blog-meta">
+              <div class="blog-author-mini">
+                <div class="blog-author-av" aria-hidden="true">ب</div>
+                <span class="blog-author-mini-name">اسم الكاتب</span>
+              </div>
+              <span class="blog-dot" aria-hidden="true"></span>
+              <time class="blog-date" datetime="2026-03-22">٢٢ مارس ٢٠٢٦</time>
+              <span class="blog-dot" aria-hidden="true"></span>
+              <span class="blog-rt">٩ دقائق</span>
+            </div>
+            <h3 class="blog-title">دليل المبتدئ في هندسة الأوامر Prompt Engineering</h3>
+            <p class="blog-excerpt">
+              تعلّم كيف تكتب أوامر فعّالة للنماذج اللغوية الكبيرة وتحصل على نتائج أفضل.
+            </p>
+            <div class="blog-card-foot">
+              <div class="blog-tags">
+                <span class="badge badge-green">LLM</span>
+                <span class="badge badge-silver">Prompting</span>
+              </div>
+              <a href="post.html" class="btn-text">
+                اقرأ
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ───── Post Card 9 ───── -->
+        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="تجارب" style="transition-delay:.15s">
+          <div class="blog-cover">
+            <!--
+              IMAGE OPTIONAL: img/blog-post-9.jpg
+              صورة غلاف المقال التاسع — 640×360 px
+            -->
+            <img
+              src="img/blog-post-9.jpg" alt="غلاف المقال"
+              loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'>🏆</div><p class=\'blog-cover-ph-label\'>blog-post-9.jpg</p></div>'"
+            />
+            <div class="blog-cat-bar">
+              <span class="badge badge-silver">تجارب</span>
+            </div>
+          </div>
+          <div class="blog-body">
+            <div class="blog-meta">
+              <div class="blog-author-mini">
+                <div class="blog-author-av" aria-hidden="true">ف</div>
+                <span class="blog-author-mini-name">اسم الكاتب</span>
+              </div>
+              <span class="blog-dot" aria-hidden="true"></span>
+              <time class="blog-date" datetime="2026-03-15">١٥ مارس ٢٠٢٦</time>
+              <span class="blog-dot" aria-hidden="true"></span>
+              <span class="blog-rt">٥ دقائق</span>
+            </div>
+            <h3 class="blog-title">من طالب إلى مطوّر: رحلتي مع شرق تك</h3>
+            <p class="blog-excerpt">
+              كيف أثّر انضمامي لفريق شرق تك على مسيرتي المهنية وما الذي اكتسبته خلال عام.
+            </p>
+            <div class="blog-card-foot">
+              <div class="blog-tags">
+                <span class="badge badge-blue">قصص</span>
+                <span class="badge badge-silver">نمو</span>
+              </div>
+              <a href="post.html" class="btn-text">
+                اقرأ
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- /posts-grid -->
+
+      <!-- No Results -->
+      <div class="no-results" id="noResults" role="status" aria-live="polite">
+        <div class="no-results-icon">🔍</div>
+        <p class="no-results-text">لا توجد مقالات تطابق بحثك أو التصنيف المختار.</p>
+      </div>
+
+      <!-- Load More -->
+      <div class="load-more-wrap reveal">
+        <button class="btn-load-more" id="loadMore" aria-label="تحميل المزيد من المقالات">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+          تحميل المزيد
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════ TOPICS ══════════════════ -->
+  <section id="blog-topics" aria-labelledby="topics-h2">
+    <div class="container">
+
+      <div class="stb reveal" style="margin-bottom:36px">
+        <div class="stb-eye">استكشف</div>
+        <h2 id="topics-h2" class="stb-h">تصفح حسب <em>التخصص</em></h2>
+        <div class="gold-rule"><div class="gold-rule-diamond"></div></div>
+      </div>
+
+      <div class="topics-grid" role="list">
+
+        <button class="topic-card reveal" role="listitem" style="transition-delay:.05s" data-filter="برمجة" aria-label="تصفية مقالات البرمجة">
+          <div class="topic-icon gold">💻</div>
+          <div class="topic-name">برمجة</div>
+          <div class="topic-count">١٢ مقال</div>
+        </button>
+
+        <button class="topic-card reveal" role="listitem" style="transition-delay:.10s" data-filter="تصميم">
+          <div class="topic-icon purple">🎨</div>
+          <div class="topic-name">تصميم</div>
+          <div class="topic-count">٨ مقالات</div>
+        </button>
+
+        <button class="topic-card reveal" role="listitem" style="transition-delay:.15s" data-filter="ذكاء اصطناعي">
+          <div class="topic-icon green">🤖</div>
+          <div class="topic-name">ذكاء اصطناعي</div>
+          <div class="topic-count">٦ مقالات</div>
+        </button>
+
+        <button class="topic-card reveal" role="listitem" style="transition-delay:.20s" data-filter="أمن سيبراني">
+          <div class="topic-icon gold">🔒</div>
+          <div class="topic-name">أمن سيبراني</div>
+          <div class="topic-count">٤ مقالات</div>
+        </button>
+
+        <button class="topic-card reveal" role="listitem" style="transition-delay:.25s" data-filter="تجارب">
+          <div class="topic-icon blue">🌟</div>
+          <div class="topic-name">تجارب</div>
+          <div class="topic-count">٩ مقالات</div>
+        </button>
+
+        <button class="topic-card reveal" role="listitem" style="transition-delay:.30s" data-filter="all">
+          <div class="topic-icon green">📚</div>
+          <div class="topic-name">عرض الكل</div>
+          <div class="topic-count">٣٤ مقال</div>
+        </button>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════ NEWSLETTER ══════════════════ -->
+  <section id="blog-newsletter" class="section-pad" aria-labelledby="nl-h2">
+    <div class="container">
+      <div class="nl-inner reveal">
+
+        <div class="nl-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </div>
+
+        <h2 id="nl-h2" class="nl-title">
+          لا تفوّت أي <em>مقال جديد</em>
+        </h2>
+        <p class="nl-sub">
+          اشترك في نشرتنا البريدية وصلك أحدث مقالات شرق تك التقنية مباشرة إلى بريدك —
+          بدون رسائل مزعجة، فقط محتوى قيّم.
+        </p>
+
+        <div class="nl-form" role="form" aria-label="نموذج الاشتراك في النشرة البريدية">
+          <input
+            type="email" id="nlEmail"
+            class="nl-input"
+            placeholder="بريدك الإلكتروني"
+            aria-label="أدخل بريدك الإلكتروني"
+            autocomplete="email"
+          />
+          <button class="btn btn-gold" id="nlSubmit" aria-label="اشتراك في النشرة البريدية">
+            اشتراك
+          </button>
+        </div>
+        <p class="nl-note" aria-live="polite" id="nlFeedback">
+          يمكنك إلغاء الاشتراك في أي وقت.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════ -->
+<footer role="contentinfo">
+  <div class="container">
+
+    <div class="footer-grid">
+
+      <div>
+        <p class="footer-brand-tagline">
+          فريق التكنولوجيا لإدارة شرق — نبني حلولاً تقنية من قلب الإسكندرية،
+          بعقول مصرية تُؤمن بأن الإبداع لا حدود له.
+        </p>
+        <div class="social-row" aria-label="وسائل التواصل الاجتماعي">
+          <a href="#" class="social-a" aria-label="تويتر X">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.738l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="#" class="social-a" aria-label="تيليغرام">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </a>
+          <a href="#" class="social-a" aria-label="يوتيوب">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+          <a href="#" class="social-a" aria-label="جيت هاب">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <nav aria-label="روابط سريعة">
+        <div class="foot-col-h">روابط سريعة</div>
+        <ul class="foot-links">
+          <li><a href="index.html"        class="foot-link">الرئيسية</a></li>
+          <li><a href="team.html"         class="foot-link">الفريق</a></li>
+          <li><a href="projects.html"     class="foot-link">المشاريع</a></li>
+          <li><a href="blog.html"         class="foot-link">المدونة</a></li>
+          <li><a href="hall-of-fame.html" class="foot-link">قاعة المجد</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-label="روابط أخرى">
+        <div class="foot-col-h">أخرى</div>
+        <ul class="foot-links">
+          <li><a href="auth.html" class="foot-link">تسجيل الدخول</a></li>
+          <li><a href="#"         class="foot-link">تواصل معنا</a></li>
+        </ul>
+      </nav>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p class="foot-copy">© 2026 شرق تك — جميع الحقوق محفوظة</p>
+    </div>
+
+  </div>
+  <div class="footer-stripe" aria-hidden="true"></div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════ -->
+<script>
+'use strict';
+
+/* ─── 1. THEME TOGGLE ─────────────────────────── */
+const html        = document.documentElement;
+const themeToggle = document.getElementById('themeToggle');
+const THEME_KEY   = 'sharq-theme';
+
+function applyTheme(t) {
+  html.setAttribute('data-theme', t);
+  localStorage.setItem(THEME_KEY, t);
+}
+const saved = localStorage.getItem(THEME_KEY) || 'dark';
+applyTheme(saved);
+themeToggle.addEventListener('click', () => {
+  applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+/* ─── 2. NAVBAR SCROLL ────────────────────────── */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+navbar.classList.toggle('scrolled', window.scrollY > 40);
+
+/* ─── 3. SCROLL REVEAL ────────────────────────── */
+const revealObs = new IntersectionObserver(
+  entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+  }),
+  { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
+);
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* ─── 4. ANIMATED COUNTERS ───────────────────── */
+function runCounter(el) {
+  const target = parseInt(el.dataset.target, 10);
+  const dur = 1600;
+  const start = performance.now();
+  const ease = t => 1 - Math.pow(1 - t, 4);
+  (function tick(now) {
+    const p = Math.min((now - start) / dur, 1);
+    el.textContent = Math.round(ease(p) * target).toLocaleString('ar-EG');
+    if (p < 1) requestAnimationFrame(tick);
+    else el.textContent = target.toLocaleString('ar-EG');
+  })(start);
+}
+const counterObs = new IntersectionObserver(
+  entries => entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.counter').forEach(runCounter);
+      counterObs.unobserve(e.target);
+    }
+  }),
+  { threshold: 0.25 }
+);
+const statsEl = document.getElementById('blog-stats');
+if (statsEl) counterObs.observe(statsEl);
+
+/* ─── 5. SMOOTH SCROLL ────────────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', function(e) {
+    const t = document.querySelector(this.getAttribute('href'));
+    if (t) {
+      e.preventDefault();
+      window.scrollTo({ top: t.getBoundingClientRect().top + scrollY - 80, behavior: 'smooth' });
+    }
+  });
+});
+
+/* ─── 6. CATEGORY FILTER ─────────────────────── */
+const cards    = Array.from(document.querySelectorAll('#postsGrid .blog-card'));
+const featured = document.querySelector('.featured-card');
+const pills    = document.querySelectorAll('#catPills .cat-pill');
+const noRes    = document.getElementById('noResults');
+const countEl  = document.getElementById('postCount');
+const ARABIC_NUMS = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+
+function toArabicNum(n) {
+  return String(n).replace(/\d/g, d => ARABIC_NUMS[d]);
+}
+
+function updateCount(n) {
+  countEl.textContent = toArabicNum(n) + ' مقال' + (n === 1 ? '' : 'ات');
+}
+
+let activeCat = 'all';
+
+function filterCards(cat) {
+  activeCat = cat;
+  let visible = 0;
+
+  cards.forEach(card => {
+    const cardCat = card.dataset.cat || '';
+    const show = cat === 'all' || cardCat === cat;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  // Featured card filter
+  if (featured) {
+    const fcCat = featured.dataset.cat || '';
+    featured.style.display = (cat === 'all' || fcCat === cat) ? '' : 'none';
+  }
+
+  noRes.classList.toggle('visible', visible === 0);
+  updateCount(visible);
+
+  pills.forEach(p => p.classList.toggle('active', p.dataset.cat === cat));
+
+  // Re-trigger reveal for shown cards
+  cards.forEach(card => {
+    if (card.style.display !== 'none') {
+      card.classList.remove('visible');
+      revealObs.observe(card);
+    }
+  });
+}
+
+pills.forEach(pill => {
+  pill.addEventListener('click', () => filterCards(pill.dataset.cat));
+});
+
+/* ─── 7. TOPIC CARD FILTER ───────────────────── */
+document.querySelectorAll('.topic-card').forEach(tc => {
+  tc.addEventListener('click', () => {
+    const cat = tc.dataset.filter;
+    filterCards(cat);
+    // Scroll to grid
+    const gridEl = document.getElementById('blog-grid');
+    if (gridEl) window.scrollTo({ top: gridEl.getBoundingClientRect().top + scrollY - 100, behavior: 'smooth' });
+  });
+});
+
+/* ─── 8. SEARCH ──────────────────────────────── */
+const searchInput = document.getElementById('blogSearch');
+
+searchInput.addEventListener('input', function() {
+  const q = this.value.trim().toLowerCase();
+  let visible = 0;
+
+  cards.forEach(card => {
+    if (card.style.display === 'none' && activeCat !== 'all') return;
+    const title   = card.querySelector('.blog-title')?.textContent.toLowerCase() || '';
+    const excerpt = card.querySelector('.blog-excerpt')?.textContent.toLowerCase() || '';
+    const catCond = activeCat === 'all' || (card.dataset.cat || '') === activeCat;
+    const show = catCond && (q === '' || title.includes(q) || excerpt.includes(q));
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  noRes.classList.toggle('visible', visible === 0);
+  updateCount(visible);
+});
+
+/* ─── 9. LOAD MORE (simulated) ───────────────── */
+document.getElementById('loadMore').addEventListener('click', function() {
+  this.textContent = 'جاري التحميل…';
+  this.disabled = true;
+  setTimeout(() => {
+    this.textContent = 'لا توجد مقالات إضافية';
+    this.style.opacity = '0.5';
+    this.style.cursor = 'not-allowed';
+  }, 1200);
+});
+
+/* ─── 10. NEWSLETTER FORM ────────────────────── */
+document.getElementById('nlSubmit').addEventListener('click', function() {
+  const email = document.getElementById('nlEmail').value.trim();
+  const fb    = document.getElementById('nlFeedback');
+  if (!email || !email.includes('@')) {
+    fb.textContent = '⚠️ يرجى إدخال بريد إلكتروني صحيح.';
+    fb.style.color = '#F87171';
+    return;
+  }
+  fb.textContent = '✅ تم الاشتراك بنجاح! شكراً لك.';
+  fb.style.color = '#4ADE80';
+  document.getElementById('nlEmail').value = '';
+  setTimeout(() => { fb.textContent = 'يمكنك إلغاء الاشتراك في أي وقت.'; fb.style.color = ''; }, 4000);
+});
+
+/* ─── 11. CARD KEYBOARD SUPPORT ─────────────── */
+document.querySelectorAll('.blog-card[tabindex], .featured-card[tabindex]').forEach(c => {
+  c.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.querySelector('a')?.click(); }
+  });
+});
+
+/* ─── 12. PAGE FADE-IN ───────────────────────── */
+document.body.style.opacity = '0';
+document.body.style.transition = 'opacity 0.38s ease';
+window.addEventListener('load', () => { document.body.style.opacity = '1'; });
+
+</script>
+</body>
+</html>
