@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="مشاريع فريق شرق تك — حلول تقنية حقيقية من قلب الإسكندرية" />
+  <meta name="keywords" content="مشاريع شرق تك, برمجة, تكنولوجيا, الإسكندرية" />
+  <meta property="og:title" content="المشاريع — شرق تك" />
+  <meta property="og:description" content="استعرض مشاريع فريق شرق تك التقنية" />
+  <meta property="og:type" content="website" />
+  <title>المشاريع — شرق تك</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+  /* ═══════════════════════════════════════════════════
+     TOKENS — DARK
+  ═══════════════════════════════════════════════════ */
+  :root, [data-theme="dark"] {
+    --bg-base:       #080E1A;
+    --bg-surface:    #0F172A;
+    --bg-card:       #131F35;
+    --bg-card-hover: #172540;
+    --bg-subtle:     #1a2744;
+    --gold:          #C9A84C;
+    --gold-bright:   #E8C76B;
+    --gold-dim:      rgba(201,168,76,0.10);
+    --gold-border:   rgba(201,168,76,0.22);
+    --gold-glow:     rgba(201,168,76,0.15);
+    --green:         #1A5C45;
+    --green-light:   #22735A;
+    --green-dim:     rgba(26,92,69,0.18);
+    --green-border:  rgba(26,92,69,0.35);
+    --text-primary:  #EEF2F7;
+    --text-secondary:#94A3B8;
+    --text-muted:    #475569;
+    --border-subtle: rgba(255,255,255,0.05);
+    --border-mid:    rgba(255,255,255,0.09);
+    --shadow-card:   0 4px 40px rgba(0,0,0,0.45);
+    --shadow-hover:  0 12px 56px rgba(0,0,0,0.6);
+    --shadow-gold:   0 0 48px rgba(201,168,76,0.12);
+    --nav-bg:        transparent;
+    --nav-bg-scroll: rgba(8,14,26,0.92);
+  }
+
+  /* ═══════════════════════════════════════════════════
+     TOKENS — LIGHT
+  ═══════════════════════════════════════════════════ */
+  [data-theme="light"] {
+    --bg-base:       #F7F5F0;
+    --bg-surface:    #FFFFFF;
+    --bg-card:       #FFFFFF;
+    --bg-card-hover: #FAFAF8;
+    --bg-subtle:     #F0EDE6;
+    --gold:          #B8922A;
+    --gold-bright:   #D4AF37;
+    --gold-dim:      rgba(184,146,42,0.08);
+    --gold-border:   rgba(184,146,42,0.28);
+    --gold-glow:     rgba(184,146,42,0.12);
+    --green:         #1A5C45;
+    --green-light:   #22735A;
+    --green-dim:     rgba(26,92,69,0.08);
+    --green-border:  rgba(26,92,69,0.25);
+    --text-primary:  #0F1923;
+    --text-secondary:#3D4F61;
+    --text-muted:    #8A96A3;
+    --border-subtle: rgba(0,0,0,0.06);
+    --border-mid:    rgba(0,0,0,0.10);
+    --shadow-card:   0 2px 24px rgba(0,0,0,0.08);
+    --shadow-hover:  0 8px 40px rgba(0,0,0,0.14);
+    --shadow-gold:   0 0 40px rgba(184,146,42,0.10);
+    --nav-bg:        rgba(247,245,240,0.80);
+    --nav-bg-scroll: rgba(255,255,255,0.95);
+  }
+
+  /* ═══════════════════════════════════════════════════
+     RESET + BASE
+  ═══════════════════════════════════════════════════ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg-base);
+    color: var(--text-primary);
+    direction: rtl;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.35s ease, color 0.35s ease;
+  }
+  img    { max-width: 100%; display: block; }
+  a      { text-decoration: none; color: inherit; }
+  ul     { list-style: none; }
+  button { font-family: 'Cairo', sans-serif; cursor: pointer; border: none; background: none; }
+
+  /* ═══════════════════════════════════════════════════
+     LAYOUT
+  ═══════════════════════════════════════════════════ */
+  .container {
+    width: 100%; max-width: 1240px;
+    margin: 0 auto; padding: 0 20px;
+  }
+  @media (min-width: 768px)  { .container { padding: 0 36px; } }
+  @media (min-width: 1024px) { .container { padding: 0 56px; } }
+
+  .section-pad { padding: 88px 0; }
+  @media (min-width: 1024px) { .section-pad { padding: 120px 0; } }
+
+  /* ═══════════════════════════════════════════════════
+     SECTION TITLE
+  ═══════════════════════════════════════════════════ */
+  .stb { text-align: center; margin-bottom: 56px; }
+  .stb-eye {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.22em; color: var(--gold);
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .stb-eye::before, .stb-eye::after {
+    content: ''; display: block; width: 28px; height: 1px;
+    background: var(--gold); opacity: 0.5;
+  }
+  .stb-h {
+    font-family: 'Cairo', sans-serif;
+    font-size: clamp(1.7rem, 4vw, 2.6rem);
+    font-weight: 800; color: var(--text-primary); line-height: 1.25;
+  }
+  .stb-h em { font-style: normal; color: var(--gold); }
+  .stb-sub {
+    margin-top: 14px; font-size: 0.95rem;
+    color: var(--text-secondary); max-width: 500px;
+    margin-left: auto; margin-right: auto; line-height: 1.9;
+  }
+  .gold-rule {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; margin-top: 20px;
+  }
+  .gold-rule::before, .gold-rule::after {
+    content: ''; display: block; width: 40px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .gold-rule::after { background: linear-gradient(90deg, var(--gold), transparent); }
+  .gold-rule-diamond {
+    width: 7px; height: 7px; background: var(--gold);
+    transform: rotate(45deg); flex-shrink: 0;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     BUTTONS
+  ═══════════════════════════════════════════════════ */
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 13px 30px; border-radius: 10px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.93rem; font-weight: 700;
+    transition: all 0.25s ease; cursor: pointer; white-space: nowrap;
+  }
+  .btn-gold {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
+    color: #0F1923; box-shadow: 0 4px 20px var(--gold-glow);
+  }
+  .btn-gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(201,168,76,0.35);
+    filter: brightness(1.08);
+  }
+  .btn-outline {
+    background: transparent; color: var(--text-primary);
+    border: 1px solid var(--border-mid);
+  }
+  .btn-outline:hover {
+    border-color: var(--gold-border); color: var(--gold);
+    transform: translateY(-2px);
+  }
+  .btn-text {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--gold); font-size: 0.88rem; font-weight: 600;
+    padding: 0; transition: gap 0.25s ease;
+  }
+  .btn-text:hover { gap: 13px; }
+  .btn-text svg { transition: transform 0.25s ease; flex-shrink: 0; }
+  .btn-text:hover svg { transform: translateX(-4px); }
+
+  /* ═══════════════════════════════════════════════════
+     BADGES
+  ═══════════════════════════════════════════════════ */
+  .badge {
+    display: inline-flex; align-items: center;
+    padding: 3px 11px; border-radius: 999px;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em;
+  }
+  .badge-gold   { background: var(--gold-dim);  color: var(--gold);  border: 1px solid var(--gold-border); }
+  .badge-green  { background: var(--green-dim); color: #4ADE80;      border: 1px solid var(--green-border); }
+  .badge-silver { background: rgba(148,163,184,0.08); color: var(--text-secondary); border: 1px solid var(--border-mid); }
+  .badge-blue   { background: rgba(59,130,246,0.08);  color: #93C5FD; border: 1px solid rgba(59,130,246,0.2); }
+
+  /* ═══════════════════════════════════════════════════
+     REVEAL
+  ═══════════════════════════════════════════════════ */
+  .reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.65s cubic-bezier(0,0,0.2,1), transform 0.65s cubic-bezier(0,0,0.2,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ═══════════════════════════════════════════════════
+     NAVBAR (identical to index.html)
+  ═══════════════════════════════════════════════════ */
+  #navbar {
+    position: fixed; top: 0; right: 0; left: 0;
+    z-index: 1000; height: 72px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(0px);
+    transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+  }
+  #navbar.scrolled {
+    background: var(--nav-bg-scroll);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 1px 0 var(--border-subtle);
+  }
+  .nav-inner {
+    height: 72px; display: flex;
+    align-items: center; justify-content: space-between; gap: 32px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 11px; flex-shrink: 0; }
+  .nav-logo-img { height: 42px; width: auto; }
+  /* dark/light logo swap */
+  .logo-dark  { display: block; }
+  .logo-light { display: none;  }
+  [data-theme="light"] .logo-dark  { display: none;  }
+  [data-theme="light"] .logo-light { display: block; }
+  .nav-logo-fallback {
+    height: 42px; width: 52px; background: var(--green);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; font-weight: 900; color: #F8FAFC; letter-spacing: -0.5px; flex-shrink: 0;
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 2px; flex: 1; justify-content: center;
+  }
+  .nav-link {
+    position: relative; padding: 8px 18px;
+    font-size: 0.9rem; font-weight: 600; color: var(--text-secondary);
+    border-radius: 8px; transition: color 0.2s ease; white-space: nowrap;
+  }
+  .nav-link::after {
+    content: ''; position: absolute; bottom: 3px; right: 18px; left: 18px;
+    height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+    border-radius: 999px; transform: scaleX(0); transform-origin: right;
+    transition: transform 0.25s ease;
+  }
+  .nav-link:hover               { color: var(--text-primary); }
+  .nav-link.active              { color: var(--gold); }
+  .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+  .nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .theme-toggle {
+    width: 38px; height: 38px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border-mid); color: var(--text-secondary);
+    transition: all 0.25s ease; background: transparent;
+  }
+  .theme-toggle:hover { border-color: var(--gold-border); color: var(--gold); }
+  .theme-toggle svg { width: 17px; height: 17px; }
+  .icon-sun  { display: none; }
+  .icon-moon { display: block; }
+  [data-theme="light"] .icon-sun  { display: block; }
+  [data-theme="light"] .icon-moon { display: none;  }
+  .nav-auth {
+    display: flex; align-items: center; gap: 7px;
+    padding: 9px 20px; border-radius: 9px;
+    font-size: 0.87rem; font-weight: 700;
+    background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+    color: #0F1923; transition: all 0.25s ease;
+    box-shadow: 0 2px 12px var(--gold-glow);
+  }
+  .nav-auth:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(201,168,76,0.3); filter: brightness(1.07);
+  }
+  .nav-auth svg { width: 15px; height: 15px; }
+
+  /* Mobile bottom nav */
+  .mobile-nav {
+    display: none; position: fixed; bottom: 0; right: 0; left: 0;
+    z-index: 999; background: var(--nav-bg-scroll);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border-subtle);
+    padding: 10px 16px; justify-content: space-around; align-items: center;
+  }
+  @media (max-width: 1023px) { .nav-links { display: none; } .mobile-nav { display: flex; } }
+  .mob-link {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    padding: 6px 10px; border-radius: 10px; color: var(--text-muted);
+    font-size: 0.6rem; font-weight: 600; transition: color 0.2s ease; min-width: 52px;
+  }
+  .mob-link svg { width: 20px; height: 20px; margin-bottom: 1px; }
+  .mob-link.active, .mob-link:hover { color: var(--gold); }
+
+  /* ═══════════════════════════════════════════════════
+     PAGE HERO
+  ═══════════════════════════════════════════════════ */
+  #page-hero {
+    position: relative; overflow: hidden;
+    padding: 140px 0 80px;
+    background: var(--bg-base);
+  }
+  /* Gold glow top center */
+  #page-hero::before {
+    content: ''; position: absolute;
+    top: -10%; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 500px;
+    background: radial-gradient(ellipse at center, rgba(201,168,76,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  /* Green glow bottom left */
+  #page-hero::after {
+    content: ''; position: absolute;
+    bottom: -60px; left: -60px; width: 400px; height: 400px;
+    background: radial-gradient(ellipse at bottom left, rgba(26,92,69,0.10) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  /* Egyptian geometric pattern */
+  .hero-pattern {
+    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  }
+  .hero-pattern::before {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg,  var(--gold-border) 0px, var(--gold-border) 1px, transparent 1px, transparent 56px),
+      repeating-linear-gradient(-45deg, var(--gold-border) 0px, var(--gold-border) 1px, transparent 1px, transparent 56px);
+    opacity: 0.15;
+  }
+  /* Floating diamond gems */
+  .hero-gems { position: absolute; inset: 0; pointer-events: none; }
+  .gem {
+    position: absolute; background: var(--gold); transform: rotate(45deg);
+    opacity: 0.12; animation: gemFloat 0s ease-in-out infinite alternate;
+  }
+  .gem-1 { width:7px; height:7px; top:20%; right:8%;  animation-duration:6s; }
+  .gem-2 { width:4px; height:4px; top:60%; left:6%;   animation-duration:8s; animation-delay:1s; }
+  .gem-3 { width:5px; height:5px; top:35%; right:20%; animation-duration:7s; animation-delay:2s; opacity:0.08; }
+  .gem-4 { width:3px; height:3px; bottom:30%; left:12%; animation-duration:9s; animation-delay:0.5s; opacity:0.09; }
+  @keyframes gemFloat {
+    from { transform: rotate(45deg) translateY(0); }
+    to   { transform: rotate(45deg) translateY(-12px); }
+  }
+  .hero-inner { position: relative; z-index: 1; text-align: center; }
+  /* Breadcrumb */
+  .breadcrumb {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.78rem; color: var(--text-muted);
+    margin-bottom: 24px;
+    font-family: 'Tajawal', sans-serif;
+  }
+  .breadcrumb a { color: var(--text-muted); transition: color 0.2s ease; }
+  .breadcrumb a:hover { color: var(--gold); }
+  .breadcrumb svg { width: 12px; height: 12px; stroke: var(--text-muted); fill: none; stroke-width: 2; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 6px 18px; border: 1px solid var(--gold-border);
+    border-radius: 999px; font-family: 'Tajawal', sans-serif;
+    font-size: 0.75rem; font-weight: 600; color: var(--gold);
+    letter-spacing: 0.12em; margin-bottom: 20px;
+    background: var(--gold-dim);
+  }
+  .hero-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green-light);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.4;transform:scale(0.65);} }
+  .hero-title {
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 900; color: var(--text-primary);
+    line-height: 1.15; margin-bottom: 16px;
+  }
+  .hero-title em { font-style: normal; color: var(--gold); }
+  .hero-desc {
+    font-size: clamp(0.92rem, 2vw, 1.05rem);
+    color: var(--text-secondary); line-height: 1.9;
+    max-width: 560px; margin: 0 auto 40px;
+  }
+  /* Stats row */
+  .hero-stats {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 0;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px; overflow: hidden;
+    margin-top: 48px; max-width: 700px; margin-left: auto; margin-right: auto;
+  }
+  .hero-stat {
+    flex: 1; min-width: 130px; padding: 24px 20px;
+    text-align: center; border-left: 1px solid var(--border-subtle);
+    transition: background 0.25s ease;
+  }
+  .hero-stat:last-child { border-left: none; }
+  [data-theme="light"] .hero-stat { border-left-color: var(--border-subtle); }
+  .hero-stat:hover { background: var(--bg-card); }
+  .hero-stat-num {
+    font-size: 1.9rem; font-weight: 900; color: var(--gold);
+    line-height: 1; display: flex; align-items: baseline;
+    justify-content: center; gap: 2px;
+  }
+  .hero-stat-suf { font-size: 0.55em; color: var(--gold-bright); }
+  .hero-stat-lbl { font-size: 0.75rem; color: var(--text-muted); margin-top: 6px; }
+
+  /* Bottom gold line */
+  #page-hero .hero-line {
+    position: absolute; bottom: 0; left: 15%; right: 15%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
+  }
+
+  /* ═══════════════════════════════════════════════════
+     FILTER BAR
+  ═══════════════════════════════════════════════════ */
+  #filter-bar {
+    position: sticky; top: 72px; z-index: 100;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 16px 0;
+    transition: background 0.35s ease;
+  }
+  .filter-inner {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  /* Filter chips */
+  .filter-chips {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .chip {
+    padding: 7px 16px; border-radius: 999px;
+    font-size: 0.8rem; font-weight: 600;
+    border: 1px solid var(--border-mid);
+    color: var(--text-muted);
+    background: transparent;
+    transition: all 0.2s ease; cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+  }
+  .chip:hover { border-color: var(--gold-border); color: var(--gold); }
+  .chip.active {
+    background: var(--gold-dim); border-color: var(--gold-border); color: var(--gold);
+  }
+  /* Search */
+  .filter-search {
+    position: relative; display: flex; align-items: center;
+  }
+  .filter-search svg {
+    position: absolute; right: 12px;
+    width: 16px; height: 16px; stroke: var(--text-muted); fill: none; stroke-width: 2;
+    pointer-events: none;
+  }
+  .search-input {
+    padding: 9px 38px 9px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-mid);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-size: 0.85rem; font-family: 'Cairo', sans-serif;
+    width: 200px; outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    direction: rtl;
+  }
+  .search-input::placeholder { color: var(--text-muted); }
+  .search-input:focus {
+    border-color: var(--gold-border);
+    box-shadow: 0 0 0 3px var(--gold-dim);
+  }
+  @media (max-width: 640px) { .search-input { width: 160px; } }
+
+  /* ═══════════════════════════════════════════════════
+     FEATURED PROJECT
+  ═══════════════════════════════════════════════════ */
+  #featured {
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 64px 0;
+    position: relative; overflow: hidden;
+  }
+  #featured::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(201,168,76,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .featured-grid {
+    display: grid; grid-template-columns: 1fr;
+    gap: 40px; align-items: center;
+  }
+  @media (min-width: 1024px) { .featured-grid { grid-template-columns: 1.1fr 1fr; gap: 64px; } }
+  /* Image side */
+  .featured-img-wrap {
+    position: relative; border-radius: 18px; overflow: hidden;
+    aspect-ratio: 16/9;
+    border: 1px solid var(--gold-border);
+    box-shadow: var(--shadow-gold);
+  }
+  .featured-img-wrap img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .featured-img-wrap:hover img { transform: scale(1.03); }
+  .featured-img-ph {
+    width: 100%; height: 100%;
+    background: var(--bg-subtle);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 12px;
+  }
+  .featured-img-ph svg { width: 48px; height: 48px; stroke: var(--text-muted); fill: none; stroke-width: 1.2; opacity: 0.4; }
+  .featured-img-ph span { font-size: 0.78rem; color: var(--text-muted); }
+  /* Gold corner ornaments on featured image */
+  .featured-img-wrap::before {
+    content: ''; position: absolute; top: 0; right: 0;
+    width: 36px; height: 36px; z-index: 2;
+    border-top: 2px solid var(--gold); border-right: 2px solid var(--gold);
+    border-radius: 0 18px 0 0;
+  }
+  .featured-img-wrap::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 36px; height: 36px; z-index: 2;
+    border-bottom: 2px solid var(--gold); border-left: 2px solid var(--gold);
+    border-radius: 0 0 0 18px;
+  }
+  /* Text side */
+  .featured-label {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em;
+    color: var(--gold); text-transform: uppercase; margin-bottom: 14px;
+  }
+  .featured-label svg { width: 14px; height: 14px; stroke: var(--gold); fill: none; stroke-width: 2; }
+  .featured-title {
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    font-weight: 900; color: var(--text-primary);
+    line-height: 1.3; margin-bottom: 14px;
+  }
+  .featured-desc {
+    font-size: 0.95rem; color: var(--text-secondary);
+    line-height: 1.9; margin-bottom: 24px;
+  }
+  .featured-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 28px; }
+  .tech-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 12px; border-radius: 7px;
+    font-size: 0.72rem; font-weight: 600;
+    background: var(--bg-subtle); color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+  }
+  .tech-tag svg { width: 12px; height: 12px; stroke: var(--gold); fill: none; stroke-width: 2; }
+  .featured-meta {
+    display: flex; flex-wrap: wrap; gap: 20px;
+    margin-bottom: 32px;
+  }
+  .featured-meta-item {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 0.8rem; color: var(--text-muted);
+  }
+  .featured-meta-item svg { width: 15px; height: 15px; stroke: var(--gold); fill: none; stroke-width: 1.8; }
+  .featured-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* ═══════════════════════════════════════════════════
+     PROJECTS GRID
+  ═══════════════════════════════════════════════════ */
+  #projects-list { position: relative; }
+  /* Result count */
+  .result-count {
+    font-size: 0.82rem; color: var(--text-muted);
+    margin-bottom: 28px;
+  }
+  .result-count span { color: var(--gold); font-weight: 700; }
+
+  .proj-grid {
+    display: grid; grid-template-columns: 1fr;
+    gap: 24px; margin-bottom: 52px;
+  }
+  @media (min-width: 640px)  { .proj-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (min-width: 1024px) { .proj-grid { grid-template-columns: repeat(3,1fr); } }
+
+  .proj-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px; overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    cursor: pointer; display: flex; flex-direction: column;
+    isolation: isolate;
+  }
+  .proj-card:hover {
+    border-color: var(--gold-border);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover), var(--shadow-gold);
+  }
+  .proj-img {
+    aspect-ratio: 16/9; overflow: hidden; position: relative;
+    background: var(--bg-subtle); flex-shrink: 0;
+  }
+  .proj-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .proj-card:hover .proj-img img { transform: scale(1.05); }
+  .proj-img-ph {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .proj-img-ph svg { width: 40px; height: 40px; stroke: var(--text-muted); fill: none; stroke-width: 1.2; opacity: 0.25; }
+  /* Status overlay on image */
+  .proj-status-overlay {
+    position: absolute; top: 12px; right: 12px;
+  }
+  .proj-body { padding: 20px 20px 24px; flex: 1; display: flex; flex-direction: column; }
+  .proj-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+  .proj-tag {
+    padding: 2px 9px; border-radius: 999px;
+    font-size: 0.65rem; font-weight: 600;
+    background: var(--bg-subtle); color: var(--text-muted);
+    border: 1px solid var(--border-subtle);
+  }
+  .proj-title {
+    font-size: 1.02rem; font-weight: 700;
+    color: var(--text-primary); margin-bottom: 8px; line-height: 1.4;
+  }
+  .proj-desc {
+    font-size: 0.82rem; color: var(--text-muted); line-height: 1.75;
+    margin-bottom: 18px; flex: 1;
+    display: -webkit-box; -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .proj-foot {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: auto;
+  }
+  /* Member avatars on card */
+  .proj-members {
+    display: flex; align-items: center;
+  }
+  .proj-avatar {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--bg-subtle);
+    border: 2px solid var(--bg-card);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.62rem; font-weight: 700; color: var(--text-secondary);
+    margin-right: -8px;
+    transition: transform 0.2s ease;
+  }
+  .proj-members:hover .proj-avatar { margin-right: -4px; }
+  .proj-avatar-more {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--gold-dim); border: 2px solid var(--bg-card);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.58rem; font-weight: 700; color: var(--gold);
+    margin-right: -8px;
+  }
+
+  /* Empty state */
+  .empty-state {
+    display: none; text-align: center;
+    padding: 80px 20px;
+  }
+  .empty-state.visible { display: block; }
+  .empty-state svg { width: 56px; height: 56px; stroke: var(--text-muted); fill: none; stroke-width: 1.2; margin: 0 auto 16px; opacity: 0.4; }
+  .empty-state p { color: var(--text-muted); font-size: 0.9rem; }
+
+  /* Load more */
+  .load-more-wrap { text-align: center; }
+  #load-more-btn { min-width: 180px; }
+  #load-more-btn.hidden { display: none; }
+
+  /* ═══════════════════════════════════════════════════
+     FOOTER (identical to index.html)
+  ═══════════════════════════════════════════════════ */
+  footer {
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border-subtle);
+    padding: 64px 0 0;
+    margin-bottom: 60px;
+  }
+  @media (min-width: 1024px) { footer { margin-bottom: 0; } }
+  .footer-grid {
+    display: grid; grid-template-columns: 1fr;
+    gap: 48px; margin-bottom: 48px;
+  }
+  @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+  .footer-brand-tagline {
+    font-size: 0.85rem; color: var(--text-muted); line-height: 1.9;
+    max-width: 280px; margin-top: 14px;
+  }
+  .social-row { display: flex; gap: 10px; margin-top: 22px; }
+  .social-a {
+    width: 38px; height: 38px; border-radius: 9px;
+    border: 1px solid var(--border-mid);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); transition: all 0.25s ease;
+  }
+  .social-a svg { width: 17px; height: 17px; }
+  .social-a:hover { border-color: var(--gold-border); color: var(--gold); background: var(--gold-dim); }
+  .foot-col-h {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+    color: var(--text-primary); text-transform: uppercase; margin-bottom: 18px;
+  }
+  .foot-links { display: flex; flex-direction: column; gap: 11px; }
+  .foot-link { font-size: 0.85rem; color: var(--text-muted); transition: color 0.2s ease; }
+  .foot-link:hover { color: var(--gold); }
+  .footer-bottom {
+    border-top: 1px solid var(--border-subtle); padding: 24px 0 28px;
+    display: flex; flex-direction: column; gap: 8px;
+    align-items: center; text-align: center;
+  }
+  @media (min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; } }
+  .foot-copy { font-size: 0.77rem; color: var(--text-muted); }
+  .foot-made { font-size: 0.77rem; color: var(--text-muted); }
+  .foot-made .green { color: var(--green-light); font-weight: 700; }
+  .footer-stripe { height: 3px; background: linear-gradient(90deg, var(--green), var(--gold), var(--green)); }
+
+  /* ═══════════════════════════════════════════════════
+     REDUCED MOTION
+  ═══════════════════════════════════════════════════ */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+    .reveal { opacity:1 !important; transform:none !important; }
+  }
+  </style>
+</head>
+
+<body>
+
+<!-- ═══════════ NAVBAR ═══════════ -->
+<header id="navbar" role="banner">
+  <div class="container">
+    <nav class="nav-inner" aria-label="التنقل الرئيسي">
+      <a href="index.html" class="nav-logo" aria-label="الصفحة الرئيسية">
+        <!-- Dark logo -->
+        <img src="img/logo-dark.png" alt="شعار شرق تك" class="nav-logo-img logo-dark"
+          width="42" height="42"
+          onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';" />
+        <!-- Light logo -->
+        <img src="img/logo-light.png" alt="شعار شرق تك" class="nav-logo-img logo-light"
+          width="42" height="42"
+          onerror="this.style.display='none';" />
+        <div class="nav-logo-fallback" id="logo-fallback" style="display:none" aria-hidden="true">شرق</div>
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html"        class="nav-link">الرئيسية</a></li>
+        <li><a href="team.html"         class="nav-link">الفريق</a></li>
+        <li><a href="projects.html"     class="nav-link active" aria-current="page">المشاريع</a></li>
+        <li><a href="blog.html"         class="nav-link">المدونة</a></li>
+        <li><a href="hall-of-fame.html" class="nav-link">قاعة المجد</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="تبديل المظهر">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+        <a href="auth.html" class="nav-auth" aria-label="تسجيل الدخول">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+            <polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
+          </svg>
+          تسجيل الدخول
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile Bottom Nav -->
+<nav class="mobile-nav" aria-label="التنقل السريع">
+  <a href="index.html" class="mob-link" aria-label="الرئيسية">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    الرئيسية
+  </a>
+  <a href="team.html" class="mob-link" aria-label="الفريق">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    الفريق
+  </a>
+  <a href="projects.html" class="mob-link active" aria-current="page" aria-label="المشاريع">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+    المشاريع
+  </a>
+  <a href="blog.html" class="mob-link" aria-label="المدونة">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    المدونة
+  </a>
+  <a href="hall-of-fame.html" class="mob-link" aria-label="قاعة المجد">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+    المجد
+  </a>
+</nav>
+
+
+<main id="main-content">
+
+  <!-- ═══════════ PAGE HERO ═══════════ -->
+  <section id="page-hero" aria-labelledby="hero-title">
+    <div class="hero-pattern" aria-hidden="true"></div>
+    <div class="hero-gems" aria-hidden="true">
+      <div class="gem gem-1"></div><div class="gem gem-2"></div>
+      <div class="gem gem-3"></div><div class="gem gem-4"></div>
+    </div>
+
+    <div class="container hero-inner">
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb" aria-label="مسار التنقل">
+        <a href="index.html">الرئيسية</a>
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        <span>المشاريع</span>
+      </nav>
+
+      <div class="hero-eyebrow">
+        <span class="hero-dot" aria-hidden="true"></span>
+        ما نبنيه
+      </div>
+
+      <h1 id="hero-title" class="hero-title">
+        مشاريع <em>حقيقية</em>،<br/>تأثير <em>ملموس</em>
+      </h1>
+
+      <p class="hero-desc">
+        كل مشروع هنا وُلد من فكرة جريئة وصُنع بأيدٍ مصرية من الإسكندرية.
+        نبني حلولاً تقنية تُحدث فرقاً حقيقياً في الواقع.
+      </p>
+
+      <!-- Stats -->
+      <div class="hero-stats" role="list">
+        <div class="hero-stat reveal" role="listitem">
+          <div class="hero-stat-num">
+            <span class="counter" data-target="15">0</span>
+            <span class="hero-stat-suf">+</span>
+          </div>
+          <div class="hero-stat-lbl">مشروع منجز</div>
+        </div>
+        <div class="hero-stat reveal" role="listitem" style="transition-delay:.08s">
+          <div class="hero-stat-num">
+            <span class="counter" data-target="8">0</span>
+          </div>
+          <div class="hero-stat-lbl">مشروع نشط</div>
+        </div>
+        <div class="hero-stat reveal" role="listitem" style="transition-delay:.16s">
+          <div class="hero-stat-num">
+            <span class="counter" data-target="4">0</span>
+          </div>
+          <div class="hero-stat-lbl">قيد التطوير</div>
+        </div>
+        <div class="hero-stat reveal" role="listitem" style="transition-delay:.24s">
+          <div class="hero-stat-num">
+            <span class="counter" data-target="12">0</span>
+          </div>
+          <div class="hero-stat-lbl">تقنية مستخدمة</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-line" aria-hidden="true"></div>
+  </section>
+
+
+  <!-- ═══════════ FILTER BAR ═══════════ -->
+  <div id="filter-bar" role="search" aria-label="تصفية المشاريع">
+    <div class="container">
+      <div class="filter-inner">
+        <div class="filter-chips" role="group" aria-label="تصفية حسب الحالة">
+          <button class="chip active" data-filter="all">الكل</button>
+          <button class="chip" data-filter="active">نشط</button>
+          <button class="chip" data-filter="completed">مكتمل</button>
+          <button class="chip" data-filter="in-progress">قيد التطوير</button>
+        </div>
+        <div class="filter-search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input
+            type="search" class="search-input" id="searchInput"
+            placeholder="ابحث عن مشروع..."
+            aria-label="البحث في المشاريع"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════ FEATURED PROJECT ═══════════ -->
+  <section id="featured" aria-labelledby="featured-title">
+    <div class="container">
+      <div class="featured-grid">
+
+        <!-- Image -->
+        <div class="featured-img-wrap reveal">
+          <img
+            src="img/project-featured.jpg"
+            alt="صورة المشروع المميز"
+            width="700" height="394" loading="eager"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+          />
+          <div class="featured-img-ph" style="display:none" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <span>project-featured.jpg</span>
+          </div>
+        </div>
+
+        <!-- Text -->
+        <div class="reveal" style="transition-delay:.12s">
+          <div class="featured-label">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            المشروع المميز
+          </div>
+
+          <h2 id="featured-title" class="featured-title">
+            اسم المشروع المميز الرئيسي
+          </h2>
+
+          <p class="featured-desc">
+            وصف تفصيلي للمشروع المميز يوضح الهدف منه، المشكلة التي يحلها،
+            والقيمة التي يضيفها. يُكتب هنا ما يجعل هذا المشروع مختلفاً
+            ومثيراً للاهتمام مقارنةً بغيره من المشاريع.
+          </p>
+
+          <div class="featured-tags">
+            <span class="tech-tag">
+              <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              Python
+            </span>
+            <span class="tech-tag">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              Web
+            </span>
+            <span class="tech-tag">
+              <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+              PostgreSQL
+            </span>
+          </div>
+
+          <div class="featured-meta">
+            <div class="featured-meta-item">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              يناير ٢٠٢٥
+            </div>
+            <div class="featured-meta-item">
+              <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              ٦ أعضاء
+            </div>
+            <div class="featured-meta-item">
+              <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              نشط
+            </div>
+          </div>
+
+          <div class="featured-actions">
+            <a href="project.html?id=featured" class="btn btn-gold">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              عرض المشروع
+            </a>
+            <a href="#projects-list" class="btn btn-outline">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              كل المشاريع
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════ PROJECTS GRID ═══════════ -->
+  <section id="projects-list" class="section-pad" aria-labelledby="projects-title">
+    <div class="container">
+
+      <div class="stb reveal">
+        <div class="stb-eye">جميع المشاريع</div>
+        <h2 id="projects-title" class="stb-h">ما <em>بنيناه</em></h2>
+        <div class="gold-rule"><div class="gold-rule-diamond"></div></div>
+        <p class="stb-sub">كل مشروع يعكس شغف فريقنا وإيمانه بأن التكنولوجيا تُغيّر الواقع</p>
+      </div>
+
+      <p class="result-count" id="resultCount" aria-live="polite">
+        عرض <span id="countNum">6</span> مشروع
+      </p>
+
+      <div class="proj-grid" id="projectsGrid" role="list" aria-label="قائمة المشاريع">
+
+        <!-- Card 1 -->
+        <article class="proj-card reveal" role="listitem" style="transition-delay:.05s"
+          data-status="active" data-title="اسم المشروع الأول"
+          tabindex="0" aria-label="مشروع: اسم المشروع الأول">
+          <div class="proj-img">
+            <img src="img/project-1.jpg" alt="صورة المشروع الأول"
+              width="400" height="225" loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div class="proj-img-ph" style="display:none" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div class="proj-status-overlay"><span class="badge badge-green">نشط</span></div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-tags">
+              <span class="proj-tag">Python</span>
+              <span class="proj-tag">Django</span>
+              <span class="proj-tag">PostgreSQL</span>
+            </div>
+            <h3 class="proj-title">اسم المشروع الأول</h3>
+            <p class="proj-desc">وصف مختصر يوضح هدف المشروع والقيمة التي يضيفها للمستخدمين والفريق.</p>
+            <div class="proj-foot">
+              <div class="proj-members" aria-label="أعضاء الفريق">
+                <div class="proj-avatar" title="عضو ١">أ</div>
+                <div class="proj-avatar" title="عضو ٢">م</div>
+                <div class="proj-avatar" title="عضو ٣">س</div>
+                <div class="proj-avatar-more" title="٢ أعضاء إضافيين">+٢</div>
+              </div>
+              <a href="project.html?id=1" class="btn-text" aria-label="عرض المشروع الأول">
+                عرض
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="proj-card reveal" role="listitem" style="transition-delay:.1s"
+          data-status="completed" data-title="اسم المشروع الثاني"
+          tabindex="0" aria-label="مشروع: اسم المشروع الثاني">
+          <div class="proj-img">
+            <img src="img/project-2.jpg" alt="صورة المشروع الثاني"
+              width="400" height="225" loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div class="proj-img-ph" style="display:none" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div class="proj-status-overlay"><span class="badge badge-gold">مكتمل</span></div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-tags">
+              <span class="proj-tag">React</span>
+              <span class="proj-tag">Node.js</span>
+              <span class="proj-tag">MongoDB</span>
+            </div>
+            <h3 class="proj-title">اسم المشروع الثاني</h3>
+            <p class="proj-desc">وصف مختصر يوضح هدف المشروع والقيمة التي يضيفها للمستخدمين والفريق.</p>
+            <div class="proj-foot">
+              <div class="proj-members" aria-label="أعضاء الفريق">
+                <div class="proj-avatar" title="عضو ١">ب</div>
+                <div class="proj-avatar" title="عضو ٢">ع</div>
+                <div class="proj-avatar-more" title="٣ أعضاء إضافيين">+٣</div>
+              </div>
+              <a href="project.html?id=2" class="btn-text" aria-label="عرض المشروع الثاني">
+                عرض
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="proj-card reveal" role="listitem" style="transition-delay:.15s"
+          data-status="in-progress" data-title="اسم المشروع الثالث"
+          tabindex="0" aria-label="مشروع: اسم المشروع الثالث">
+          <div class="proj-img">
+            <img src="img/project-3.jpg" alt="صورة المشروع الثالث"
+              width="400" height="225" loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div class="proj-img-ph" style="display:none" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            </div>
+            <div class="proj-status-overlay"><span class="badge badge-silver">قيد التطوير</span></div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-tags">
+              <span class="proj-tag">Flutter</span>
+              <span class="proj-tag">Firebase</span>
+            </div>
+            <h3 class="proj-title">اسم المشروع الثالث</h3>
+            <p class="proj-desc">وصف مختصر يوضح هدف المشروع والقيمة التي يضيفها للمستخدمين والفريق.</p>
+            <div class="proj-foot">
+              <div class="proj-members" aria-label="أعضاء الفريق">
+                <div class="proj-avatar" title="عضو ١">ك</div>
+                <div class="proj-avatar" title="عضو ٢">ن</div>
+                <div class="proj-avatar-more" title="١ عضو إضافي">+١</div>
+              </div>
+              <a href="project.html?id=3" class="btn-text" aria-label="عرض المشروع الثالث">
+                عرض
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="proj-card reveal" role="listitem" style="transition-delay:.2s"
+          data-status="completed" data-title="اسم المشروع الرابع"
+          tabindex="0" aria-label="مشروع: اسم المشروع الرابع">
+          <div class="proj-img">
+            <img src="img/project-4.jpg" alt="صورة المشروع الرابع"
+              width="400" height="225" loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div class="proj-img-ph" style="display:none" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <div class="proj-status-overlay"><span class="badge badge-gold">مكتمل</span></div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-tags">
+              <span class="proj-tag">Vue.js</span>
+              <span class="proj-tag">Laravel</span>
+            </div>
+            <h3 class="proj-title">اسم المشروع الرابع</h3>
+            <p class="proj-desc">وصف مختصر يوضح هدف المشروع والقيمة التي يضيفها للمستخدمين والفريق.</p>
+            <div class="proj-foot">
+              <div class="proj-members" aria-label="أعضاء الفريق">
+                <div class="proj-avatar" title="عضو ١">ف</div>
+                <div class="proj-avatar" title="عضو ٢">ه</div>
+              </div>
+              <a href="project.html?id=4" class="btn-text" aria-label="عرض المشروع الرابع">
+                عرض
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 5 -->
+        <article class="proj-card reveal" role="listitem" style="transition-delay:.25s"
+          data-status="active" data-title="اسم المشروع الخامس"
+          tabindex="0" aria-label="مشروع: اسم المشروع الخامس">
+          <div class="proj-img">
+            <img src="img/project-5.jpg" alt="صورة المشروع الخامس"
+              width="400" height="225" loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div class="proj-img-ph" style="display:none" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            </div>
+            <div class="proj-status-overlay"><span class="badge badge-green">نشط</span></div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-tags">
+              <span class="proj-tag">AI</span>
+              <span class="proj-tag">Python</span>
+              <span class="proj-tag">FastAPI</span>
+            </div>
+            <h3 class="proj-title">اسم المشروع الخامس</h3>
+            <p class="proj-desc">وصف مختصر يوضح هدف المشروع والقيمة التي يضيفها للمستخدمين والفريق.</p>
+            <div class="proj-foot">
+              <div class="proj-members" aria-label="أعضاء الفريق">
+                <div class="proj-avatar" title="عضو ١">ي</div>
+                <div class="proj-avatar" title="عضو ٢">ز</div>
+                <div class="proj-avatar-more" title="٤ أعضاء إضافيين">+٤</div>
+              </div>
+              <a href="project.html?id=5" class="btn-text" aria-label="عرض المشروع الخامس">
+                عرض
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 6 -->
+        <article class="proj-card reveal" role="listitem" style="transition-delay:.3s"
+          data-status="in-progress" data-title="اسم المشروع السادس"
+          tabindex="0" aria-label="مشروع: اسم المشروع السادس">
+          <div class="proj-img">
+            <img src="img/project-6.jpg" alt="صورة المشروع السادس"
+              width="400" height="225" loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div class="proj-img-ph" style="display:none" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="proj-status-overlay"><span class="badge badge-silver">قيد التطوير</span></div>
+          </div>
+          <div class="proj-body">
+            <div class="proj-tags">
+              <span class="proj-tag">React Native</span>
+              <span class="proj-tag">Node.js</span>
+            </div>
+            <h3 class="proj-title">اسم المشروع السادس</h3>
+            <p class="proj-desc">وصف مختصر يوضح هدف المشروع والقيمة التي يضيفها للمستخدمين والفريق.</p>
+            <div class="proj-foot">
+              <div class="proj-members" aria-label="أعضاء الفريق">
+                <div class="proj-avatar" title="عضو ١">ط</div>
+                <div class="proj-avatar" title="عضو ٢">خ</div>
+                <div class="proj-avatar-more" title="٢ أعضاء إضافيين">+٢</div>
+              </div>
+              <a href="project.html?id=6" class="btn-text" aria-label="عرض المشروع السادس">
+                عرض
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Empty state -->
+      <div class="empty-state" id="emptyState" aria-live="polite">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <p>لا توجد مشاريع تطابق بحثك أو الفلتر المختار.</p>
+      </div>
+
+      <!-- Load More -->
+      <div class="load-more-wrap reveal">
+        <button class="btn btn-outline" id="load-more-btn" aria-label="تحميل المزيد من المشاريع">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 13 12 18 17 13"/><polyline points="7 6 12 11 17 6"/></svg>
+          تحميل المزيد
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="nav-logo-fallback" style="width:48px;height:48px;font-size:0.95rem" aria-hidden="true">شرق</div>
+        <p class="footer-brand-tagline">
+          فريق التكنولوجيا لإدارة شرق — نبني حلولاً تقنية من قلب الإسكندرية،
+          بعقول مصرية تُؤمن بأن الإبداع لا حدود له.
+        </p>
+        <div class="social-row" aria-label="وسائل التواصل الاجتماعي">
+          <a href="#" class="social-a" aria-label="تويتر X">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.738l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="#" class="social-a" aria-label="تيليغرام">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </a>
+          <a href="#" class="social-a" aria-label="يوتيوب">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+          <a href="#" class="social-a" aria-label="جيت هاب">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav aria-label="روابط سريعة">
+        <div class="foot-col-h">روابط سريعة</div>
+        <ul class="foot-links">
+          <li><a href="index.html"        class="foot-link">الرئيسية</a></li>
+          <li><a href="team.html"         class="foot-link">الفريق</a></li>
+          <li><a href="projects.html"     class="foot-link">المشاريع</a></li>
+          <li><a href="blog.html"         class="foot-link">المدونة</a></li>
+          <li><a href="hall-of-fame.html" class="foot-link">قاعة المجد</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="روابط أخرى">
+        <div class="foot-col-h">أخرى</div>
+        <ul class="foot-links">
+          <li><a href="auth.html" class="foot-link">تسجيل الدخول</a></li>
+          <li><a href="#"         class="foot-link">تواصل معنا</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p class="foot-copy">© 2025 شرق تك — جميع الحقوق محفوظة</p>
+      <p class="foot-made">صُنع بـ <span class="green">♥</span> من فريق شرق تك · الإسكندرية، مصر</p>
+    </div>
+  </div>
+  <div class="footer-stripe" aria-hidden="true"></div>
+</footer>
+
+
+<script>
+'use strict';
+
+/* ─── 1. THEME ─────────────────── */
+const html = document.documentElement;
+const THEME_KEY = 'sharq-theme';
+function applyTheme(t) {
+  html.setAttribute('data-theme', t);
+  localStorage.setItem(THEME_KEY, t);
+}
+applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
+document.getElementById('themeToggle').addEventListener('click', () => {
+  applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+/* ─── 2. NAVBAR SCROLL ─────────── */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+navbar.classList.toggle('scrolled', window.scrollY > 40);
+
+/* ─── 3. REVEAL ────────────────── */
+const revealObs = new IntersectionObserver(
+  entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+  }),
+  { threshold: 0.10, rootMargin: '0px 0px -36px 0px' }
+);
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* ─── 4. COUNTERS ──────────────── */
+function runCounter(el) {
+  const target = parseInt(el.dataset.target, 10);
+  const dur = 1400; const start = performance.now();
+  const ease = t => 1 - Math.pow(1 - t, 4);
+  (function tick(now) {
+    const p = Math.min((now - start) / dur, 1);
+    el.textContent = Math.round(ease(p) * target).toLocaleString('ar-EG');
+    if (p < 1) requestAnimationFrame(tick);
+    else el.textContent = target.toLocaleString('ar-EG');
+  })(start);
+}
+new IntersectionObserver(
+  entries => entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.counter').forEach(runCounter);
+      e.target.querySelectorAll('.counter').forEach(() => {});
+    }
+  }),
+  { threshold: 0.3 }
+).observe(document.getElementById('page-hero'));
+
+/* ─── 5. FILTER + SEARCH ───────── */
+const cards = Array.from(document.querySelectorAll('.proj-card'));
+const chips = document.querySelectorAll('.chip');
+const searchInput = document.getElementById('searchInput');
+const emptyState  = document.getElementById('emptyState');
+const countNum    = document.getElementById('countNum');
+let activeFilter  = 'all';
+
+function filterCards() {
+  const query = searchInput.value.trim().toLowerCase();
+  let visible = 0;
+
+  cards.forEach(card => {
+    const status = card.dataset.status || '';
+    const title  = (card.dataset.title  || '').toLowerCase();
+    const matchFilter = activeFilter === 'all' || status === activeFilter;
+    const matchSearch = !query || title.includes(query);
+    const show = matchFilter && matchSearch;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  countNum.textContent = visible;
+  emptyState.classList.toggle('visible', visible === 0);
+}
+
+chips.forEach(chip => {
+  chip.addEventListener('click', () => {
+    chips.forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    activeFilter = chip.dataset.filter;
+    filterCards();
+  });
+});
+
+searchInput.addEventListener('input', filterCards);
+
+/* ─── 6. LOAD MORE (placeholder) ─ */
+/* When API is connected:
+   async function loadMore() {
+     page++;
+     const res = await ProjectService.getAll({ status: activeFilter, page, limit: 6 });
+     renderCards(res.data);
+     if (!res.hasMore) document.getElementById('load-more-btn').classList.add('hidden');
+   }
+*/
+document.getElementById('load-more-btn').addEventListener('click', function() {
+  // Placeholder — replace with API call
+  this.textContent = 'لا توجد مشاريع إضافية حالياً';
+  this.disabled = true;
+  this.style.opacity = '0.5';
+});
+
+/* ─── 7. CARD KEYBOARD ─────────── */
+cards.forEach(c => {
+  c.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.querySelector('a')?.click(); }
+  });
+});
+
+/* ─── 8. PAGE FADE-IN ──────────── */
+document.body.style.opacity = '0';
+document.body.style.transition = 'opacity 0.38s ease';
+window.addEventListener('load', () => { document.body.style.opacity = '1'; });
+
+/* ═══════════════════════════════════════
+   API INTEGRATION LAYER — READY
+   ═══════════════════════════════════════
+   When backend is ready, replace static cards with:
+
+   async function loadProjects(filter = 'all', page = 1) {
+     const res = await fetch(`/api/projects?status=${filter}&page=${page}&limit=6`);
+     const { data, total, hasMore } = await res.json();
+     renderCards(data);
+     countNum.textContent = total;
+     if (!hasMore) document.getElementById('load-more-btn').classList.add('hidden');
+   }
+
+   function renderCards(projects) {
+     const grid = document.getElementById('projectsGrid');
+     grid.innerHTML = projects.map(p => `
+       <article class="proj-card reveal" role="listitem"
+         data-status="${p.status}" data-title="${p.title}" tabindex="0">
+         <div class="proj-img">
+           <img src="${p.image}" alt="${p.title}" width="400" height="225" loading="lazy" />
+         </div>
+         <div class="proj-body">
+           <div class="proj-tags">${p.tags.map(t => `<span class="proj-tag">${t}</span>`).join('')}</div>
+           <h3 class="proj-title">${p.title}</h3>
+           <p class="proj-desc">${p.short_desc}</p>
+           <div class="proj-foot">
+             <div class="proj-members">
+               ${p.members.slice(0,3).map(m => `<div class="proj-avatar">${m.name[0]}</div>`).join('')}
+               ${p.members.length > 3 ? `<div class="proj-avatar-more">+${p.members.length - 3}</div>` : ''}
+             </div>
+             <a href="project.html?id=${p.id}" class="btn-text">عرض ←</a>
+           </div>
+         </div>
+       </article>
+     `).join('');
+     document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+   }
+═══════════════════════════════════════ */
+</script>
+</body>
+</html>
