@@ -14,9 +14,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
 
   <style>
-  /* ═══════════════════════════════════════════════════
-     DESIGN TOKENS — DARK MODE (default)
-  ═══════════════════════════════════════════════════ */
+  /* 
+    DARK MODE (default)
+   */
   :root,
   [data-theme="dark"] {
     --bg-base:        #080E1A;
@@ -52,9 +52,9 @@
     --nav-bg-scroll:  rgba(8,14,26,0.92);
   }
 
-  /* ═══════════════════════════════════════════════════
+  /* 
      LIGHT MODE
-  ═══════════════════════════════════════════════════ */
+   */
   [data-theme="light"] {
     --bg-base:        #F7F5F0;
     --bg-surface:     #FFFFFF;
@@ -89,9 +89,9 @@
     --nav-bg-scroll:  rgba(255,255,255,0.95);
   }
 
-  /* ═══════════════════════════════════════════════════
+  /* 
      BASE RESET
-  ═══════════════════════════════════════════════════ */
+   */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   html { scroll-behavior: smooth; font-size: 16px; }
@@ -111,9 +111,9 @@
   ul    { list-style: none; }
   button { font-family: 'Cairo', sans-serif; cursor: pointer; border: none; background: none; }
 
-  /* ═══════════════════════════════════════════════════
+  /* 
      LAYOUT UTILITIES
-  ═══════════════════════════════════════════════════ */
+   */
   .container {
     width: 100%;
     max-width: 1240px;
@@ -126,9 +126,9 @@
   .section-pad { padding: 88px 0; }
   @media (min-width: 1024px) { .section-pad { padding: 128px 0; } }
 
-  /* ═══════════════════════════════════════════════════
+  /* 
      SECTION TITLE SYSTEM
-  ═══════════════════════════════════════════════════ */
+   */
   .stb { text-align: center; margin-bottom: 60px; }
 
   .stb-eye {
@@ -194,9 +194,9 @@
     flex-shrink: 0;
   }
 
-  /* ═══════════════════════════════════════════════════
+  /* 
      BUTTONS
-  ═══════════════════════════════════════════════════ */
+   */
   .btn {
     display: inline-flex;
     align-items: center;
@@ -247,9 +247,9 @@
   .btn-text svg { transition: transform 0.25s ease; flex-shrink: 0; }
   .btn-text:hover svg { transform: translateX(-4px); }
 
-  /* ═══════════════════════════════════════════════════
+  /* 
      BADGES
-  ═══════════════════════════════════════════════════ */
+   */
   .badge {
     display: inline-flex; align-items: center;
     padding: 3px 11px; border-radius: 999px;
@@ -259,9 +259,9 @@
   .badge-green  { background: var(--green-dim); color: #4ADE80;      border: 1px solid var(--green-border); }
   .badge-silver { background: rgba(148,163,184,0.08); color: var(--text-secondary); border: 1px solid var(--border-mid); }
 
-  /* ═══════════════════════════════════════════════════
+  /* 
      REVEAL ANIMATION
-  ═══════════════════════════════════════════════════ */
+   */
   .reveal {
     opacity: 0;
     transform: translateY(28px);
@@ -269,9 +269,9 @@
   }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  /* ═══════════════════════════════════════════════════
+  /* 
      EGYPTIAN GEOMETRIC BACKGROUND PATTERN
-  ═══════════════════════════════════════════════════ */
+   */
   .eg-pattern {
     position: absolute; inset: 0; pointer-events: none; overflow: hidden;
   }
@@ -284,9 +284,9 @@
     opacity: 0.18;
   }
 
-  /* ═══════════════════════════════════════════════════
+  /* 
      NAVBAR
-  ═══════════════════════════════════════════════════ */
+   */
   #navbar {
     position: fixed; top: 0; right: 0; left: 0;
     z-index: 1000; height: 72px;
@@ -315,7 +315,23 @@
     flex-shrink: 0;
   }
   .nav-logo-img {
-    height: 140px; width: 140px;
+    height: 140px;
+    width: 140px;
+  }
+  /* Dark mode logo (shown by default) */
+  .nav-logo-dark {
+    display: block;
+  }
+  /* Light mode logo (hidden by default) */
+  .nav-logo-light {
+    display: none;
+  }
+  /* Show light logo in light mode */
+  [data-theme="light"] .nav-logo-dark {
+    display: none;
+  }
+  [data-theme="light"] .nav-logo-light {
+    display: block;
   }
   .nav-logo-fallback {
     height: 42px; width: 52px;
@@ -431,9 +447,9 @@
   .mob-link svg { width: 20px; height: 20px; margin-bottom: 1px; }
   .mob-link.active, .mob-link:hover { color: var(--gold); }
 
-  /* ═══════════════════════════════════════════════════
+  /* 
      HERO
-  ═══════════════════════════════════════════════════ */
+   */
   #hero {
     position: relative;
     min-height: 100vh;
@@ -635,9 +651,9 @@
     50%      { transform: translateY(7px); }
   }
 
-  /* ═══════════════════════════════════════════════════
+  /* 
      STATS BAR
-  ═══════════════════════════════════════════════════ */
+   */
   #stats {
     background: var(--bg-surface);
     border-top: 1px solid var(--border-subtle);
@@ -689,9 +705,9 @@
     font-weight: 500; letter-spacing: 0.04em;
   }
 
-  /* ═══════════════════════════════════════════════════
+  /* 
      ABOUT — Alexandria Character Section
-  ═══════════════════════════════════════════════════ */
+   */
   #about { position: relative; overflow: hidden; }
 
   /* Subtle Alexandria pattern overlay */
@@ -828,9 +844,9 @@
   .awc-title { font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin-bottom: 3px; }
   .awc-sub   { font-size: 0.78rem; color: var(--text-muted); }
 
-  /* ═══════════════════════════════════════════════════
+  /* 
      PROJECTS
-  ═══════════════════════════════════════════════════ */
+   */
   #projects {
     background: var(--bg-surface);
     position: relative;
@@ -907,9 +923,9 @@
     display: flex; align-items: center; justify-content: space-between;
   }
 
-  /* ═══════════════════════════════════════════════════
+  /* 
      BLOG
-  ═══════════════════════════════════════════════════ */
+   */
   #blog { position: relative; }
 
   .blog-grid {
@@ -965,9 +981,9 @@
     margin-bottom: 16px;
   }
 
-  /* ═══════════════════════════════════════════════════
+  /* 
      HALL OF FAME TEASER
-  ═══════════════════════════════════════════════════ */
+   */
   #hof {
     background: var(--bg-surface);
     position: relative; overflow: hidden;
@@ -1058,9 +1074,9 @@
   .pod-pts-n { font-size:1.4rem; font-weight:900; color:var(--gold); }
   .pod-pts-l { font-size:0.68rem; color:var(--text-muted); }
 
-  /* ═══════════════════════════════════════════════════
+  /* 
      EVENTS + SPONSORS
-  ═══════════════════════════════════════════════════ */
+   */
   #events-sponsors { position: relative; }
 
   .ev-grid {
@@ -1092,9 +1108,9 @@
   .ev-title { font-size:0.9rem; font-weight:700; color:var(--text-primary); margin-bottom:8px; line-height:1.4; }
 
   
-  /* ═══════════════════════════════════════════════════
+  /* 
      FOOTER
-  ═══════════════════════════════════════════════════ */
+   */
   footer {
     background: var(--bg-surface);
     border-top: 1px solid var(--border-subtle);
@@ -1155,14 +1171,14 @@
     background: linear-gradient(90deg, var(--green), var(--gold), var(--green));
   }
 
-  /* ═══════════════════════════════════════════════════
+  /* 
      SECTION CTA (centered)
-  ═══════════════════════════════════════════════════ */
+   */
   .sec-cta { text-align: center; }
 
-  /* ═══════════════════════════════════════════════════
+  /* 
      KEYFRAMES
-  ═══════════════════════════════════════════════════ */
+   */
   @keyframes fadeUp {
     from { opacity:0; transform:translateY(24px); }
     to   { opacity:1; transform:translateY(0); }
@@ -1172,9 +1188,9 @@
     to   { opacity:1; transform:translateY(0); }
   }
 
-  /* ═══════════════════════════════════════════════════
+  /* 
      REDUCED MOTION
-  ═══════════════════════════════════════════════════ */
+   */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
     .reveal { opacity:1 !important; transform:none !important; }
@@ -1194,9 +1210,14 @@
       <!-- Logo -->
       <a href="index.html" class="nav-logo" aria-label="الصفحة الرئيسية">
         <img
-          src="img/logo.png" alt="شعار شرق تك"
-          class="nav-logo-img" width="42" height="42"
-          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+          src="img/logo-dark.png" alt="شعار شرق تك"
+          class="nav-logo-img nav-logo-dark" width="42" height="42"
+          onerror="this.style.display='none';document.querySelector('.nav-logo-fallback').style.display='flex';"
+        />
+        <img
+          src="img/logo-light.png" alt="شعار شرق تك"
+          class="nav-logo-img nav-logo-light" width="42" height="42"
+          onerror="this.style.display='none';document.querySelector('.nav-logo-fallback').style.display='flex';"
         />
         <div class="nav-logo-fallback" style="display:none" aria-hidden="true">شرق</div>
       </a>
