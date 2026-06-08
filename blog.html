@@ -15,7 +15,7 @@
 
   <style>
   /* ═══════════════════════════════════════
-     DESIGN TOKENS — DARK MODE (default)
+     DESIGN TOKENS — DARK MODE (default)  
   ═══════════════════════════════════════ */
   :root,
   [data-theme="dark"] {
@@ -1893,11 +1893,11 @@ document.getElementById('nlSubmit').addEventListener('click', function() {
   const email = document.getElementById('nlEmail').value.trim();
   const fb    = document.getElementById('nlFeedback');
   if (!email || !email.includes('@')) {
-    fb.textContent = '⚠️ يرجى إدخال بريد إلكتروني صحيح.';
+    fb.textContent = 'يرجى إدخال بريد إلكتروني صحيح.';
     fb.style.color = '#F87171';
     return;
   }
-  fb.textContent = '✅ تم الاشتراك بنجاح! شكراً لك.';
+  fb.textContent = 'تم الاشتراك بنجاح! شكراً لك.';
   fb.style.color = '#4ADE80';
   document.getElementById('nlEmail').value = '';
   setTimeout(() => { fb.textContent = 'يمكنك إلغاء الاشتراك في أي وقت.'; fb.style.color = ''; }, 4000);
