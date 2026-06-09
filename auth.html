@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="تسجيل الدخول أو إنشاء حساب جديد في منصة شرق تك" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>شرق تك — الدخول إلى المنصة</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+  /* ═══════════════════════════════════════
+     DESIGN TOKENS — identical to index.html
+  ═══════════════════════════════════════ */
+  :root,
+  [data-theme="dark"] {
+    --bg-base:        #080E1A;
+    --bg-surface:     #0F172A;
+    --bg-card:        #131F35;
+    --bg-card-hover:  #172540;
+    --bg-subtle:      #1a2744;
+
+    --gold:           #C9A84C;
+    --gold-bright:    #E8C76B;
+    --gold-dim:       rgba(201,168,76,0.10);
+    --gold-border:    rgba(201,168,76,0.22);
+    --gold-glow:      rgba(201,168,76,0.15);
+
+    --green:          #1A5C45;
+    --green-light:    #22735A;
+    --green-dim:      rgba(26,92,69,0.18);
+    --green-border:   rgba(26,92,69,0.35);
+
+    --text-primary:   #EEF2F7;
+    --text-secondary: #94A3B8;
+    --text-muted:     #475569;
+    --text-gold:      var(--gold);
+
+    --border-subtle:  rgba(255,255,255,0.05);
+    --border-mid:     rgba(255,255,255,0.09);
+
+    --shadow-card:    0 4px 40px rgba(0,0,0,0.45);
+    --shadow-hover:   0 12px 56px rgba(0,0,0,0.6);
+    --shadow-gold:    0 0 48px rgba(201,168,76,0.12);
+
+    --nav-bg:         transparent;
+    --nav-bg-scroll:  rgba(8,14,26,0.92);
+
+    --error:          #F87171;
+    --error-dim:      rgba(248,113,113,0.10);
+    --success:        #4ADE80;
+    --success-dim:    rgba(74,222,128,0.10);
+  }
+
+  [data-theme="light"] {
+    --bg-base:        #F7F5F0;
+    --bg-surface:     #FFFFFF;
+    --bg-card:        #FFFFFF;
+    --bg-card-hover:  #FAFAF8;
+    --bg-subtle:      #F0EDE6;
+
+    --gold:           #B8922A;
+    --gold-bright:    #D4AF37;
+    --gold-dim:       rgba(184,146,42,0.08);
+    --gold-border:    rgba(184,146,42,0.28);
+    --gold-glow:      rgba(184,146,42,0.12);
+
+    --green:          #1A5C45;
+    --green-light:    #22735A;
+    --green-dim:      rgba(26,92,69,0.08);
+    --green-border:   rgba(26,92,69,0.25);
+
+    --text-primary:   #0F1923;
+    --text-secondary: #3D4F61;
+    --text-muted:     #8A96A3;
+    --text-gold:      var(--gold);
+
+    --border-subtle:  rgba(0,0,0,0.06);
+    --border-mid:     rgba(0,0,0,0.10);
+
+    --shadow-card:    0 2px 24px rgba(0,0,0,0.08);
+    --shadow-hover:   0 8px 40px rgba(0,0,0,0.14);
+    --shadow-gold:    0 0 40px rgba(184,146,42,0.10);
+
+    --nav-bg:         rgba(247,245,240,0.80);
+    --nav-bg-scroll:  rgba(255,255,255,0.95);
+
+    --error:          #DC2626;
+    --error-dim:      rgba(220,38,38,0.08);
+    --success:        #16A34A;
+    --success-dim:    rgba(22,163,74,0.08);
+  }
+
+  /* ═══════════════════════════════════════
+     BASE RESET
+  ═══════════════════════════════════════ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg-base);
+    color: var(--text-primary);
+    direction: rtl;
+    overflow-x: hidden;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.35s ease, color 0.35s ease;
+  }
+
+  img   { max-width: 100%; display: block; }
+  a     { text-decoration: none; color: inherit; }
+  ul    { list-style: none; }
+  button { font-family: 'Cairo', sans-serif; cursor: pointer; border: none; background: none; }
+
+  .container {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  @media (min-width: 768px)  { .container { padding: 0 36px; } }
+  @media (min-width: 1024px) { .container { padding: 0 56px; } }
+
+  /* ═══════════════════════════════════════
+     EGYPTIAN GEOMETRIC BACKGROUND
+  ═══════════════════════════════════════ */
+  .eg-pattern {
+    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  }
+  .eg-pattern::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg,  var(--gold-border) 0px, var(--gold-border) 1px, transparent 1px, transparent 56px),
+      repeating-linear-gradient(-45deg, var(--gold-border) 0px, var(--gold-border) 1px, transparent 1px, transparent 56px);
+    opacity: 0.18;
+  }
+  [data-theme="light"] .eg-pattern::before { opacity: 0.55; }
+  [data-theme="light"] .auth-glow-gold  { background: radial-gradient(ellipse, rgba(184,146,42,0.10) 0%, transparent 65%); }
+  [data-theme="light"] .auth-glow-green { background: radial-gradient(ellipse, rgba(26,92,69,0.07) 0%, transparent 65%); }
+
+  /* Floating Gems */
+  .hero-gems { position: absolute; inset: 0; pointer-events: none; }
+  .gem {
+    position: absolute;
+    background: var(--gold);
+    transform: rotate(45deg);
+    opacity: 0.15;
+    animation: gemFloat 0s ease-in-out infinite alternate;
+  }
+  .gem-1 { width:8px; height:8px; top:12%; right:8%;   animation-duration:6s; }
+  .gem-2 { width:5px; height:5px; top:60%; left:6%;    animation-duration:8s; animation-delay:1s; }
+  .gem-3 { width:4px; height:4px; top:25%; right:20%;  animation-duration:7s; animation-delay:2s; opacity:0.09; }
+  .gem-4 { width:6px; height:6px; bottom:25%; left:12%; animation-duration:9s; animation-delay:0.5s; opacity:0.10; }
+  .gem-5 { width:3px; height:3px; top:75%; right:28%;  animation-duration:5s; animation-delay:3s; opacity:0.12; }
+  .gem-6 { width:5px; height:5px; top:40%; left:18%;   animation-duration:7s; animation-delay:1.5s; opacity:0.08; }
+  @keyframes gemFloat {
+    from { transform: rotate(45deg) translateY(0px); }
+    to   { transform: rotate(45deg) translateY(-14px); }
+  }
+
+  /* Radial glows */
+  .auth-glow-gold {
+    position: absolute;
+    top: 20%; right: 15%;
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(201,168,76,0.06) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .auth-glow-green {
+    position: absolute;
+    bottom: 10%; left: 10%;
+    width: 500px; height: 400px;
+    background: radial-gradient(ellipse, rgba(26,92,69,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  /* ═══════════════════════════════════════
+     NAVBAR — identical to index.html
+  ═══════════════════════════════════════ */
+  #navbar {
+    position: fixed; top: 0; right: 0; left: 0;
+    z-index: 1000; height: 72px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(0px);
+    transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+  }
+  #navbar.scrolled {
+    background: var(--nav-bg-scroll);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 1px 0 var(--border-subtle);
+  }
+
+  .nav-inner {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 11px; flex-shrink: 0;
+  }
+  .nav-logo-img   { height: 140px; width: 140px; }
+  .nav-logo-dark  { display: block; }
+  .nav-logo-light { display: none; }
+  [data-theme="light"] .nav-logo-dark  { display: none; }
+  [data-theme="light"] .nav-logo-light { display: block; }
+  .nav-logo-fallback {
+    height: 42px; width: 52px;
+    background: var(--green);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; font-weight: 900;
+    color: #F8FAFC; letter-spacing: -0.5px; flex-shrink: 0;
+  }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 2px;
+    flex: 1; justify-content: center;
+  }
+  .nav-link {
+    position: relative;
+    padding: 8px 18px;
+    font-size: 0.9rem; font-weight: 600;
+    color: var(--text-secondary);
+    border-radius: 8px;
+    transition: color 0.2s ease, background 0.2s ease;
+    white-space: nowrap;
+  }
+  .nav-link::after {
+    content: ''; position: absolute;
+    bottom: 3px; right: 18px; left: 18px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+    border-radius: 999px;
+    transform: scaleX(0); transform-origin: right;
+    transition: transform 0.25s ease;
+  }
+  .nav-link:hover        { color: var(--text-primary); }
+  .nav-link.active       { color: var(--gold); }
+  .nav-link:hover::after,
+  .nav-link.active::after { transform: scaleX(1); }
+
+  .nav-actions {
+    display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+  }
+
+  .theme-toggle {
+    width: 38px; height: 38px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border-mid);
+    color: var(--text-secondary);
+    transition: all 0.25s ease;
+    background: transparent;
+  }
+  .theme-toggle:hover { border-color: var(--gold-border); color: var(--gold); }
+  .theme-toggle svg { width: 17px; height: 17px; }
+  .icon-sun  { display: none; }
+  .icon-moon { display: block; }
+  [data-theme="light"] .icon-sun  { display: block; }
+  [data-theme="light"] .icon-moon { display: none; }
+
+  .nav-auth {
+    display: flex; align-items: center; gap: 7px;
+    padding: 9px 20px;
+    border-radius: 9px;
+    font-size: 0.87rem; font-weight: 700;
+    background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+    color: #0F1923;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 12px var(--gold-glow);
+  }
+  .nav-auth:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(201,168,76,0.3);
+    filter: brightness(1.07);
+  }
+  .nav-auth svg { width: 15px; height: 15px; }
+
+  /* Mobile bottom nav */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    bottom: 0; right: 0; left: 0;
+    z-index: 999;
+    background: var(--nav-bg-scroll);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border-subtle);
+    padding: 10px 16px;
+    gap: 0;
+    justify-content: space-around;
+    align-items: center;
+  }
+  @media (max-width: 1023px) {
+    .nav-links  { display: none; }
+    .mobile-nav { display: flex; }
+  }
+  .mob-link {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    padding: 6px 10px; border-radius: 10px;
+    color: var(--text-muted);
+    font-size: 0.6rem; font-weight: 600;
+    transition: color 0.2s ease;
+    min-width: 52px;
+  }
+  .mob-link svg { width: 20px; height: 20px; margin-bottom: 1px; }
+  .mob-link.active, .mob-link:hover { color: var(--gold); }
+
+  /* ═══════════════════════════════════════
+     AUTH SECTION — full viewport
+  ═══════════════════════════════════════ */
+  #auth-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 20px 100px;
+    overflow: hidden;
+  }
+  @media (min-width: 1024px) { #auth-section { padding: 100px 40px 60px; } }
+
+  /* ═══════════════════════════════════════
+     AUTH SPLIT CARD
+  ═══════════════════════════════════════ */
+  .auth-wrap {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 980px;
+    display: grid;
+    grid-template-columns: 1fr;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: var(--shadow-hover), 0 0 80px rgba(201,168,76,0.08);
+    animation: fadeUp 0.7s cubic-bezier(0,0,0.2,1) both;
+  }
+  @media (min-width: 900px) {
+    .auth-wrap { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ── LEFT PANEL — decorative (hidden on mobile) ── */
+  .auth-deco {
+    display: none;
+    position: relative;
+    background: linear-gradient(145deg, var(--green) 0%, #0D3D2A 50%, #0A2D20 100%);
+    padding: 56px 44px;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+  @media (min-width: 900px) { .auth-deco { display: flex; } }
+
+  /* geometric overlay on deco */
+  .auth-deco::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg,  rgba(201,168,76,0.08) 0px, rgba(201,168,76,0.08) 1px, transparent 1px, transparent 40px),
+      repeating-linear-gradient(-45deg, rgba(201,168,76,0.08) 0px, rgba(201,168,76,0.08) 1px, transparent 1px, transparent 40px);
+  }
+  .auth-deco::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: -60px;
+    width: 280px; height: 280px;
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 50%;
+  }
+
+  .deco-top { position: relative; z-index: 1; }
+  .deco-logo {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 40px;
+  }
+  .deco-logo-mark {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; font-weight: 900; color: var(--gold);
+  }
+  .deco-logo-text {
+    font-size: 1.1rem; font-weight: 800; color: #E8F5F0;
+    line-height: 1.2;
+  }
+  .deco-logo-sub { font-size: 0.72rem; color: rgba(232,245,240,0.5); font-weight: 400; }
+
+  .deco-headline {
+    font-family: 'Cairo', sans-serif;
+    font-size: clamp(1.6rem, 2.8vw, 2.1rem);
+    font-weight: 900;
+    color: #E8F5F0;
+    line-height: 1.35;
+    margin-bottom: 18px;
+  }
+  .deco-headline em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .deco-sub {
+    font-size: 0.88rem;
+    color: rgba(232,245,240,0.55);
+    line-height: 1.9;
+    max-width: 280px;
+  }
+
+  /* Feature list on deco */
+  .deco-features {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; gap: 14px;
+    margin-top: 40px;
+  }
+  .deco-feat {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 0.84rem; color: rgba(232,245,240,0.7);
+  }
+  .deco-feat-icon {
+    width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .deco-feat-icon svg { width: 14px; height: 14px; stroke: var(--gold); fill: none; stroke-width: 2; }
+
+  /* Ornament rule at bottom of deco */
+  .deco-bottom {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; gap: 8px;
+    margin-top: 48px;
+  }
+  .deco-bottom::before, .deco-bottom::after {
+    content: '';
+    flex: 1; height: 1px;
+    background: rgba(201,168,76,0.25);
+  }
+  .deco-diamond {
+    width: 7px; height: 7px;
+    background: var(--gold); transform: rotate(45deg); flex-shrink: 0; opacity: 0.6;
+  }
+
+  /* ── RIGHT PANEL — form area ── */
+  .auth-form-panel {
+    background: var(--bg-card);
+    padding: 48px 40px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 580px;
+  }
+  @media (max-width: 899px) {
+    .auth-form-panel { padding: 40px 28px; }
+  }
+
+  /* Mobile brand (shown only when deco panel hidden) */
+  .auth-mobile-brand {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    margin-bottom: 32px;
+  }
+  @media (min-width: 900px) { .auth-mobile-brand { display: none; } }
+  .amb-mark {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: var(--green-dim);
+    border: 1px solid var(--green-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; font-weight: 900; color: var(--gold);
+  }
+  .amb-text { font-size: 1.05rem; font-weight: 800; color: var(--text-primary); }
+
+  /* ── TABS ── */
+  .auth-tabs {
+    display: flex;
+    background: var(--bg-subtle);
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 36px;
+    position: relative;
+  }
+  .auth-tab {
+    flex: 1; padding: 11px 8px;
+    border-radius: 9px;
+    font-size: 0.9rem; font-weight: 700;
+    color: var(--text-muted);
+    transition: color 0.25s ease;
+    position: relative; z-index: 1;
+    text-align: center;
+  }
+  .auth-tab.active { color: var(--text-primary); }
+
+  /* Sliding indicator */
+  .tabs-slider {
+    position: absolute;
+    top: 4px; bottom: 4px;
+    width: calc(50% - 4px);
+    right: 4px;
+    background: var(--bg-card);
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    border: 1px solid var(--border-mid);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .tabs-slider.to-register {
+    transform: translateX(calc(-100% - 0px));
+  }
+
+  /* ── PANELS ── */
+  .auth-panel {
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .auth-panel.hidden {
+    display: none;
+  }
+
+  /* ── FORM ELEMENTS ── */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-label {
+    display: block;
+    font-size: 0.82rem; font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+  }
+  .form-label .required {
+    color: var(--error);
+    margin-right: 2px;
+    font-size: 0.9em;
+  }
+
+  .input-wrap {
+    position: relative;
+  }
+  .input-icon {
+    position: absolute;
+    right: 14px; top: 50%; transform: translateY(-50%);
+    width: 16px; height: 16px;
+    stroke: var(--text-muted); fill: none; stroke-width: 2;
+    pointer-events: none;
+    transition: stroke 0.2s ease;
+  }
+  .form-input {
+    width: 100%;
+    padding: 13px 42px 13px 16px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-mid);
+    border-radius: 10px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    outline: none;
+    direction: rtl;
+  }
+  .form-input::placeholder { color: var(--text-muted); font-size: 0.85rem; }
+  .form-input:focus {
+    border-color: var(--gold-border);
+    background: var(--bg-card);
+    box-shadow: 0 0 0 3px var(--gold-dim);
+  }
+  .form-input:focus + .input-icon,
+  .input-wrap:focus-within .input-icon { stroke: var(--gold); }
+  .form-input.error { border-color: var(--error); box-shadow: 0 0 0 3px var(--error-dim); }
+  .form-input.success { border-color: var(--success); }
+
+  /* Password toggle */
+  .pw-toggle {
+    position: absolute;
+    left: 12px; top: 50%; transform: translateY(-50%);
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); border-radius: 6px;
+    transition: color 0.2s ease;
+    cursor: pointer;
+  }
+  .pw-toggle:hover { color: var(--gold); }
+  .pw-toggle svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  /* For password inputs — add left padding for toggle */
+  .has-pw-toggle { padding-left: 44px; }
+
+  /* Select */
+  .form-select {
+    width: 100%;
+    padding: 13px 42px 13px 16px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-mid);
+    border-radius: 10px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+    direction: rtl;
+    -webkit-appearance: none;
+    cursor: pointer;
+  }
+  .form-select:focus {
+    border-color: var(--gold-border);
+    box-shadow: 0 0 0 3px var(--gold-dim);
+  }
+
+  /* Error message */
+  .form-error {
+    display: none;
+    font-size: 0.75rem;
+    color: var(--error);
+    margin-top: 6px;
+    align-items: center;
+    gap: 5px;
+  }
+  .form-error.show { display: flex; }
+  .form-error svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2.5; flex-shrink: 0; }
+
+  /* ── FORM ROW (remember me + forgot) ── */
+  .form-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    gap: 12px;
+  }
+
+  /* Custom checkbox */
+  .check-wrap {
+    display: flex; align-items: center; gap: 9px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .check-input {
+    position: absolute; opacity: 0; width: 0; height: 0;
+  }
+  .check-box {
+    width: 18px; height: 18px;
+    border: 1.5px solid var(--border-mid);
+    border-radius: 5px;
+    background: var(--bg-subtle);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+  .check-input:checked ~ .check-box {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+  .check-box svg {
+    width: 11px; height: 11px;
+    stroke: #0F1923; fill: none; stroke-width: 2.5;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+  .check-input:checked ~ .check-box svg {
+    opacity: 1; transform: scale(1);
+  }
+  .check-label {
+    font-size: 0.82rem; color: var(--text-muted);
+  }
+
+  .forgot-link {
+    font-size: 0.82rem;
+    color: var(--gold);
+    transition: opacity 0.2s ease;
+  }
+  .forgot-link:hover { opacity: 0.75; }
+
+  /* ── SUBMIT BUTTON ── */
+  .btn-submit {
+    width: 100%;
+    padding: 15px 24px;
+    border-radius: 12px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.97rem; font-weight: 800;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
+    color: #0F1923;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 20px var(--gold-glow);
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    letter-spacing: 0.02em;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-submit::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .btn-submit:hover::before { opacity: 1; }
+  .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(201,168,76,0.35);
+  }
+  .btn-submit:active { transform: translateY(0); }
+  .btn-submit span, .btn-submit svg { position: relative; z-index: 1; }
+  .btn-submit svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+  .btn-submit.loading { pointer-events: none; opacity: 0.75; }
+
+  /* Spinner */
+  .spinner {
+    display: none;
+    width: 17px; height: 17px;
+    border: 2px solid rgba(15,25,35,0.25);
+    border-top-color: #0F1923;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  .btn-submit.loading .btn-label { display: none; }
+  .btn-submit.loading .btn-icon  { display: none; }
+  .btn-submit.loading .spinner   { display: block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── DIVIDER ── */
+  .auth-divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 22px 0;
+    font-size: 0.75rem; color: var(--text-muted);
+  }
+  .auth-divider::before, .auth-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border-subtle);
+  }
+
+  /* ── SWITCH PROMPT ── */
+  .auth-switch {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.83rem;
+    color: var(--text-muted);
+  }
+  .auth-switch button {
+    color: var(--gold); font-weight: 700;
+    font-family: 'Cairo', sans-serif; font-size: 0.83rem;
+    transition: opacity 0.2s ease;
+  }
+  .auth-switch button:hover { opacity: 0.75; }
+
+  /* ── REGISTER NOTE ── */
+  .register-note {
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 24px;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .register-note svg {
+    width: 15px; height: 15px;
+    stroke: var(--gold); fill: none; stroke-width: 2;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .register-note p {
+    font-size: 0.79rem;
+    color: var(--gold);
+    line-height: 1.7;
+  }
+
+  /* ── PENDING SUCCESS STATE ── */
+  .pending-notice {
+    display: none;
+    text-align: center;
+    padding: 12px 0 8px;
+    animation: fadeUp 0.5s cubic-bezier(0,0,0.2,1) both;
+  }
+  .pending-notice.show { display: block; }
+
+  .pending-icon {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--success-dim);
+    border: 2px solid var(--success);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  .pending-icon svg { width: 32px; height: 32px; stroke: var(--success); fill: none; stroke-width: 2; }
+  @keyframes popIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+  }
+
+  .pending-title {
+    font-size: 1.2rem; font-weight: 800;
+    color: var(--text-primary); margin-bottom: 10px;
+  }
+  .pending-sub {
+    font-size: 0.85rem; color: var(--text-secondary);
+    line-height: 1.9; max-width: 320px;
+    margin: 0 auto 28px;
+  }
+  .pending-sub strong { color: var(--gold); }
+
+  /* Timeline — waiting steps */
+  .pending-steps {
+    display: flex; flex-direction: column; gap: 0;
+    text-align: right;
+    margin: 0 auto 28px;
+    max-width: 300px;
+  }
+  .pstep {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 0;
+    position: relative;
+  }
+  .pstep:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 11px; top: 28px;
+    width: 2px; height: calc(100% - 8px);
+    background: var(--border-subtle);
+  }
+  .pstep-dot {
+    width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; font-weight: 800;
+  }
+  .pstep-dot.done  { background: var(--success-dim); border: 1.5px solid var(--success); color: var(--success); }
+  .pstep-dot.wait  { background: var(--gold-dim);    border: 1.5px solid var(--gold-border); color: var(--gold); }
+  .pstep-dot.next  { background: var(--bg-subtle);   border: 1.5px solid var(--border-mid);  color: var(--text-muted); }
+  .pstep-text { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; padding-top: 2px; }
+  .pstep-text strong { color: var(--text-primary); display: block; margin-bottom: 1px; }
+
+  .btn-back-login {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-size: 0.88rem; font-weight: 700;
+    border: 1px solid var(--border-mid);
+    color: var(--text-secondary);
+    background: var(--bg-subtle);
+    transition: all 0.25s ease;
+    font-family: 'Cairo', sans-serif;
+  }
+  .btn-back-login:hover {
+    border-color: var(--gold-border); color: var(--gold);
+    transform: translateY(-1px);
+  }
+
+  /* ── GLOBAL ALERT ── */
+  .form-alert {
+    display: none;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    align-items: flex-start; gap: 10px;
+  }
+  .form-alert.show { display: flex; }
+  .form-alert.alert-error   { background: var(--error-dim);   border: 1px solid rgba(248,113,113,0.25); color: var(--error); }
+  .form-alert.alert-success { background: var(--success-dim); border: 1px solid rgba(74,222,128,0.25);  color: var(--success); }
+  .form-alert svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── PASSWORD STRENGTH ── */
+  .pw-strength {
+    margin-top: 8px;
+    display: none;
+  }
+  .pw-strength.show { display: block; }
+  .pw-strength-bar {
+    display: flex; gap: 4px; margin-bottom: 5px;
+  }
+  .pw-seg {
+    flex: 1; height: 3px; border-radius: 999px;
+    background: var(--border-subtle);
+    transition: background 0.3s ease;
+  }
+  .pw-seg.weak   { background: var(--error); }
+  .pw-seg.fair   { background: #F59E0B; }
+  .pw-seg.strong { background: var(--success); }
+  .pw-strength-label {
+    font-size: 0.72rem; color: var(--text-muted);
+  }
+
+  /* ═══════════════════════════════════════
+     FOOTER — minimal stripe only
+  ═══════════════════════════════════════ */
+  .auth-footer {
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border-subtle);
+    padding: 20px 0 0;
+    margin-bottom: 60px;
+  }
+  @media (min-width: 1024px) { .auth-footer { margin-bottom: 0; } }
+
+  .auth-footer-inner {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    padding-bottom: 20px; text-align: center;
+  }
+  .auth-footer-copy { font-size: 0.77rem; color: var(--text-muted); }
+  .auth-footer-links {
+    display: flex; gap: 20px;
+  }
+  .auth-footer-link {
+    font-size: 0.77rem; color: var(--text-muted);
+    transition: color 0.2s ease;
+  }
+  .auth-footer-link:hover { color: var(--gold); }
+
+  .footer-stripe {
+    height: 3px;
+    background: linear-gradient(90deg, var(--green), var(--gold), var(--green));
+  }
+
+  /* ═══════════════════════════════════════
+     KEYFRAMES
+  ═══════════════════════════════════════ */
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(24px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  /* ═══════════════════════════════════════
+     REDUCED MOTION
+  ═══════════════════════════════════════ */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+  }
+  </style>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════ -->
+<header id="navbar" role="banner">
+  <div class="container">
+    <nav class="nav-inner" aria-label="التنقل الرئيسي">
+
+      <a href="index.html" class="nav-logo" aria-label="العودة للرئيسية">
+        <img src="img/logo-dark.png"  alt="شعار شرق تك" class="nav-logo-img nav-logo-dark"  width="42" height="42"
+          onerror="this.style.display='none';document.querySelector('.nav-logo-fallback').style.display='flex';" />
+        <img src="img/logo-light.png" alt="شعار شرق تك" class="nav-logo-img nav-logo-light" width="42" height="42"
+          onerror="this.style.display='none';" />
+        <div class="nav-logo-fallback" style="display:none" aria-hidden="true">شرق</div>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="index.html"        class="nav-link">الرئيسية</a></li>
+        <li><a href="team.html"         class="nav-link">الفريق</a></li>
+        <li><a href="projects.html"     class="nav-link">المشاريع</a></li>
+        <li><a href="blog.html"         class="nav-link">المدونة</a></li>
+        <li><a href="hall-of-fame.html" class="nav-link">قاعة المجد</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="تبديل المظهر">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+
+        <a href="auth.html" class="nav-auth active" aria-label="تسجيل الدخول" aria-current="page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+            <polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
+          </svg>
+          تسجيل الدخول
+        </a>
+      </div>
+
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile Bottom Nav -->
+<nav class="mobile-nav" id="mobileNav" aria-label="قائمة التنقل">
+  <a href="index.html" class="mob-link" aria-label="الرئيسية">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+    الرئيسية
+  </a>
+  <a href="team.html" class="mob-link" aria-label="الفريق">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+    </svg>
+    الفريق
+  </a>
+  <a href="projects.html" class="mob-link" aria-label="المشاريع">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="2" y="3" width="20" height="14" rx="2"/>
+      <line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+    </svg>
+    المشاريع
+  </a>
+  <a href="blog.html" class="mob-link" aria-label="المدونة">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+    </svg>
+    المدونة
+  </a>
+  <a href="auth.html" class="mob-link active" aria-label="الدخول" aria-current="page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+      <polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
+    </svg>
+    الدخول
+  </a>
+</nav>
+
+
+<!-- ═══════════════════════════════════════
+     MAIN
+═══════════════════════════════════════ -->
+<main id="main-content">
+  <section id="auth-section" aria-labelledby="auth-heading">
+
+    <!-- Background -->
+    <div class="eg-pattern" aria-hidden="true"></div>
+    <div class="hero-gems" aria-hidden="true">
+      <div class="gem gem-1"></div><div class="gem gem-2"></div>
+      <div class="gem gem-3"></div><div class="gem gem-4"></div>
+      <div class="gem gem-5"></div><div class="gem gem-6"></div>
+    </div>
+    <div class="auth-glow-gold"  aria-hidden="true"></div>
+    <div class="auth-glow-green" aria-hidden="true"></div>
+
+    <!-- Auth Card -->
+    <div class="auth-wrap" role="main">
+
+      <!-- LEFT — Decorative panel (desktop only) -->
+      <div class="auth-deco" aria-hidden="true">
+        <div class="deco-top">
+          <div class="deco-logo">
+            <div class="deco-logo-mark">ش</div>
+            <div>
+              <div class="deco-logo-text">شرق تك</div>
+              <div class="deco-logo-sub">فريق التكنولوجيا</div>
+            </div>
+          </div>
+
+          <h2 class="deco-headline">
+            ادخل عالم<br/>
+            <em>شرق تك</em><br/>
+            وابدأ رحلتك
+          </h2>
+          <p class="deco-sub">
+            منصة خاصة بأعضاء فريق التكنولوجيا لإدارة شرق — تابع مشاريعك، إنجازاتك، ونقاطك في مكان واحد.
+          </p>
+
+          <div class="deco-features">
+            <div class="deco-feat">
+              <div class="deco-feat-icon">
+                <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </div>
+              تتبع مشاريع الفريق في الوقت الحقيقي
+            </div>
+            <div class="deco-feat">
+              <div class="deco-feat-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+              </div>
+              نظام نقاط وشارات قاعة المجد
+            </div>
+            <div class="deco-feat">
+              <div class="deco-feat-icon">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </div>
+              محتوى وتدوينات حصرية للأعضاء
+            </div>
+            <div class="deco-feat">
+              <div class="deco-feat-icon">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              تكريم الإنجازات والتميز الشهري
+            </div>
+          </div>
+        </div>
+
+        <div class="deco-bottom">
+          <div class="deco-diamond"></div>
+          <span style="font-size:.72rem;color:rgba(232,245,240,0.35)">الإسكندرية — مصر</span>
+          <div class="deco-diamond"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT — Form panel -->
+      <div class="auth-form-panel">
+
+        <!-- Auth title -->
+        <div style="margin-bottom:28px;">
+          <h1 id="auth-heading-login" style="font-size:1.3rem;font-weight:800;color:var(--text-primary);margin-bottom:6px;">أهلاً بك في شرق تك</h1>
+          <p style="font-size:.84rem;color:var(--text-muted);line-height:1.7;">سجّل دخولك للوصول إلى لوحة تحكم الفريق</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="auth-tabs" role="tablist" aria-label="نوع العملية">
+          <div class="tabs-slider" id="tabsSlider" aria-hidden="true"></div>
+          <button class="auth-tab active" id="tab-login"    role="tab" aria-selected="true"  aria-controls="panel-login"    data-tab="login">
+            تسجيل الدخول
+          </button>
+          <button class="auth-tab"        id="tab-register" role="tab" aria-selected="false" aria-controls="panel-register" data-tab="register">
+            إنشاء حساب
+          </button>
+        </div>
+
+
+        <!-- ══ LOGIN PANEL ══ -->
+        <div class="auth-panel" id="panel-login" role="tabpanel" aria-labelledby="tab-login">
+
+          <!-- Alert -->
+          <div class="form-alert alert-error" id="login-alert" role="alert">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span id="login-alert-msg">البريد الإلكتروني أو كلمة المرور غير صحيحة.</span>
+          </div>
+
+          <form id="login-form" novalidate data-action="login">
+
+            <!-- Email -->
+            <div class="form-group">
+              <label class="form-label" for="login-email">
+                البريد الإلكتروني <span class="required" aria-hidden="true">*</span>
+              </label>
+              <div class="input-wrap">
+                <input
+                  type="email" id="login-email" name="email"
+                  class="form-input" placeholder="example@sharqtech.com"
+                  autocomplete="email" required
+                  aria-required="true" aria-describedby="login-email-err"
+                />
+                <svg class="input-icon" viewBox="0 0 24 24">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </div>
+              <div class="form-error" id="login-email-err" role="alert">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <span>الرجاء إدخال بريد إلكتروني صحيح</span>
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+              <label class="form-label" for="login-password">
+                كلمة المرور <span class="required" aria-hidden="true">*</span>
+              </label>
+              <div class="input-wrap">
+                <input
+                  type="password" id="login-password" name="password"
+                  class="form-input has-pw-toggle" placeholder="••••••••"
+                  autocomplete="current-password" required
+                  aria-required="true" aria-describedby="login-pw-err"
+                />
+                <svg class="input-icon" viewBox="0 0 24 24">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                <button type="button" class="pw-toggle" aria-label="إظهار/إخفاء كلمة المرور" data-target="login-password">
+                  <svg class="eye-open" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <svg class="eye-closed" viewBox="0 0 24 24" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                </button>
+              </div>
+              <div class="form-error" id="login-pw-err" role="alert">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <span>كلمة المرور مطلوبة</span>
+              </div>
+            </div>
+
+            <!-- Remember + Forgot -->
+            <div class="form-row">
+              <label class="check-wrap">
+                <input type="checkbox" class="check-input" name="remember" id="remember-me" />
+                <span class="check-box">
+                  <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+                </span>
+                <span class="check-label">تذكرني</span>
+              </label>
+              <button type="button" class="forgot-link" id="forgot-link" style="background:none;border:none;cursor:pointer;font-family:Cairo,sans-serif;">نسيت كلمة المرور؟</button>
+            </div>
+
+            <!-- Forgot password inline notice (shown instead of forgot link) -->
+            <div class="forgot-notice" id="forgot-notice" style="display:none;background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:.82rem;color:var(--gold);line-height:1.7;display:none;align-items:flex-start;gap:10px;" role="alert">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:2px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span>لإعادة تعيين كلمة المرور، تواصل مع <strong>مشرف الفريق</strong> مباشرةً وسيقوم بمساعدتك.</span>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn-submit" id="login-btn" aria-label="تسجيل الدخول">
+              <span class="btn-label">دخول</span>
+              <svg class="btn-icon" viewBox="0 0 24 24">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                <polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
+              </svg>
+              <div class="spinner"></div>
+            </button>
+
+          </form>
+
+          <div class="auth-switch">
+            ليس لديك حساب؟
+            <button id="goto-register" aria-label="الانتقال لصفحة إنشاء حساب">إنشاء حساب جديد</button>
+          </div>
+
+        </div>
+        <!-- / LOGIN PANEL -->
+
+
+        <!-- ══ REGISTER PANEL ══ -->
+        <div class="auth-panel hidden" id="panel-register" role="tabpanel" aria-labelledby="tab-register">
+
+          <!-- Registration notice -->
+          <div class="register-note" role="note">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <p>التسجيل متاح لأعضاء فريق شرق تك فقط. سيتم <strong>مراجعة طلبك وتفعيل حسابك</strong> من قِبل المشرف.</p>
+          </div>
+
+          <!-- Alert -->
+          <div class="form-alert alert-error" id="reg-alert" role="alert">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span id="reg-alert-msg">حدث خطأ، الرجاء المحاولة مرة أخرى.</span>
+          </div>
+
+          <!-- REGISTER FORM -->
+          <form id="register-form" novalidate data-action="register" id="reg-form-fields">
+
+            <!-- Full name -->
+            <div class="form-group">
+              <label class="form-label" for="reg-name">
+                الاسم الكامل <span class="required" aria-hidden="true">*</span>
+              </label>
+              <div class="input-wrap">
+                <input
+                  type="text" id="reg-name" name="fullName"
+                  class="form-input" placeholder="محمد أحمد"
+                  autocomplete="name" required
+                  aria-required="true" aria-describedby="reg-name-err"
+                />
+                <svg class="input-icon" viewBox="0 0 24 24">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </div>
+              <div class="form-error" id="reg-name-err" role="alert">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <span>الاسم الكامل مطلوب (٣ أحرف على الأقل)</span>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+              <label class="form-label" for="reg-email">
+                البريد الإلكتروني <span class="required" aria-hidden="true">*</span>
+              </label>
+              <div class="input-wrap">
+                <input
+                  type="email" id="reg-email" name="email"
+                  class="form-input" placeholder="example@sharqtech.com"
+                  autocomplete="email" required
+                  aria-required="true" aria-describedby="reg-email-err"
+                />
+                <svg class="input-icon" viewBox="0 0 24 24">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </div>
+              <div class="form-error" id="reg-email-err" role="alert">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <span>الرجاء إدخال بريد إلكتروني صحيح</span>
+              </div>
+            </div>
+
+            <!-- Department -->
+            <div class="form-group">
+              <label class="form-label" for="reg-dept">
+                القسم / التخصص <span class="required" aria-hidden="true">*</span>
+              </label>
+              <div class="input-wrap">
+                <select id="reg-dept" name="department" class="form-select" required
+                  aria-required="true" aria-describedby="reg-dept-err">
+                  <option value="" disabled selected>اختر قسمك</option>
+                  <option value="frontend">تطوير الواجهات الأمامية</option>
+                  <option value="backend">تطوير الخوادم والـ API</option>
+                  <option value="mobile">تطوير تطبيقات الجوال</option>
+                  <option value="ai">الذكاء الاصطناعي وتعلم الآلة</option>
+                  <option value="cybersecurity">الأمن السيبراني</option>
+                  <option value="design">تصميم UI/UX</option>
+                  <option value="data">علوم البيانات</option>
+                  <option value="devops">DevOps والبنية التحتية</option>
+                  <option value="other">أخرى</option>
+                </select>
+                <svg class="input-icon" style="left:14px;right:auto;" viewBox="0 0 24 24">
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
+              </div>
+              <div class="form-error" id="reg-dept-err" role="alert">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <span>الرجاء اختيار قسمك</span>
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+              <label class="form-label" for="reg-password">
+                كلمة المرور <span class="required" aria-hidden="true">*</span>
+              </label>
+              <div class="input-wrap">
+                <input
+                  type="password" id="reg-password" name="password"
+                  class="form-input has-pw-toggle" placeholder="••••••••"
+                  autocomplete="new-password" required minlength="8"
+                  aria-required="true" aria-describedby="reg-pw-err reg-pw-strength"
+                />
+                <svg class="input-icon" viewBox="0 0 24 24">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                <button type="button" class="pw-toggle" aria-label="إظهار/إخفاء كلمة المرور" data-target="reg-password">
+                  <svg class="eye-open" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <svg class="eye-closed" viewBox="0 0 24 24" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                </button>
+              </div>
+              <div class="pw-strength" id="reg-pw-strength" role="status" aria-live="polite">
+                <div class="pw-strength-bar">
+                  <div class="pw-seg" id="ps1"></div>
+                  <div class="pw-seg" id="ps2"></div>
+                  <div class="pw-seg" id="ps3"></div>
+                  <div class="pw-seg" id="ps4"></div>
+                </div>
+                <div class="pw-strength-label" id="ps-label">أدخل كلمة مرور قوية</div>
+              </div>
+              <div class="form-error" id="reg-pw-err" role="alert">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <span>كلمة المرور يجب أن تكون ٨ أحرف على الأقل</span>
+              </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+              <label class="form-label" for="reg-confirm">
+                تأكيد كلمة المرور <span class="required" aria-hidden="true">*</span>
+              </label>
+              <div class="input-wrap">
+                <input
+                  type="password" id="reg-confirm" name="confirmPassword"
+                  class="form-input has-pw-toggle" placeholder="••••••••"
+                  autocomplete="new-password" required
+                  aria-required="true" aria-describedby="reg-confirm-err"
+                />
+                <svg class="input-icon" viewBox="0 0 24 24">
+                  <path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <button type="button" class="pw-toggle" aria-label="إظهار/إخفاء كلمة التأكيد" data-target="reg-confirm">
+                  <svg class="eye-open" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <svg class="eye-closed" viewBox="0 0 24 24" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                </button>
+              </div>
+              <div class="form-error" id="reg-confirm-err" role="alert">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <span>كلمتا المرور غير متطابقتين</span>
+              </div>
+            </div>
+
+            <!-- Terms check -->
+            <div class="form-group" style="margin-bottom:24px;">
+              <label class="check-wrap">
+                <input type="checkbox" class="check-input" name="terms" id="agree-terms" required aria-required="true" />
+                <span class="check-box">
+                  <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+                </span>
+                <span class="check-label">أوافق على شروط الاستخدام وسياسة الخصوصية</span>
+              </label>
+              <div class="form-error" id="reg-terms-err" role="alert" style="margin-top:6px;">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <span>يجب الموافقة على الشروط للمتابعة</span>
+              </div>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn-submit" id="register-btn" aria-label="إرسال طلب التسجيل">
+              <span class="btn-label">إرسال طلب التسجيل</span>
+              <svg class="btn-icon" viewBox="0 0 24 24">
+                <line x1="22" y1="2" x2="11" y2="13"/>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+              <div class="spinner"></div>
+            </button>
+
+          </form>
+
+          <!-- PENDING SUCCESS NOTICE (shown after register) -->
+          <div class="pending-notice" id="pending-notice" aria-live="polite">
+            <div class="pending-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <h2 class="pending-title">تم إرسال طلبك! 🎉</h2>
+            <p class="pending-sub">
+              طلبك وصلنا بنجاح. سيقوم <strong>المشرف</strong> بمراجعة بياناتك وتفعيل حسابك في أقرب وقت.
+            </p>
+
+            <div class="pending-steps" aria-label="مراحل تفعيل الحساب">
+              <div class="pstep">
+                <div class="pstep-dot done" aria-label="مكتمل">✓</div>
+                <div class="pstep-text"><strong>إرسال الطلب</strong>وصلنا طلب إنشاء الحساب</div>
+              </div>
+              <div class="pstep">
+                <div class="pstep-dot wait" aria-label="قيد الانتظار">⏳</div>
+                <div class="pstep-text"><strong>مراجعة المشرف</strong>يتحقق المشرف من بياناتك</div>
+              </div>
+              <div class="pstep">
+                <div class="pstep-dot next" aria-label="لاحقاً">📧</div>
+                <div class="pstep-text"><strong>إشعار التفعيل</strong>ستصلك رسالة عند تفعيل الحساب</div>
+              </div>
+            </div>
+
+            <button class="btn-back-login" id="back-to-login" aria-label="العودة لصفحة تسجيل الدخول">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                <polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
+              </svg>
+              العودة لتسجيل الدخول
+            </button>
+          </div>
+
+          <div class="auth-switch" id="reg-switch-row">
+            لديك حساب بالفعل؟
+            <button id="goto-login" aria-label="الانتقال لتسجيل الدخول">تسجيل الدخول</button>
+          </div>
+
+        </div>
+        <!-- / REGISTER PANEL -->
+
+      </div><!-- /auth-form-panel -->
+    </div><!-- /auth-wrap -->
+
+  </section>
+</main>
+
+
+<!-- ═══════════════════════════════════════
+     FOOTER — minimal
+═══════════════════════════════════════ -->
+<footer class="auth-footer" role="contentinfo">
+  <div class="container">
+    <div class="auth-footer-inner">
+      <p class="auth-footer-copy">© 2026 شرق تك — جميع الحقوق محفوظة</p>
+      <nav class="auth-footer-links" aria-label="روابط الفوتر">
+        <a href="index.html"        class="auth-footer-link">الرئيسية</a>
+        <a href="projects.html"     class="auth-footer-link">المشاريع</a>
+        <a href="blog.html"         class="auth-footer-link">المدونة</a>
+        <a href="team.html"         class="auth-footer-link">الفريق</a>
+        <a href="hall-of-fame.html" class="auth-footer-link">قاعة المجد</a>
+      </nav>
+    </div>
+  </div>
+  <div class="footer-stripe" aria-hidden="true"></div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════ -->
+<script>
+'use strict';
+
+/* ─── 0. XSS SANITIZER ───────────────────────────── */
+// All dynamic text MUST go through sanitize() before touching the DOM.
+// Using textContent is safe by default, but this helper also strips
+// any accidental HTML if data ever flows into innerHTML contexts.
+function sanitize(str) {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .replace(/\//g, '&#x2F;');
+}
+// Safe way to set alert message text — NEVER use innerHTML for API data
+function setAlertText(el, msg) {
+  if (el) el.textContent = sanitize(msg); // textContent doesn't parse HTML — XSS safe
+}
+
+/* ─── 1. THEME TOGGLE ─────────────────────────────── */
+const html        = document.documentElement;
+const themeToggle = document.getElementById('themeToggle');
+const THEME_KEY   = 'sharq-theme';
+
+function applyTheme(t) {
+  html.setAttribute('data-theme', t);
+  localStorage.setItem(THEME_KEY, t);
+}
+applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
+themeToggle.addEventListener('click', () => {
+  applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+/* ─── 2. NAVBAR SCROLL ────────────────────────────── */
+const navbar = document.getElementById('navbar');
+function checkScroll() { navbar.classList.toggle('scrolled', window.scrollY > 40); }
+window.addEventListener('scroll', checkScroll, { passive: true });
+checkScroll();
+
+/* ─── 3. PAGE FADE-IN ─────────────────────────────── */
+document.body.style.opacity = '0';
+document.body.style.transition = 'opacity 0.38s ease';
+window.addEventListener('load', () => { document.body.style.opacity = '1'; });
+
+/* ─── 4. TABS ─────────────────────────────────────── */
+const tabLogin    = document.getElementById('tab-login');
+const tabRegister = document.getElementById('tab-register');
+const panelLogin  = document.getElementById('panel-login');
+const panelReg    = document.getElementById('panel-register');
+const slider      = document.getElementById('tabsSlider');
+const authTitle   = document.getElementById('auth-heading-login');
+
+function switchTab(to) {
+  if (to === 'register') {
+    tabLogin.classList.remove('active'); tabLogin.setAttribute('aria-selected','false');
+    tabRegister.classList.add('active'); tabRegister.setAttribute('aria-selected','true');
+    panelLogin.classList.add('hidden');
+    panelReg.classList.remove('hidden');
+    slider.classList.add('to-register');
+    if (authTitle) { authTitle.querySelector('h1').textContent = 'إنشاء حساب جديد'; }
+    hideForgotNotice();
+  } else {
+    tabRegister.classList.remove('active'); tabRegister.setAttribute('aria-selected','false');
+    tabLogin.classList.add('active');       tabLogin.setAttribute('aria-selected','true');
+    panelReg.classList.add('hidden');
+    panelLogin.classList.remove('hidden');
+    slider.classList.remove('to-register');
+    if (authTitle) { authTitle.querySelector('h1').textContent = 'أهلاً بك في شرق تك'; }
+    // Reset register state
+    document.getElementById('pending-notice').classList.remove('show');
+    document.getElementById('register-form').style.display = '';
+    document.getElementById('reg-switch-row').style.display = '';
+    clearAlert('login-alert');
+    hideForgotNotice();
+  }
+}
+
+tabLogin.addEventListener('click',    () => switchTab('login'));
+tabRegister.addEventListener('click', () => switchTab('register'));
+document.getElementById('goto-register').addEventListener('click', () => switchTab('register'));
+document.getElementById('goto-login').addEventListener('click',    () => switchTab('login'));
+document.getElementById('back-to-login').addEventListener('click', () => switchTab('login'));
+
+/* ─── 5. PASSWORD TOGGLE ──────────────────────────── */
+document.querySelectorAll('.pw-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const input   = document.getElementById(btn.dataset.target);
+    const isText  = input.type === 'text';
+    input.type    = isText ? 'password' : 'text';
+    btn.querySelector('.eye-open').style.display   = isText ? '' : 'none';
+    btn.querySelector('.eye-closed').style.display = isText ? 'none' : '';
+    btn.setAttribute('aria-label', isText ? 'إظهار كلمة المرور' : 'إخفاء كلمة المرور');
+  });
+});
+
+/* ─── 6. PASSWORD STRENGTH ────────────────────────── */
+const regPwInput = document.getElementById('reg-password');
+const pwStrength = document.getElementById('reg-pw-strength');
+const psLabel    = document.getElementById('ps-label');
+const psSegs     = [document.getElementById('ps1'), document.getElementById('ps2'),
+                    document.getElementById('ps3'), document.getElementById('ps4')];
+
+function calcStrength(pw) {
+  let score = 0;
+  if (pw.length >= 8)  score++;
+  if (pw.length >= 12) score++;
+  if (/[A-Z]/.test(pw) && /[a-z]/.test(pw)) score++;
+  if (/[0-9]/.test(pw))          score++;
+  if (/[^A-Za-z0-9]/.test(pw)) score++;
+  return Math.min(Math.ceil(score * 4 / 5), 4);
+}
+
+regPwInput.addEventListener('input', () => {
+  const val = regPwInput.value;
+  if (!val) { pwStrength.classList.remove('show'); return; }
+  pwStrength.classList.add('show');
+  const score  = calcStrength(val);
+  const cls    = score <= 1 ? 'weak' : score <= 2 ? 'fair' : 'strong';
+  const labels = ['', 'ضعيفة', 'مقبولة', 'جيدة', 'قوية'];
+  psSegs.forEach((s, i) => { s.className = 'pw-seg'; if (i < score) s.classList.add(cls); });
+  // textContent — XSS safe
+  psLabel.textContent = 'قوة كلمة المرور: ' + (labels[score] || '');
+  psLabel.style.color = cls === 'weak' ? 'var(--error)' : cls === 'fair' ? '#F59E0B' : 'var(--success)';
+});
+
+/* ─── 7. VALIDATION HELPERS ───────────────────────── */
+function showFieldError(inputId, errId)  {
+  const inp = document.getElementById(inputId);
+  const err = document.getElementById(errId);
+  if (inp) inp.classList.add('error');
+  if (err) err.classList.add('show');
+}
+function clearFieldError(inputId, errId) {
+  const inp = document.getElementById(inputId);
+  const err = document.getElementById(errId);
+  if (inp) inp.classList.remove('error');
+  if (err) err.classList.remove('show');
+}
+function showAlert(id, msg, type) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.className = 'form-alert show alert-' + (type || 'error');
+  const msgEl = el.querySelector('span');
+  // Always use textContent — NEVER innerHTML — to prevent XSS from API responses
+  if (msgEl) msgEl.textContent = sanitize(msg);
+}
+function clearAlert(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.remove('show');
+}
+
+// Real-time error clearing on input
+['login-email','login-password'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', () => { el.classList.remove('error'); clearAlert('login-alert'); });
+});
+['reg-name','reg-email','reg-password','reg-confirm'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', () => { el.classList.remove('error'); clearAlert('reg-alert'); });
+});
+
+/* ─── 8. FORGOT PASSWORD — inline, no new page ───── */
+function showForgotNotice() {
+  const notice = document.getElementById('forgot-notice');
+  const row    = document.querySelector('.form-row');
+  if (notice && row) {
+    notice.style.display = 'flex';
+    row.style.display    = 'none';
+  }
+}
+function hideForgotNotice() {
+  const notice = document.getElementById('forgot-notice');
+  const row    = document.querySelector('.form-row');
+  if (notice && row) {
+    notice.style.display = 'none';
+    row.style.display    = '';
+  }
+}
+document.getElementById('forgot-link').addEventListener('click', showForgotNotice);
+
+/* ─── 9. LOGIN FORM ───────────────────────────────── */
+document.getElementById('login-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  clearAlert('login-alert');
+  hideForgotNotice();
+
+  // Trim input — never trust raw user input
+  const emailVal = this.email.value.trim().slice(0, 320);   // max email length
+  const passVal  = this.password.value.slice(0, 128);        // max password length
+  let valid = true;
+
+  if (!emailVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+    showFieldError('login-email', 'login-email-err'); valid = false;
+  } else clearFieldError('login-email', 'login-email-err');
+
+  if (!passVal) {
+    showFieldError('login-password', 'login-pw-err'); valid = false;
+  } else clearFieldError('login-password', 'login-pw-err');
+
+  if (!valid) return;
+
+  const btn = document.getElementById('login-btn');
+  btn.classList.add('loading');
+
+  try {
+    /*
+     * API: POST /api/auth/login
+     * Body: { email, password, remember }
+     * Success: { token, user: { id, name, role } }
+     * Error:   { message: "string" }
+     */
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email:    emailVal,
+        password: passVal,
+        remember: this.remember?.checked || false
+      })
+    });
+
+    const data = await res.json();
+
+    if (res.ok && data.token) {
+      const storage = this.remember?.checked ? localStorage : sessionStorage;
+      // Store token — XSS risk note: localStorage is accessible by JS;
+      // consider httpOnly cookies on the backend for production.
+      storage.setItem('sharq-token', data.token);
+      if (data.user) storage.setItem('sharq-user', JSON.stringify(data.user));
+      window.location.href = 'index.html';
+    } else {
+      // data.message from API is sanitized via textContent inside showAlert
+      showAlert('login-alert', data.message || 'البريد الإلكتروني أو كلمة المرور غير صحيحة.', 'error');
+    }
+  } catch (err) {
+    showAlert('login-alert', 'تعذّر الاتصال بالخادم. الرجاء المحاولة لاحقاً.', 'error');
+    console.error('[Login Error]', err);
+  } finally {
+    btn.classList.remove('loading');
+  }
+});
+
+/* ─── 10. REGISTER FORM ───────────────────────────── */
+document.getElementById('register-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  clearAlert('reg-alert');
+
+  // Trim + length-limit all inputs
+  const nameVal    = this.fullName.value.trim().slice(0, 100);
+  const emailVal   = this.email.value.trim().slice(0, 320);
+  const deptVal    = this.department.value;
+  const passVal    = this.password.value.slice(0, 128);
+  const confirmVal = this.confirmPassword.value.slice(0, 128);
+  const termsVal   = this.terms.checked;
+  let valid = true;
+
+  if (!nameVal || nameVal.length < 3) {
+    showFieldError('reg-name', 'reg-name-err'); valid = false;
+  } else clearFieldError('reg-name', 'reg-name-err');
+
+  if (!emailVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+    showFieldError('reg-email', 'reg-email-err'); valid = false;
+  } else clearFieldError('reg-email', 'reg-email-err');
+
+  // Whitelist department values — prevent injection of unexpected values
+  const allowedDepts = ['frontend','backend','mobile','ai','cybersecurity','design','data','devops','other'];
+  if (!deptVal || !allowedDepts.includes(deptVal)) {
+    showFieldError('reg-dept', 'reg-dept-err'); valid = false;
+  } else clearFieldError('reg-dept', 'reg-dept-err');
+
+  if (!passVal || passVal.length < 8) {
+    showFieldError('reg-password', 'reg-pw-err'); valid = false;
+  } else clearFieldError('reg-password', 'reg-pw-err');
+
+  if (!confirmVal || confirmVal !== passVal) {
+    showFieldError('reg-confirm', 'reg-confirm-err'); valid = false;
+  } else clearFieldError('reg-confirm', 'reg-confirm-err');
+
+  if (!termsVal) {
+    document.getElementById('reg-terms-err').classList.add('show');
+    valid = false;
+  } else {
+    document.getElementById('reg-terms-err').classList.remove('show');
+  }
+
+  if (!valid) return;
+
+  const btn = document.getElementById('register-btn');
+  btn.classList.add('loading');
+
+  try {
+    /*
+     * API: POST /api/auth/register
+     * Body: { fullName, email, department, password, status: 'pending' }
+     * Backend MUST set isActive = false — user cannot login until admin activates.
+     * Success: { message: "string" }
+     * Error:   { message: "string" }
+     */
+    const res = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fullName:   nameVal,
+        email:      emailVal,
+        department: deptVal,
+        password:   passVal,
+        status:     'pending'
+      })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      document.getElementById('register-form').style.display = 'none';
+      document.getElementById('reg-switch-row').style.display = 'none';
+      document.getElementById('pending-notice').classList.add('show');
+    } else {
+      showAlert('reg-alert', data.message || 'حدث خطأ أثناء إنشاء الحساب.', 'error');
+    }
+  } catch (err) {
+    // Offline / no backend yet — show pending anyway for demo
+    document.getElementById('register-form').style.display = 'none';
+    document.getElementById('reg-switch-row').style.display = 'none';
+    document.getElementById('pending-notice').classList.add('show');
+    console.error('[Register Error]', err);
+  } finally {
+    btn.classList.remove('loading');
+  }
+});
+
+/* ─── 11. URL PARAM — auto open register tab ─────── */
+if (new URLSearchParams(window.location.search).get('tab') === 'register') {
+  switchTab('register');
+}
+</script>
+</body>
+</html>
