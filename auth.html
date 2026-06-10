@@ -1495,10 +1495,13 @@ function sanitize(str) {
     .replace(/'/g, '&#x27;')
     .replace(/\//g, '&#x2F;');
 }
-// Safe way to set alert message text — NEVER use innerHTML for API data
 function setAlertText(el, msg) {
-  if (el) el.textContent = sanitize(msg); // textContent doesn't parse HTML — XSS safe
+  if (el) el.textContent = sanitize(msg);
 }
+
+/* ─── CONFIG ──────────────────────────────────────── */
+// غيّر السطر ده بس لما ترفع الباك على سيرفر حقيقي
+const API_BASE = 'http://localhost:8000';
 
 /* ─── 1. THEME TOGGLE ─────────────────────────────── */
 const html        = document.documentElement;
@@ -1686,13 +1689,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
   btn.classList.add('loading');
 
   try {
-    /*
-     * API: POST /api/auth/login
-     * Body: { email, password, remember }
-     * Success: { token, user: { id, name, role } }
-     * Error:   { message: "string" }
-     */
-    const res = await fetch('/api/auth/login', {
+    const res = await fetch(`${API_BASE}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -1706,17 +1703,16 @@ document.getElementById('login-form').addEventListener('submit', async function(
 
     if (res.ok && data.token) {
       const storage = this.remember?.checked ? localStorage : sessionStorage;
-      // Store token — XSS risk note: localStorage is accessible by JS;
-      // consider httpOnly cookies on the backend for production.
       storage.setItem('sharq-token', data.token);
       if (data.user) storage.setItem('sharq-user', JSON.stringify(data.user));
       window.location.href = 'index.html';
     } else {
-      // data.message from API is sanitized via textContent inside showAlert
-      showAlert('login-alert', data.message || 'البريد الإلكتروني أو كلمة المرور غير صحيحة.', 'error');
+      // FastAPI بيرجع الخطأ في data.detail
+      const msg = data.detail || data.message || 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+      showAlert('login-alert', msg, 'error');
     }
   } catch (err) {
-    showAlert('login-alert', 'تعذّر الاتصال بالخادم. الرجاء المحاولة لاحقاً.', 'error');
+    showAlert('login-alert', 'تعذّر الاتصال بالخادم. تأكد إن السيرفر شغّال على localhost:8000', 'error');
     console.error('[Login Error]', err);
   } finally {
     btn.classList.remove('loading');
@@ -1772,22 +1768,14 @@ document.getElementById('register-form').addEventListener('submit', async functi
   btn.classList.add('loading');
 
   try {
-    /*
-     * API: POST /api/auth/register
-     * Body: { fullName, email, department, password, status: 'pending' }
-     * Backend MUST set isActive = false — user cannot login until admin activates.
-     * Success: { message: "string" }
-     * Error:   { message: "string" }
-     */
-    const res = await fetch('/api/auth/register', {
+    const res = await fetch(`${API_BASE}/api/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        fullName:   nameVal,
+        full_name:  nameVal,   // FastAPI بيستنى snake_case
         email:      emailVal,
         department: deptVal,
         password:   passVal,
-        status:     'pending'
       })
     });
 
@@ -1798,13 +1786,17 @@ document.getElementById('register-form').addEventListener('submit', async functi
       document.getElementById('reg-switch-row').style.display = 'none';
       document.getElementById('pending-notice').classList.add('show');
     } else {
-      showAlert('reg-alert', data.message || 'حدث خطأ أثناء إنشاء الحساب.', 'error');
+      const msg = data.detail || data.message || 'حدث خطأ أثناء إنشاء الحساب.';
+      // لو الإيميل مكرر (409) — ظهّر الخطأ على الـ field نفسه
+      if (res.status === 409) {
+        showFieldError('reg-email', 'reg-email-err');
+        const errSpan = document.querySelector('#reg-email-err span');
+        if (errSpan) errSpan.textContent = sanitize(msg);
+      }
+      showAlert('reg-alert', msg, 'error');
     }
   } catch (err) {
-    // Offline / no backend yet — show pending anyway for demo
-    document.getElementById('register-form').style.display = 'none';
-    document.getElementById('reg-switch-row').style.display = 'none';
-    document.getElementById('pending-notice').classList.add('show');
+    showAlert('reg-alert', 'تعذّر الاتصال بالخادم. تأكد إن السيرفر شغّال على localhost:8000', 'error');
     console.error('[Register Error]', err);
   } finally {
     btn.classList.remove('loading');
