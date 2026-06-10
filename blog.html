@@ -122,7 +122,7 @@
   @media (min-width: 1024px) { .section-pad { padding: 128px 0; } }
 
   /* ═══════════════════════════════════════
-     SECTION TITLE SYSTEM (identical to home)
+     SECTION TITLE SYSTEM
   ═══════════════════════════════════════ */
   .stb { text-align: center; margin-bottom: 60px; }
   .stb-eye {
@@ -307,7 +307,12 @@
   }
   .mob-link svg { width: 20px; height: 20px; margin-bottom: 1px; }
   .mob-link.active, .mob-link:hover { color: var(--gold); }
-
+@media (max-width: 768px) {
+  .nav-logo-img {
+    height: 120px;
+    width: 120px;
+  }
+}
   /* ═══════════════════════════════════════
      BLOG HERO / PAGE HEADER
   ═══════════════════════════════════════ */
