@@ -12,7 +12,7 @@
 
   <style>
   /* ═══════════════════════════════════════
-     DESIGN TOKENS — identical to index.html
+     DESIGN TOKENS
   ═══════════════════════════════════════ */
   :root,
   [data-theme="dark"] {
@@ -179,7 +179,7 @@
   }
 
   /* ═══════════════════════════════════════
-     NAVBAR — identical to index.html
+     NAVBAR
   ═══════════════════════════════════════ */
   #navbar {
     position: fixed; top: 0; right: 0; left: 0;
@@ -313,7 +313,12 @@
   }
   .mob-link svg { width: 20px; height: 20px; margin-bottom: 1px; }
   .mob-link.active, .mob-link:hover { color: var(--gold); }
-
+@media (max-width: 768px) {
+  .nav-logo-img {
+    height: 120px;
+    width: 120px;
+  }
+}
   /* ═══════════════════════════════════════
      AUTH SECTION — full viewport
   ═══════════════════════════════════════ */
