@@ -108,12 +108,26 @@
   ul    { list-style: none; }
   button { font-family: 'Cairo', sans-serif; cursor: pointer; border: none; background: none; }
   
-  /* Background pattern */
+  /* Egyptian Geometric Background — same as all other pages */
   body::before {
     content: '';
     position: fixed; inset: 0;
-    background: radial-gradient(circle at top left, rgba(201,168,76,0.12), transparent 24%),
-                radial-gradient(circle at bottom right, rgba(59,130,246,0.12), transparent 26%);
+    background-image:
+      repeating-linear-gradient(45deg,  var(--gold-border) 0px, var(--gold-border) 1px, transparent 1px, transparent 56px),
+      repeating-linear-gradient(-45deg, var(--gold-border) 0px, var(--gold-border) 1px, transparent 1px, transparent 56px);
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: -1;
+  }
+  [data-theme="light"] body::before { opacity: 0.45; }
+
+  /* Radial glows */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse at top right,   rgba(201,168,76,0.07) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom left, rgba(26,92,69,0.08)   0%, transparent 50%);
     pointer-events: none;
     z-index: -1;
   }
@@ -473,7 +487,7 @@
   }
 
   .member-photo {
-    aspect-ratio: 1;
+    height: 200px;
     background: var(--bg-subtle);
     overflow: hidden;
     position: relative;
@@ -500,7 +514,7 @@
   .member-photo-label { font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
 
   .member-body {
-    padding: 28px 24px 32px;
+    padding: 20px 20px 24px;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -702,71 +716,6 @@
     color: var(--text-muted);
     font-weight: 600;
   }
-
-  /* ═══════════════════════════════════════
-     CTA SECTION
-  ═══════════════════════════════════════ */
-  #team-cta {
-    position: relative;
-    text-align: center;
-  }
-  #team-cta::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 10%; right: 10%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
-  }
-  #team-cta::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.05) 0%, transparent 55%);
-    pointer-events: none;
-  }
-
-  .cta-content {
-    position: relative;
-    z-index: 1;
-    max-width: 720px;
-    margin: 0 auto;
-  }
-
-  .cta-icon {
-    width: 64px;
-    height: 64px;
-    margin: 0 auto 24px;
-    border-radius: 16px;
-    background: var(--gold-dim);
-    border: 1px solid var(--gold-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .cta-icon svg { width: 28px; height: 28px; stroke: var(--gold); fill: none; stroke-width: 1.8; }
-
-  .cta-title {
-    font-size: clamp(1.5rem, 3vw, 2.2rem);
-    font-weight: 800;
-    color: var(--text-primary);
-    margin-bottom: 16px;
-  }
-  .cta-title em { font-style: normal; color: var(--gold); }
-
-  .cta-desc {
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-    line-height: 1.9;
-    margin-bottom: 32px;
-  }
-
-  .cta-buttons {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
   /* ═══════════════════════════════════════
      FOOTER
   ═══════════════════════════════════════ */
@@ -1191,25 +1140,41 @@
       <div class="culture-grid" role="list">
 
         <article class="value-card reveal" role="listitem" style="transition-delay:.05s">
-          <div class="value-icon"></div>
+          <div class="value-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+              <path d="M12 2a7 7 0 0 1 7 7c0 2.5-1.3 4.7-3.3 6L15 17H9l-.7-2C6.3 13.7 5 11.5 5 9a7 7 0 0 1 7-7z"/><line x1="9" y1="21" x2="15" y2="21"/><line x1="10" y1="17" x2="10" y2="21"/><line x1="14" y1="17" x2="14" y2="21"/>
+            </svg>
+          </div>
           <h3 class="value-title">الابتكار</h3>
           <p class="value-desc">نسعى دائماً لتجاوز الحدود والبحث عن حلول جديدة وإبداعية لكل تحدي.</p>
         </article>
 
         <article class="value-card reveal" role="listitem" style="transition-delay:.1s">
-          <div class="value-icon"></div>
+          <div class="value-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
           <h3 class="value-title">التعاون</h3>
-          <p class="value-desc">نعمل كفريق واحد موحد، نشاركل المعرفة والخبرة لتحقيق أهداف مشتركة.</p>
+          <p class="value-desc">نعمل كفريق واحد موحد، نشارك المعرفة والخبرة لتحقيق أهداف مشتركة.</p>
         </article>
 
         <article class="value-card reveal" role="listitem" style="transition-delay:.15s">
-          <div class="value-icon"></div>
+          <div class="value-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+            </svg>
+          </div>
           <h3 class="value-title">التطور المستمر</h3>
           <p class="value-desc">نستثمر في تعليمنا وتطورنا، لنبقى في طليعة التكنولوجيا والممارسات الحديثة.</p>
         </article>
 
         <article class="value-card reveal" role="listitem" style="transition-delay:.2s">
-          <div class="value-icon"></div>
+          <div class="value-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
           <h3 class="value-title">الجودة</h3>
           <p class="value-desc">نلتزم بأعلى معايير الجودة في كل منتج وخدمة نقدمها للعملاء.</p>
         </article>
@@ -1245,34 +1210,6 @@
           <div class="stat-label">ساعة عمل متفاني</div>
         </div>
 
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════ CTA SECTION ══════════════════ -->
-  <section id="team-cta" class="section-pad" aria-labelledby="cta-h2">
-    <div class="container">
-      <div class="cta-content reveal">
-        <div class="cta-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        </div>
-        <h2 id="cta-h2" class="cta-title">هل تريد <em>الانضمام إلينا؟</em></h2>
-        <p class="cta-desc">
-          إذا كنت متحمساً للتكنولوجيا والابتكار وتريد أن تكون جزءاً من فريق استثنائي،
-          فنحن نرحب بطلبك!
-        </p>
-        <div class="cta-buttons">
-          <a href="#" class="btn btn-gold">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-            </svg>
-            تواصل معنا
-          </a>
-          <a href="careers.html" class="btn btn-outline">
-            عرض الفرص الوظيفية
-          </a>
-        </div>
       </div>
     </div>
   </section>
@@ -1364,7 +1301,7 @@ const html = document.documentElement;
 
 function applyTheme(t) {
   html.setAttribute('data-theme', t);
-  localStorage.setItem('theme', t);
+  localStorage.setItem('sharq-theme', t);
 }
 
 themeToggle.addEventListener('click', () => {
@@ -1373,7 +1310,7 @@ themeToggle.addEventListener('click', () => {
 });
 
 (function() {
-  const st = localStorage.getItem('theme') || 'dark';
+  const st = localStorage.getItem('sharq-theme') || 'dark';
   applyTheme(st);
 })();
 
