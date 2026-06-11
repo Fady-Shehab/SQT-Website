@@ -98,8 +98,20 @@
     body::before {
       content: '';
       position: fixed; inset: 0;
-      background: radial-gradient(circle at top left, rgba(201,168,76,0.12), transparent 24%),
-                  radial-gradient(circle at bottom right, rgba(59,130,246,0.12), transparent 26%);
+      background-image:
+        repeating-linear-gradient(45deg,  var(--gold-border) 0px, var(--gold-border) 1px, transparent 1px, transparent 56px),
+        repeating-linear-gradient(-45deg, var(--gold-border) 0px, var(--gold-border) 1px, transparent 1px, transparent 56px);
+      opacity: 0.18;
+      pointer-events: none;
+      z-index: -1;
+    }
+    [data-theme="light"] body::before { opacity: 0.45; }
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse at top right,   rgba(201,168,76,0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom left, rgba(26,92,69,0.08)   0%, transparent 50%);
       pointer-events: none;
       z-index: -1;
     }
