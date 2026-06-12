@@ -210,7 +210,13 @@
     align-items: center; justify-content: space-between; gap: 32px;
   }
   .nav-logo { display: flex; align-items: center; gap: 11px; flex-shrink: 0; }
-  .nav-logo-img { height: 42px; width: auto; }
+  .nav-logo-img { height: 140px; width: 140px; }
+  @media (max-width: 768px) {
+  .nav-logo-img {
+    height: 120px;
+    width: 120px;
+  }
+}
   .logo-dark  { display: block; }
   .logo-light { display: none;  }
   [data-theme="light"] .logo-dark  { display: none;  }
@@ -573,10 +579,10 @@
     <nav class="nav-inner" aria-label="التنقل الرئيسي">
       <a href="index.html" class="nav-logo" aria-label="الصفحة الرئيسية">
         <img src="img/logo-dark.png" alt="شعار شرق تك" class="nav-logo-img logo-dark"
-          width="42" height="42"
+           
           onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';" />
         <img src="img/logo-light.png" alt="شعار شرق تك" class="nav-logo-img logo-light"
-          width="42" height="42"
+           
           onerror="this.style.display='none';" />
         <div class="nav-logo-fallback" id="logo-fallback" style="display:none" aria-hidden="true">شرق</div>
       </a>
@@ -916,7 +922,6 @@
   <div class="container">
     <div class="footer-grid">
       <div>
-        <div class="nav-logo-fallback" style="width:48px;height:48px;font-size:0.95rem" aria-hidden="true">شرق</div>
         <p class="footer-brand-tagline">
           فريق التكنولوجيا لإدارة شرق — نبني حلولاً تقنية من قلب الإسكندرية،
           بعقول مصرية تُؤمن بأن الإبداع لا حدود له.
@@ -955,8 +960,7 @@
       </nav>
     </div>
     <div class="footer-bottom">
-      <p class="foot-copy">© 2025 شرق تك — جميع الحقوق محفوظة</p>
-      <p class="foot-made">صُنع بـ <span class="green">♥</span> من فريق شرق تك · الإسكندرية، مصر</p>
+      <p class="foot-copy">© 2026 شرق تك — جميع الحقوق محفوظة</p>
     </div>
   </div>
   <div class="footer-stripe" aria-hidden="true"></div>

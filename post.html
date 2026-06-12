@@ -208,6 +208,12 @@
       height: 140px;
       width: 140px;
     }
+    @media (max-width: 768px) {
+  .nav-logo-img {
+    height: 120px;
+    width: 120px;
+  }
+}
     .nav-logo-dark {
       display: block;
     }
@@ -477,12 +483,12 @@
         <a href="index.html" class="nav-logo" aria-label="الصفحة الرئيسية">
           <img
             src="img/logo-dark.png" alt="شعار شرق تك"
-            class="nav-logo-img nav-logo-dark" width="42" height="42"
+            class="nav-logo-img nav-logo-dark"  
             onerror="this.style.display='none';document.querySelector('.nav-logo-fallback').style.display='flex';"
           />
           <img
             src="img/logo-light.png" alt="شعار شرق تك"
-            class="nav-logo-img nav-logo-light" width="42" height="42"
+            class="nav-logo-img nav-logo-light"  
             onerror="this.style.display='none';document.querySelector('.nav-logo-fallback').style.display='flex';"
           />
           <div class="nav-logo-fallback" style="display:none" aria-hidden="true">شرق</div>
