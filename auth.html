@@ -1300,7 +1300,7 @@
                   <option value="Programming">Programming</option>
                   <option value="AI">AI</option>
                   <option value="Robotics">Robotics</option>
-                  <option value="Desgin">Desgin</option>
+                  <option value="Design">Design</option>
                 </select>
                 <svg class="input-icon" style="left:14px;right:auto;" viewBox="0 0 24 24">
                   <polyline points="6 9 12 15 18 9"/>
@@ -1496,7 +1496,7 @@ function setAlertText(el, msg) {
 
 /* ─── CONFIG ──────────────────────────────────────── */
 // غيّر السطر ده بس لما ترفع الباك على سيرفر حقيقي
-const API_BASE = 'http://localhost:8000';
+const API_BASE = 'http://localhost:5000';
 
 /* ─── 1. THEME TOGGLE ─────────────────────────────── */
 const html        = document.documentElement;
@@ -1538,7 +1538,7 @@ function switchTab(to) {
     panelLogin.classList.add('hidden');
     panelReg.classList.remove('hidden');
     slider.classList.add('to-register');
-    if (authTitle) { authTitle.querySelector('h1').textContent = 'إنشاء حساب جديد'; }
+    if (authTitle) { authTitle.textContent = 'إنشاء حساب جديد'; }
     hideForgotNotice();
   } else {
     tabRegister.classList.remove('active'); tabRegister.setAttribute('aria-selected','false');
@@ -1546,7 +1546,7 @@ function switchTab(to) {
     panelReg.classList.add('hidden');
     panelLogin.classList.remove('hidden');
     slider.classList.remove('to-register');
-    if (authTitle) { authTitle.querySelector('h1').textContent = 'أهلاً بك في شرق تك'; }
+    if (authTitle) { authTitle.textContent = 'أهلاً بك في شرق تك'; }
     // Reset register state
     document.getElementById('pending-notice').classList.remove('show');
     document.getElementById('register-form').style.display = '';
@@ -1702,12 +1702,11 @@ document.getElementById('login-form').addEventListener('submit', async function(
       if (data.user) storage.setItem('sharq-user', JSON.stringify(data.user));
       window.location.href = 'index.html';
     } else {
-      // FastAPI بيرجع الخطأ في data.detail
-      const msg = data.detail || data.message || 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+      const msg = data.message || 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
       showAlert('login-alert', msg, 'error');
     }
   } catch (err) {
-    showAlert('login-alert', 'تعذّر الاتصال بالخادم. تأكد إن السيرفر شغّال على localhost:8000', 'error');
+    showAlert('login-alert', 'تعذّر الاتصال بالخادم. تأكد إن السيرفر شغّال على localhost:5000', 'error');
     console.error('[Login Error]', err);
   } finally {
     btn.classList.remove('loading');
@@ -1736,8 +1735,8 @@ document.getElementById('register-form').addEventListener('submit', async functi
     showFieldError('reg-email', 'reg-email-err'); valid = false;
   } else clearFieldError('reg-email', 'reg-email-err');
 
-  // Whitelist department values — prevent injection of unexpected values
-  const allowedDepts = ['frontend','backend','mobile','ai','cybersecurity','design','data','devops','other'];
+  // Whitelist department values — must match <option value="..."> in the select above
+  const allowedDepts = ['Programming', 'AI', 'Robotics', 'Design'];
   if (!deptVal || !allowedDepts.includes(deptVal)) {
     showFieldError('reg-dept', 'reg-dept-err'); valid = false;
   } else clearFieldError('reg-dept', 'reg-dept-err');
@@ -1781,7 +1780,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
       document.getElementById('reg-switch-row').style.display = 'none';
       document.getElementById('pending-notice').classList.add('show');
     } else {
-      const msg = data.detail || data.message || 'حدث خطأ أثناء إنشاء الحساب.';
+      const msg = data.message || 'حدث خطأ أثناء إنشاء الحساب.';
       // لو الإيميل مكرر (409) — ظهّر الخطأ على الـ field نفسه
       if (res.status === 409) {
         showFieldError('reg-email', 'reg-email-err');
@@ -1791,7 +1790,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
       showAlert('reg-alert', msg, 'error');
     }
   } catch (err) {
-    showAlert('reg-alert', 'تعذّر الاتصال بالخادم. تأكد إن السيرفر شغّال على localhost:8000', 'error');
+    showAlert('reg-alert', 'تعذّر الاتصال بالخادم. تأكد إن السيرفر شغّال على localhost:5000', 'error');
     console.error('[Register Error]', err);
   } finally {
     btn.classList.remove('loading');
