@@ -375,7 +375,7 @@
   .hof-crown-ornament::before, .hof-crown-ornament::after {
     content: ''; display: block; width: 70px; height: 1px; background: var(--gold-border);
   }
-  .hof-crown-emoji { font-size: 1.8rem; line-height: 1; }
+  .hof-crown-icon { width: 2rem; height: 2rem; display: inline-block; vertical-align: middle; stroke: var(--gold); fill: none; }
 
   /* Alexandria skyline — same as home */
   .hof-skyline {
@@ -915,7 +915,7 @@
       </p>
 
       <div class="hof-crown-ornament" aria-hidden="true">
-        <span class="hof-crown-emoji">👑</span>
+        <svg class="hof-crown-icon" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20M4 20l2-8 6 4 6-4 2 8"/><circle cx="12" cy="8" r="2"/><path d="M4 12L2 6l4 2M20 12l2-6-4 2"/></svg>
       </div>
     </div>
 
@@ -953,7 +953,7 @@
 
         <div class="stat-cell reveal" role="listitem" style="transition-delay:.1s">
           <div class="stat-num">
-            <span class="counter" data-target="3" data-api-key="total_seasons">0</span>
+            <span class="counter" data-target="1" data-api-key="total_seasons">0</span>
           </div>
           <div class="stat-lbl">موسم مجد</div>
         </div>
@@ -990,9 +990,7 @@
         <span class="season-label">الموسم:</span>
 
         <div class="season-pills" id="seasonPills" role="group" aria-label="اختيار الموسم">
-          <button class="season-pill active" data-season="3" aria-pressed="true">الموسم الثالث</button>
-          <button class="season-pill" data-season="2" aria-pressed="false">الموسم الثاني</button>
-          <button class="season-pill" data-season="1" aria-pressed="false">الموسم الأول</button>
+          <button class="season-pill active" data-season="1" aria-pressed="true">الموسم الأول</button>
         </div>
 
         <div class="sort-wrap">
@@ -1076,7 +1074,7 @@
         <article class="pod-card r1 reveal" role="listitem" style="transition-delay:.05s"
                  data-member-id="" aria-label="بطل الموسم — المركز الأول">
           <div class="pod-rank" aria-label="المركز الأول">١</div>
-          <span class="pod-crown" aria-hidden="true">👑</span>
+          <span class="pod-crown" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M2 20h20M4 20l2-8 6 4 6-4 2 8"/><circle cx="12" cy="8" r="2"/><path d="M4 12L2 6l4 2M20 12l2-6-4 2"/></svg></span>
           <!--
             IMAGE OPTIONAL: img/member-1.jpg
             صورة بطل الموسم — دائرة 88×88 px
@@ -1221,8 +1219,8 @@
               <td class="lb-prog"><div class="lb-prog-bg"><div class="lb-prog-fill" style="width:100%"></div></div></td>
               <td class="lb-trend"><span class="trend-up">▲ ١</span></td>
               <td class="lb-badges">
-                <span class="badge badge-gold" title="بطل الموسم">👑</span>
-                <span class="badge badge-green" title="أكثر مساهمة">⭐</span>
+                <span class="badge badge-gold" title="بطل الموسم"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M2 20h20M4 20l2-8 6 4 6-4 2 8"/><circle cx="12" cy="8" r="2"/><path d="M4 12L2 6l4 2M20 12l2-6-4 2"/></svg></span>
+                <span class="badge badge-green" title="أكثر مساهمة"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
               </td>
             </tr>
 
@@ -1244,7 +1242,7 @@
               <td class="lb-pts">٨٤٠ نقطة</td>
               <td class="lb-prog"><div class="lb-prog-bg"><div class="lb-prog-fill" style="width:68%"></div></div></td>
               <td class="lb-trend"><span class="trend-up">▲ ٢</span></td>
-              <td class="lb-badges"><span class="badge badge-silver" title="المركز الثاني">🥈</span></td>
+              <td class="lb-badges"><span class="badge badge-silver" title="المركز الثاني"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></span></td>
             </tr>
 
             <!-- Row 3 -->
@@ -1265,7 +1263,7 @@
               <td class="lb-pts">٧٢٠ نقطة</td>
               <td class="lb-prog"><div class="lb-prog-bg"><div class="lb-prog-fill" style="width:58%"></div></div></td>
               <td class="lb-trend"><span class="trend-same">— ٠</span></td>
-              <td class="lb-badges"><span class="badge badge-bronze" title="المركز الثالث">🥉</span></td>
+              <td class="lb-badges"><span class="badge badge-bronze" title="المركز الثالث"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg></span></td>
             </tr>
 
             <!-- Rows 4-10 — placeholder data, will be replaced by API -->
@@ -1276,7 +1274,7 @@
               <td class="lb-pts">٦٥٠ نقطة</td>
               <td class="lb-prog"><div class="lb-prog-bg"><div class="lb-prog-fill" style="width:52%"></div></div></td>
               <td class="lb-trend"><span class="trend-up">▲ ١</span></td>
-              <td class="lb-badges"><span class="badge badge-green">🔥</span></td>
+              <td class="lb-badges"><span class="badge badge-green"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></span></td>
             </tr>
             <tr class="lb-row" data-member-id="" data-name="اسم العضو الخامس"  data-dept="القسم الثاني" data-points="590">
               <td class="lb-rank"><span class="lb-rank-num">٥</span></td>
@@ -1339,7 +1337,7 @@
 
       <!-- Empty state -->
       <div class="empty-state" id="lbEmpty" role="status" aria-live="polite">
-        <div class="empty-icon">🔍</div>
+        <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="40" height="40"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
         <p class="empty-text">لا يوجد عضو يطابق بحثك.</p>
       </div>
 
@@ -1365,73 +1363,73 @@
       <div class="ach-grid" role="list">
 
         <div class="ach-card legendary reveal" role="listitem" style="transition-delay:.05s">
-          <div class="ach-icon">👑</div>
+          <div class="ach-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M2 20h20M4 20l2-8 6 4 6-4 2 8"/><circle cx="12" cy="8" r="2"/><path d="M4 12L2 6l4 2M20 12l2-6-4 2"/></svg></div>
           <div class="ach-name">بطل الموسم</div>
           <div class="ach-desc">الأعلى نقاطاً في الموسم كاملاً</div>
         </div>
 
         <div class="ach-card reveal" role="listitem" style="transition-delay:.10s">
-          <div class="ach-icon">🚀</div>
+          <div class="ach-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
           <div class="ach-name">صاروخ المشاريع</div>
           <div class="ach-desc">إتمام ٥ مشاريع في موسم واحد</div>
         </div>
 
         <div class="ach-card reveal" role="listitem" style="transition-delay:.15s">
-          <div class="ach-icon">🔥</div>
+          <div class="ach-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></div>
           <div class="ach-name">حضور مستمر</div>
           <div class="ach-desc">٣٠ يوماً متتالياً بدون غياب</div>
         </div>
 
         <div class="ach-card reveal" role="listitem" style="transition-delay:.20s">
-          <div class="ach-icon">💡</div>
+          <div class="ach-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></div>
           <div class="ach-name">مبتكر الموسم</div>
           <div class="ach-desc">أفضل فكرة مشروع مُصوَّت عليها</div>
         </div>
 
         <div class="ach-card reveal" role="listitem" style="transition-delay:.25s">
-          <div class="ach-icon">🤝</div>
+          <div class="ach-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg></div>
           <div class="ach-name">روح الفريق</div>
           <div class="ach-desc">أكثر عضو مساهمة في مساعدة الزملاء</div>
         </div>
 
         <div class="ach-card locked reveal" role="listitem" style="transition-delay:.30s">
-          <div class="ach-icon">🏆</div>
+          <div class="ach-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg></div>
           <div class="ach-name">أسطورة شرق</div>
           <div class="ach-desc">الفوز في ٣ مواسم متتالية</div>
         </div>
 
         <div class="ach-card reveal" role="listitem" style="transition-delay:.05s">
-          <div class="ach-icon">⚡</div>
+          <div class="ach-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
           <div class="ach-name">سريع التسليم</div>
           <div class="ach-desc">إتمام مهمة في نصف الوقت المحدد</div>
         </div>
 
         <div class="ach-card reveal" role="listitem" style="transition-delay:.10s">
-          <div class="ach-icon">📚</div>
+          <div class="ach-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
           <div class="ach-name">عاشق التعلم</div>
           <div class="ach-desc">إتمام ١٠ دورات أو شهادات</div>
         </div>
 
         <div class="ach-card reveal" role="listitem" style="transition-delay:.15s">
-          <div class="ach-icon">🎯</div>
+          <div class="ach-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
           <div class="ach-name">القنّاص</div>
           <div class="ach-desc">تحقيق ١٠٠٪ من أهداف الموسم</div>
         </div>
 
         <div class="ach-card locked reveal" role="listitem" style="transition-delay:.20s">
-          <div class="ach-icon">🌟</div>
+          <div class="ach-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
           <div class="ach-name">نجم الإسكندرية</div>
           <div class="ach-desc">التميز في جميع مجالات التقييم</div>
         </div>
 
         <div class="ach-card reveal" role="listitem" style="transition-delay:.25s">
-          <div class="ach-icon">🛡️</div>
+          <div class="ach-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
           <div class="ach-name">حارس الجودة</div>
           <div class="ach-desc">أكثر عضو مراجعةً لكود الزملاء</div>
         </div>
 
         <div class="ach-card locked reveal" role="listitem" style="transition-delay:.30s">
-          <div class="ach-icon">💎</div>
+          <div class="ach-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polygon points="6 3 18 3 22 9 12 22 2 9"/><polyline points="2 9 12 22"/><line x1="6" y1="3" x2="2" y2="9"/><line x1="18" y1="3" x2="22" y2="9"/><line x1="12" y1="3" x2="12" y2="22"/></svg></div>
           <div class="ach-name">الماسة</div>
           <div class="ach-desc">تجاوز ٢٠٠٠ نقطة في موسم واحد</div>
         </div>
@@ -1459,76 +1457,23 @@
 
       <div class="timeline" id="historyTimeline" role="list">
 
-        <!-- Season 3 -->
-        <div class="tl-item reveal" role="listitem" data-season-id="3" style="transition-delay:.05s">
+        <!-- Season 1 — current active season -->
+        <div class="tl-item reveal" role="listitem" data-season-id="1" style="transition-delay:.05s">
           <div class="tl-dot gold" aria-hidden="true"></div>
-          <div class="tl-card">
+          <div class="tl-card" id="tl-season-1">
             <div class="tl-head">
-              <span class="tl-season">الموسم الثالث • ٢٠٢٦</span>
-              <h3 class="tl-title">موسم الإطلاق الكبير</h3>
+              <span class="tl-season" id="tl-s1-label">الموسم الأول • ٢٠٢٦</span>
+              <h3 class="tl-title" id="tl-s1-title">الموسم الأول</h3>
               <span class="badge badge-gold">الموسم الحالي</span>
             </div>
-            <div class="tl-winners" role="list" aria-label="أبطال الموسم الثالث">
+            <!-- Winners loaded from API: GET /api/hof/seasons/history -->
+            <div class="tl-winners" id="tl-s1-winners" role="list" aria-label="أبطال الموسم الأول">
               <div class="tl-winner" role="listitem">
-                <div class="tl-winner-av">
-                  <img src="img/member-1.jpg" alt="" onerror="this.parentElement.innerHTML='ب'" />
-                </div>
+                <div class="tl-winner-av" id="tl-s1-av1">-</div>
                 <div class="tl-winner-info">
-                  <div class="tl-winner-name">اسم بطل الموسم 👑</div>
-                  <div class="tl-winner-pts">١٬٢٤٠ نقطة</div>
+                  <div class="tl-winner-name" id="tl-s1-name1">جاري التحديث...</div>
+                  <div class="tl-winner-pts" id="tl-s1-pts1">— نقطة</div>
                 </div>
-              </div>
-              <div class="tl-winner" role="listitem">
-                <div class="tl-winner-av"><img src="img/member-2.jpg" alt="" onerror="this.parentElement.innerHTML='م'"/></div>
-                <div class="tl-winner-info"><div class="tl-winner-name">اسم العضو الثاني 🥈</div><div class="tl-winner-pts">٨٤٠ نقطة</div></div>
-              </div>
-              <div class="tl-winner" role="listitem">
-                <div class="tl-winner-av"><img src="img/member-3.jpg" alt="" onerror="this.parentElement.innerHTML='ع'"/></div>
-                <div class="tl-winner-info"><div class="tl-winner-name">اسم العضو الثالث 🥉</div><div class="tl-winner-pts">٧٢٠ نقطة</div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Season 2 -->
-        <div class="tl-item reveal" role="listitem" data-season-id="2" style="transition-delay:.10s">
-          <div class="tl-dot silver" aria-hidden="true"></div>
-          <div class="tl-card">
-            <div class="tl-head">
-              <span class="tl-season">الموسم الثاني • ٢٠٢٥</span>
-              <h3 class="tl-title">موسم البناء والتطوير</h3>
-              <span class="badge badge-silver">مكتمل</span>
-            </div>
-            <div class="tl-winners" role="list" aria-label="أبطال الموسم الثاني">
-              <div class="tl-winner" role="listitem">
-                <div class="tl-winner-av"><img src="img/season2-1.jpg" alt="" onerror="this.parentElement.innerHTML='خ'"/></div>
-                <div class="tl-winner-info"><div class="tl-winner-name">اسم بطل الموسم الثاني 👑</div><div class="tl-winner-pts">١٬٠٨٠ نقطة</div></div>
-              </div>
-              <div class="tl-winner" role="listitem">
-                <div class="tl-winner-av"><img src="img/season2-2.jpg" alt="" onerror="this.parentElement.innerHTML='ر'"/></div>
-                <div class="tl-winner-info"><div class="tl-winner-name">اسم العضو الثاني 🥈</div><div class="tl-winner-pts">٩٢٠ نقطة</div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Season 1 -->
-        <div class="tl-item reveal" role="listitem" data-season-id="1" style="transition-delay:.15s">
-          <div class="tl-dot green" aria-hidden="true"></div>
-          <div class="tl-card">
-            <div class="tl-head">
-              <span class="tl-season">الموسم الأول • ٢٠٢٤</span>
-              <h3 class="tl-title">موسم البداية والأحلام</h3>
-              <span class="badge badge-silver">مكتمل</span>
-            </div>
-            <div class="tl-winners" role="list" aria-label="أبطال الموسم الأول">
-              <div class="tl-winner" role="listitem">
-                <div class="tl-winner-av"><img src="img/season1-1.jpg" alt="" onerror="this.parentElement.innerHTML='ز'"/></div>
-                <div class="tl-winner-info"><div class="tl-winner-name">اسم بطل الموسم الأول 👑</div><div class="tl-winner-pts">٩٦٠ نقطة</div></div>
-              </div>
-              <div class="tl-winner" role="listitem">
-                <div class="tl-winner-av"><img src="img/season1-2.jpg" alt="" onerror="this.parentElement.innerHTML='د'"/></div>
-                <div class="tl-winner-info"><div class="tl-winner-name">اسم العضو الثاني 🥈</div><div class="tl-winner-pts">٨١٠ نقطة</div></div>
               </div>
             </div>
           </div>
@@ -1838,9 +1783,12 @@ async function fetchLeaderboard(seasonId, sort = 'points', search = '') {
 }
 
 // ── Initial load
-// fetchStats();
-// fetchPodium(3);
-// fetchLeaderboard(3);
+// Active season
+const CURRENT_SEASON = 1;
+
+fetchStats();
+fetchPodium(CURRENT_SEASON);
+fetchLeaderboard(CURRENT_SEASON);
 ═══════════════════════════════════════════════════════ */
 
 </script>
