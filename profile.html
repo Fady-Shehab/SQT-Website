@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ملف المستخدم — فريق شرق تك" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title id="pageTitle">الملف الشخصي — شرق تك</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+
+  /* ══════════════════════════════════════════════
+     TOKENS — DARK
+  ══════════════════════════════════════════════ */
+  :root, [data-theme="dark"] {
+    --bg-base:        #080E1A;
+    --bg-surface:     #0F172A;
+    --bg-card:        #131F35;   
+    --bg-card-hover:  #172540;
+    --bg-subtle:      #1a2744;
+    --bg-input:       #0F172A;
+
+    --gold:           #C9A84C;
+    --gold-bright:    #E8C76B;
+    --gold-dim:       rgba(201,168,76,0.10);
+    --gold-border:    rgba(201,168,76,0.22);
+    --gold-glow:      rgba(201,168,76,0.15);
+
+    --green:          #1A5C45;
+    --green-light:    #22735A;
+    --green-dim:      rgba(26,92,69,0.18);
+    --green-border:   rgba(26,92,69,0.35);
+
+    --text-primary:   #EEF2F7;
+    --text-secondary: #94A3B8;
+    --text-muted:     #475569;
+
+    --border-subtle:  rgba(255,255,255,0.05);
+    --border-mid:     rgba(255,255,255,0.09);
+    --border-input:   rgba(255,255,255,0.08);
+    --border-focus:   rgba(201,168,76,0.45);
+
+    --error-bg:       rgba(239,68,68,0.08);
+    --error-border:   rgba(239,68,68,0.3);
+    --error-text:     #FCA5A5;
+    --success-bg:     rgba(74,222,128,0.08);
+    --success-border: rgba(74,222,128,0.3);
+    --success-text:   #86EFAC;
+
+    --shadow-card:    0 4px 40px rgba(0,0,0,0.45);
+    --shadow-hover:   0 12px 56px rgba(0,0,0,0.6);
+    --shadow-gold:    0 0 48px rgba(201,168,76,0.12);
+    --nav-bg:         transparent;
+    --nav-bg-scroll:  rgba(8,14,26,0.92);
+    --banner-bg:      linear-gradient(145deg, var(--green) 0%, #0D3D2A 50%, #0A2D20 100%);
+  }
+
+  /* ══════════════════════════════════════════════
+     TOKENS — LIGHT
+  ══════════════════════════════════════════════ */
+  [data-theme="light"] {
+    --bg-base:        #F7F5F0;
+    --bg-surface:     #FFFFFF;
+    --bg-card:        #FFFFFF;
+    --bg-card-hover:  #FAFAF8;
+    --bg-subtle:      #F0EDE6;
+    --bg-input:       #F8F6F1;
+
+    --gold:           #B8922A;
+    --gold-bright:    #D4AF37;
+    --gold-dim:       rgba(184,146,42,0.08);
+    --gold-border:    rgba(184,146,42,0.28);
+    --gold-glow:      rgba(184,146,42,0.12);
+
+    --green:          #1A5C45;
+    --green-light:    #22735A;
+    --green-dim:      rgba(26,92,69,0.08);
+    --green-border:   rgba(26,92,69,0.25);
+
+    --text-primary:   #0F1923;
+    --text-secondary: #3D4F61;
+    --text-muted:     #8A96A3;
+
+    --border-subtle:  rgba(0,0,0,0.06);
+    --border-mid:     rgba(0,0,0,0.10);
+    --border-input:   rgba(0,0,0,0.10);
+    --border-focus:   rgba(184,146,42,0.5);
+
+    --error-bg:       rgba(220,38,38,0.06);
+    --error-border:   rgba(220,38,38,0.25);
+    --error-text:     #DC2626;
+    --success-bg:     rgba(22,163,74,0.06);
+    --success-border: rgba(22,163,74,0.25);
+    --success-text:   #16A34A;
+
+    --shadow-card:    0 2px 24px rgba(0,0,0,0.08);
+    --shadow-hover:   0 8px 40px rgba(0,0,0,0.14);
+    --shadow-gold:    0 0 40px rgba(184,146,42,0.10);
+    --nav-bg:         rgba(247,245,240,0.80);
+    --nav-bg-scroll:  rgba(255,255,255,0.95);
+    --banner-bg:      linear-gradient(145deg, var(--green) 0%, #0D3D2A 50%, #0A2D20 100%);
+  }
+
+  /* ══════════════════════════════════════════════
+     RESET + BASE
+  ══════════════════════════════════════════════ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg-base);
+    color: var(--text-primary);
+    direction: rtl;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.35s ease, color 0.35s ease;
+  }
+  img    { max-width: 100%; display: block; }
+  a      { text-decoration: none; color: inherit; }
+  ul     { list-style: none; }
+  button { font-family: 'Cairo', sans-serif; cursor: pointer; border: none; background: none; }
+  input, select, textarea { font-family: 'Cairo', sans-serif; }
+
+  /* ══════════════════════════════════════════════
+     LAYOUT
+  ══════════════════════════════════════════════ */
+  .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+  @media (min-width: 768px)  { .container { padding: 0 36px; } }
+  @media (min-width: 1024px) { .container { padding: 0 48px; } }
+
+  /* ══════════════════════════════════════════════
+     NAVBAR
+  ══════════════════════════════════════════════ */
+  #navbar {
+    position: fixed; top: 0; right: 0; left: 0; z-index: 1000; height: 72px;
+    background: var(--nav-bg);
+    transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+  }
+  #navbar.scrolled {
+    background: var(--nav-bg-scroll);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 1px 0 var(--border-subtle);
+  }
+  .nav-inner { height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+  .nav-logo  { display: flex; align-items: center; gap: 11px; flex-shrink: 0; }
+  .nav-logo-img { height: 140px; width: 140px; }
+  @media (max-width: 768px) {
+  .nav-logo-img {
+    height: 120px;
+    width: 120px;
+  }
+}
+  .logo-dark  { display: block; }  .logo-light { display: none; }
+  [data-theme="light"] .logo-dark  { display: none; }
+  [data-theme="light"] .logo-light { display: block; }
+  .nav-logo-fallback {
+    height: 42px; width: 52px; background: var(--green);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; font-weight: 900; color: #F8FAFC; flex-shrink: 0;
+  }
+  .nav-links { display: flex; align-items: center; gap: 2px; flex: 1; justify-content: center; }
+  .nav-link {
+    position: relative; padding: 8px 18px; font-size: 0.9rem; font-weight: 600;
+    color: var(--text-secondary); border-radius: 8px; transition: color 0.2s ease; white-space: nowrap;
+  }
+  .nav-link::after {
+    content: ''; position: absolute; bottom: 3px; right: 18px; left: 18px; height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+    border-radius: 999px; transform: scaleX(0); transform-origin: right; transition: transform 0.25s ease;
+  }
+  .nav-link:hover { color: var(--text-primary); }
+  .nav-link.active { color: var(--gold); }
+  .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+  .nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .theme-toggle {
+    width: 38px; height: 38px; border-radius: 9px; border: 1px solid var(--border-mid);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-secondary); transition: all 0.25s ease; background: transparent;
+  }
+  .theme-toggle:hover { border-color: var(--gold-border); color: var(--gold); }
+  .theme-toggle svg { width: 17px; height: 17px; }
+  .icon-sun  { display: none; } .icon-moon { display: block; }
+  [data-theme="light"] .icon-sun  { display: block; }
+  [data-theme="light"] .icon-moon { display: none; }
+  .nav-auth {
+    display: flex; align-items: center; gap: 7px; padding: 9px 20px; border-radius: 9px;
+    font-size: 0.87rem; font-weight: 700;
+    background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+    color: #0F1923; transition: all 0.25s ease; box-shadow: 0 2px 12px var(--gold-glow);
+  }
+  .nav-auth:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(201,168,76,0.3); filter: brightness(1.07); }
+  .nav-auth svg { width: 15px; height: 15px; }
+  @media (max-width: 1023px) { .nav-links { display: none; } }
+
+  /* Mobile bottom nav */
+  .mobile-nav {
+    display: none; position: fixed; bottom: 0; right: 0; left: 0; z-index: 999;
+    background: var(--nav-bg-scroll); backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border-subtle);
+    padding: 10px 16px; justify-content: space-around; align-items: center;
+  }
+  @media (max-width: 1023px) { .mobile-nav { display: flex; } }
+  .mob-link {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    padding: 6px 10px; border-radius: 10px; color: var(--text-muted);
+    font-size: 0.6rem; font-weight: 600; transition: color 0.2s ease; min-width: 52px;
+  }
+  .mob-link svg { width: 20px; height: 20px; }
+  .mob-link.active, .mob-link:hover { color: var(--gold); }
+
+  /* ══════════════════════════════════════════════
+     BUTTONS
+  ══════════════════════════════════════════════ */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 11px 24px;
+    border-radius: 10px; font-family: 'Cairo', sans-serif;
+    font-size: 0.88rem; font-weight: 700; transition: all 0.25s ease; cursor: pointer;
+  }
+  .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-bright)); color: #0F1923; box-shadow: 0 3px 16px var(--gold-glow); }
+  .btn-gold:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 6px 28px rgba(201,168,76,0.35); }
+  .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid var(--border-mid); }
+  .btn-outline:hover { border-color: var(--gold-border); color: var(--gold); transform: translateY(-1px); }
+  .btn-danger { background: rgba(239,68,68,0.1); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.25); }
+  .btn-danger:hover { background: rgba(239,68,68,0.18); transform: translateY(-1px); }
+  .btn-sm { padding: 8px 16px; font-size: 0.8rem; border-radius: 8px; }
+  .btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+  /* ══════════════════════════════════════════════
+     BADGES
+  ══════════════════════════════════════════════ */
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 11px; border-radius: 999px;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em;
+  }
+  .badge-gold   { background: var(--gold-dim);  color: var(--gold);  border: 1px solid var(--gold-border); }
+  .badge-green  { background: var(--green-dim); color: #4ADE80;      border: 1px solid var(--green-border); }
+  .badge-silver { background: rgba(148,163,184,0.08); color: var(--text-secondary); border: 1px solid var(--border-mid); }
+  .badge-blue   { background: rgba(59,130,246,0.08); color: #93C5FD; border: 1px solid rgba(59,130,246,0.2); }
+  .badge-purple { background: rgba(168,85,247,0.08); color: #C4B5FD; border: 1px solid rgba(168,85,247,0.2); }
+
+  /* ══════════════════════════════════════════════
+     FORM ELEMENTS
+  ══════════════════════════════════════════════ */
+  .field-group { margin-bottom: 18px; }
+  .field-label {
+    display: block; font-size: 0.8rem; font-weight: 700;
+    color: var(--text-secondary); margin-bottom: 8px;
+  }
+  .field-label .req { color: var(--gold); font-size: 0.68rem; margin-right: 2px; }
+  .field-wrap { position: relative; display: flex; align-items: center; }
+  .field-icon {
+    position: absolute; right: 13px;
+    width: 17px; height: 17px; pointer-events: none;
+    stroke: var(--text-muted); fill: none; stroke-width: 1.8;
+  }
+  .field-input {
+    width: 100%; padding: 11px 40px 11px 14px;
+    background: var(--bg-input); border: 1px solid var(--border-input);
+    border-radius: 10px; color: var(--text-primary);
+    font-size: 0.88rem; font-weight: 500; outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    direction: rtl; -webkit-appearance: none;
+  }
+  .field-input::placeholder { color: var(--text-muted); font-size: 0.82rem; }
+  .field-input:focus { border-color: var(--border-focus); box-shadow: 0 0 0 3px var(--gold-dim); }
+  .field-input.error { border-color: var(--error-border); box-shadow: 0 0 0 3px var(--error-bg); }
+  select.field-input { cursor: pointer; padding-left: 36px; }
+  .field-hint { font-size: 0.71rem; color: var(--text-muted); margin-top: 5px; }
+  .field-hint.error { color: var(--error-text); }
+  .field-hint.success { color: var(--success-text); }
+
+  /* Alert */
+  .inline-alert {
+    display: none; padding: 11px 14px; border-radius: 10px;
+    font-size: 0.8rem; font-weight: 600; margin-bottom: 16px;
+    align-items: flex-start; gap: 9px; line-height: 1.5;
+  }
+  .inline-alert.visible { display: flex; }
+  .inline-alert.error   { background: var(--error-bg);   border: 1px solid var(--error-border);   color: var(--error-text); }
+  .inline-alert.success { background: var(--success-bg); border: 1px solid var(--success-border); color: var(--success-text); }
+  .inline-alert svg { width: 15px; height: 15px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  /* ══════════════════════════════════════════════
+     REVEAL
+  ══════════════════════════════════════════════ */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s cubic-bezier(0,0,0.2,1), transform 0.6s cubic-bezier(0,0,0.2,1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* Skeleton */
+  .skel {
+    background: linear-gradient(90deg, var(--bg-subtle) 25%, var(--bg-card-hover) 50%, var(--bg-subtle) 75%);
+    background-size: 200% 100%; border-radius: 6px;
+    animation: skelShim 1.4s ease-in-out infinite;
+    display: inline-block;
+  }
+  @keyframes skelShim { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+  /* ══════════════════════════════════════════════
+     PROFILE HEADER — BANNER + AVATAR
+  ══════════════════════════════════════════════ */
+  #profile-header { padding-top: 72px; position: relative; }
+
+  .profile-banner {
+    height: 180px; background: var(--banner-bg);
+    position: relative; overflow: hidden;
+  }
+  @media (min-width: 768px) { .profile-banner { height: 220px; } }
+
+  /* Egyptian geometric pattern overlay on banner */
+  .profile-banner::before {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg,  var(--gold-border) 0px, var(--gold-border) 1px, transparent 1px, transparent 52px),
+      repeating-linear-gradient(-45deg, var(--gold-border) 0px, var(--gold-border) 1px, transparent 1px, transparent 52px);
+    opacity: 0.18; pointer-events: none;
+  }
+  /* Gold + green subtle glows */
+  .profile-banner::after {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 50%, rgba(201,168,76,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 50%, rgba(26,92,69,0.07) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  /* Bottom gold line on banner */
+  .banner-line {
+    position: absolute; bottom: 0; left: 10%; right: 10%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
+  }
+
+  /* Floating diamonds on banner */
+  .banner-gem {
+    position: absolute; background: var(--gold); transform: rotate(45deg);
+    opacity: 0.12; pointer-events: none;
+    animation: gemF 0s ease-in-out infinite alternate;
+  }
+  .banner-gem-1 { width:6px; height:6px; top:30%; right:8%;  animation-duration:6s; }
+  .banner-gem-2 { width:4px; height:4px; top:60%; left:12%;  animation-duration:8s; animation-delay:1s; }
+  .banner-gem-3 { width:5px; height:5px; top:20%; left:35%;  animation-duration:7s; animation-delay:2s; opacity:0.08; }
+  @keyframes gemF { from{transform:rotate(45deg) translateY(0)} to{transform:rotate(45deg) translateY(-10px)} }
+
+  /* Owner: edit banner button */
+  .banner-edit-btn {
+    position: absolute; bottom: 12px; left: 12px; z-index: 2;
+    padding: 6px 14px; border-radius: 8px; font-size: 0.75rem; font-weight: 700;
+    background: rgba(8,14,26,0.65); backdrop-filter: blur(8px);
+    border: 1px solid var(--border-mid); color: var(--text-secondary);
+    display: none; align-items: center; gap: 6px; transition: all 0.2s ease;
+  }
+  .banner-edit-btn:hover { border-color: var(--gold-border); color: var(--gold); }
+  .banner-edit-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; }
+  body.is-owner .banner-edit-btn { display: flex; }
+
+  /* Profile row — avatar + info */
+  .profile-row {
+    display: flex; flex-direction: column; gap: 16px;
+    padding: 0 0 32px;
+    position: relative;
+  }
+  @media (min-width: 768px) { .profile-row { flex-direction: row; align-items: flex-end; gap: 28px; } }
+
+  /* Avatar wrapper */
+  .avatar-wrap {
+    position: relative; flex-shrink: 0;
+    margin-top: -52px;
+  }
+  @media (min-width: 768px) { .avatar-wrap { margin-top: -60px; } }
+
+  .avatar-ring {
+    width: 108px; height: 108px;
+    border-radius: 50%;
+    border: 4px solid var(--bg-base);
+    overflow: hidden; position: relative;
+    background: var(--bg-subtle);
+    box-shadow: 0 0 0 2px var(--gold-border);
+  }
+  @media (min-width: 768px) { .avatar-ring { width: 128px; height: 128px; } }
+
+  .avatar-img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .avatar-initials {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.2rem; font-weight: 900; color: var(--text-primary);
+    background: var(--bg-subtle);
+  }
+
+  /* Camera overlay — owner only */
+  .avatar-upload-overlay {
+    position: absolute; inset: 0; border-radius: 50%;
+    background: rgba(8,14,26,0.55); backdrop-filter: blur(4px);
+    display: none; align-items: center; justify-content: center;
+    cursor: pointer; transition: opacity 0.2s ease;
+    flex-direction: column; gap: 4px;
+  }
+  .avatar-upload-overlay svg { width: 24px; height: 24px; stroke: var(--ivory, #F8FAFC); fill: none; stroke-width: 2; }
+  .avatar-upload-overlay span { font-size: 0.65rem; color: #F8FAFC; font-weight: 600; }
+  body.is-owner .avatar-ring:hover .avatar-upload-overlay { display: flex; }
+  #avatarFileInput { display: none; }
+
+  /* Info block */
+  .profile-info { flex: 1; }
+
+  .profile-name-row {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 6px;
+  }
+  .profile-name {
+    font-size: clamp(1.4rem, 4vw, 1.9rem); font-weight: 900; color: var(--text-primary); line-height: 1.2;
+  }
+  .profile-role-badge { }
+
+  .profile-username {
+    font-size: 0.85rem; color: var(--text-muted);
+    font-family: 'Tajawal', sans-serif; margin-bottom: 10px;
+  }
+
+  .profile-meta-row {
+    display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 14px;
+  }
+  .profile-meta-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 0.8rem; color: var(--text-muted);
+  }
+  .profile-meta-item svg { width: 14px; height: 14px; stroke: var(--gold); fill: none; stroke-width: 2; flex-shrink: 0; }
+
+  /* Edit profile button — owner only */
+  .edit-profile-btn {
+    display: none; /* shown via is-owner */
+  }
+  body.is-owner .edit-profile-btn { display: inline-flex; }
+
+  /* ══════════════════════════════════════════════
+     STATS ROW
+  ══════════════════════════════════════════════ */
+  .stats-strip {
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .stats-inner {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+    background: var(--border-subtle);
+  }
+  @media (min-width: 640px) { .stats-inner { grid-template-columns: repeat(4, 1fr); } }
+
+  .stat-cell {
+    background: var(--bg-surface); padding: 28px 20px; text-align: center;
+    transition: background 0.2s ease;
+  }
+  .stat-cell:hover { background: var(--bg-card); }
+  .stat-num {
+    font-size: 2rem; font-weight: 900; color: var(--gold); line-height: 1;
+    display: flex; align-items: baseline; justify-content: center; gap: 2px;
+  }
+  .stat-suf { font-size: 0.5em; color: var(--gold-bright); }
+  .stat-lbl { font-size: 0.77rem; color: var(--text-muted); margin-top: 7px; }
+
+  /* ══════════════════════════════════════════════
+     PROFILE BODY — TABS + CONTENT
+  ══════════════════════════════════════════════ */
+  #profile-body { padding: 40px 0 80px; }
+
+  .body-grid {
+    display: grid; grid-template-columns: 1fr; gap: 28px;
+  }
+  @media (min-width: 1024px) { .body-grid { grid-template-columns: 1fr 300px; align-items: start; } }
+
+  /* ── Tabs ── */
+  .tabs-bar {
+    display: flex; gap: 2px; border-bottom: 1px solid var(--border-subtle);
+    margin-bottom: 28px; 
+  }
+  .tab-btn {
+    padding: 10px 20px; font-size: 0.86rem; font-weight: 700;
+    color: var(--text-muted); border-bottom: 2px solid transparent;
+    transition: all 0.2s ease; white-space: nowrap; flex-shrink: 0;
+    background: transparent; margin-bottom: -1px;
+  }
+  .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .tab-btn:hover:not(.active) { color: var(--text-secondary); }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── Overview tab ── */
+  .overview-bio {
+    background: var(--bg-card); border: 1px solid var(--border-subtle);
+    border-radius: 14px; padding: 22px; margin-bottom: 24px;
+  }
+  .overview-bio-title {
+    font-size: 0.82rem; font-weight: 700; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;
+  }
+  .overview-bio-text { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.9; }
+  .overview-bio-empty { font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
+
+  /* Recent activity row */
+  .recent-section-title {
+    font-size: 0.88rem; font-weight: 700; color: var(--text-primary);
+    margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+  }
+  .recent-section-title svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; stroke-width: 2; }
+
+  /* ── Project mini card ── */
+  .proj-mini {
+    background: var(--bg-card); border: 1px solid var(--border-subtle);
+    border-radius: 14px; overflow: hidden;
+    transition: all 0.25s ease; display: flex; flex-direction: column;
+  }
+  .proj-mini:hover { border-color: var(--gold-border); transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+  .proj-mini-img { aspect-ratio: 16/9; background: var(--bg-subtle); overflow: hidden; }
+  .proj-mini-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+  .proj-mini:hover .proj-mini-img img { transform: scale(1.04); }
+  .proj-mini-img-ph {
+    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+  }
+  .proj-mini-img-ph svg { width: 32px; height: 32px; stroke: var(--text-muted); fill: none; stroke-width: 1.2; opacity: 0.3; }
+  .proj-mini-body { padding: 16px; flex: 1; }
+  .proj-mini-title { font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .proj-mini-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .proj-mini-foot { display: flex; align-items: center; justify-content: space-between; }
+  .proj-mini-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+  .proj-tag { padding: 2px 9px; border-radius: 999px; font-size: 0.63rem; font-weight: 600;
+    background: var(--bg-subtle); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+
+  /* ── Blog mini card ── */
+  .blog-mini {
+    background: var(--bg-card); border: 1px solid var(--border-subtle);
+    border-radius: 14px; overflow: hidden;
+    transition: all 0.25s ease; display: flex; flex-direction: column;
+  }
+  .blog-mini:hover { border-color: var(--gold-border); transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+  .blog-mini-cover { aspect-ratio: 16/9; background: var(--bg-subtle); overflow: hidden; }
+  .blog-mini-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+  .blog-mini:hover .blog-mini-cover img { transform: scale(1.04); }
+  .blog-mini-cover-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+  .blog-mini-cover-ph svg { width: 32px; height: 32px; stroke: var(--text-muted); fill: none; stroke-width: 1.2; opacity: 0.3; }
+  .blog-mini-body { padding: 16px; flex: 1; }
+  .blog-mini-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+  .blog-mini-date { font-size: 0.7rem; color: var(--text-muted); }
+  .blog-mini-title { font-size: 0.9rem; font-weight: 700; color: var(--text-primary); line-height: 1.45; margin-bottom: 6px;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .blog-mini-excerpt { font-size: 0.77rem; color: var(--text-muted); line-height: 1.6;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+  /* ── Grid layouts for tabs ── */
+  .two-col-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+  @media (min-width: 640px) { .two-col-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ── Badges tab ── */
+  .badges-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  @media (min-width: 480px) { .badges-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 768px) { .badges-grid { grid-template-columns: repeat(4, 1fr); } }
+
+  .badge-card {
+    background: var(--bg-card); border: 1px solid var(--border-subtle);
+    border-radius: 14px; padding: 20px 14px; text-align: center;
+    transition: all 0.25s ease; cursor: default;
+  }
+  .badge-card:hover { border-color: var(--gold-border); transform: translateY(-3px); }
+  .badge-card.locked { opacity: 0.35; filter: grayscale(1); }
+  .badge-icon {
+    width: 52px; height: 52px; border-radius: 14px; margin: 0 auto 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .badge-icon svg { width: 26px; height: 26px; fill: none; stroke-width: 1.8; }
+  .badge-icon.gold  { background: var(--gold-dim);  } .badge-icon.gold  svg { stroke: var(--gold); }
+  .badge-icon.green { background: var(--green-dim); } .badge-icon.green svg { stroke: #4ADE80; }
+  .badge-icon.blue  { background: rgba(59,130,246,0.1); } .badge-icon.blue  svg { stroke: #93C5FD; }
+  .badge-icon.purple{ background: rgba(168,85,247,0.1); } .badge-icon.purple svg { stroke: #C4B5FD; }
+  .badge-name { font-size: 0.8rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .badge-desc { font-size: 0.68rem; color: var(--text-muted); line-height: 1.4; }
+
+  /* ── Empty state ── */
+  .empty-state { text-align: center; padding: 48px 20px; }
+  .empty-state svg { width: 48px; height: 48px; stroke: var(--text-muted); fill: none; stroke-width: 1.2; margin: 0 auto 12px; opacity: 0.35; }
+  .empty-state p { font-size: 0.88rem; color: var(--text-muted); }
+
+  /* ══════════════════════════════════════════════
+     SIDEBAR CARDS
+  ══════════════════════════════════════════════ */
+  .side-card {
+    background: var(--bg-card); border: 1px solid var(--border-subtle);
+    border-radius: 16px; padding: 22px; margin-bottom: 20px;
+    isolation: isolate;
+  }
+  .side-card-title {
+    font-size: 0.8rem; font-weight: 700; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 18px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .side-card-title svg { width: 15px; height: 15px; stroke: var(--gold); fill: none; stroke-width: 2; }
+
+  /* Info list */
+  .info-list { display: flex; flex-direction: column; gap: 14px; }
+  .info-row { display: flex; align-items: flex-start; gap: 12px; }
+  .info-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--bg-subtle); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .info-icon svg { width: 15px; height: 15px; stroke: var(--gold); fill: none; stroke-width: 1.8; }
+  .info-key { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 2px; }
+  .info-val { font-size: 0.85rem; font-weight: 700; color: var(--text-primary); }
+
+  /* Section badge */
+  .section-display {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px; border-radius: 10px;
+    background: var(--green-dim); border: 1px solid var(--green-border);
+    font-size: 0.82rem; font-weight: 700; color: #4ADE80;
+    font-family: 'Tajawal', sans-serif; letter-spacing: 0.04em;
+    width: 100%; justify-content: center; margin-top: 4px;
+  }
+  .section-display svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  /* Points display */
+  .points-display {
+    display: flex; align-items: baseline; gap: 6px; justify-content: center;
+    margin-top: 8px;
+  }
+  .points-num { font-size: 2.4rem; font-weight: 900; color: var(--gold); line-height: 1; }
+  .points-label { font-size: 0.78rem; color: var(--text-muted); }
+  .points-bar-wrap { margin-top: 12px; }
+  .points-bar-track { height: 5px; background: var(--bg-subtle); border-radius: 999px; overflow: hidden; }
+  .points-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-bright)); border-radius: 999px; transition: width 1.2s cubic-bezier(0,0,0.2,1); }
+  .points-bar-label { display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--text-muted); margin-top: 5px; }
+
+  /* ══════════════════════════════════════════════
+     EDIT MODAL
+  ══════════════════════════════════════════════ */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 2000;
+    background: rgba(8,14,26,0.75); backdrop-filter: blur(8px);
+    display: none; align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: var(--bg-card); border: 1px solid var(--border-mid);
+    border-radius: 20px; padding: 32px 28px; width: 100%; max-width: 460px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    animation: modalIn 0.3s cubic-bezier(0,0,0.2,1);
+    position: relative; max-height: 90vh; overflow-y: auto;
+  }
+  @keyframes modalIn { from{opacity:0;transform:translateY(20px) scale(0.97)} to{opacity:1;transform:translateY(0) scale(1)} }
+  .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+  .modal-title { font-size: 1.1rem; font-weight: 800; color: var(--text-primary); }
+  .modal-close {
+    width: 36px; height: 36px; border-radius: 9px; border: 1px solid var(--border-mid);
+    display: flex; align-items: center; justify-content: center; color: var(--text-muted);
+    transition: all 0.2s ease; flex-shrink: 0;
+  }
+  .modal-close:hover { border-color: var(--gold-border); color: var(--gold); }
+  .modal-close svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+  /* Gold top line on modal */
+  .modal-box::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--green), var(--gold), var(--green));
+    border-radius: 20px 20px 0 0;
+  }
+
+  /* ══════════════════════════════════════════════
+     FOOTER
+  ══════════════════════════════════════════════ */
+  footer {
+    background: var(--bg-surface); border-top: 1px solid var(--border-subtle);
+    padding: 64px 0 0; margin-bottom: 60px;
+  }
+  @media (min-width: 1024px) { footer { margin-bottom: 0; } }
+  .footer-grid { display: grid; grid-template-columns: 1fr; gap: 48px; margin-bottom: 48px; }
+  @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+  .footer-tagline { font-size: 0.85rem; color: var(--text-muted); line-height: 1.9; max-width: 280px; margin-top: 14px; }
+  .social-row { display: flex; gap: 10px; margin-top: 22px; }
+  .social-a { width: 38px; height: 38px; border-radius: 9px; border: 1px solid var(--border-mid); display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: all 0.25s ease; }
+  .social-a svg { width: 17px; height: 17px; }
+  .social-a:hover { border-color: var(--gold-border); color: var(--gold); background: var(--gold-dim); }
+  .foot-col-h { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; color: var(--text-primary); text-transform: uppercase; margin-bottom: 18px; }
+  .foot-links { display: flex; flex-direction: column; gap: 11px; }
+  .foot-link { font-size: 0.85rem; color: var(--text-muted); transition: color 0.2s ease; }
+  .foot-link:hover { color: var(--gold); }
+  .footer-bottom { border-top: 1px solid var(--border-subtle); padding: 24px 0 28px; display: flex; flex-direction: column; gap: 8px; align-items: center; text-align: center; }
+  @media (min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; } }
+  .foot-copy { font-size: 0.77rem; color: var(--text-muted); }
+  .foot-made { font-size: 0.77rem; color: var(--text-muted); }
+  .foot-made .green { color: var(--green-light); font-weight: 700; }
+  .footer-stripe { height: 3px; background: linear-gradient(90deg, var(--green), var(--gold), var(--green)); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    .reveal { opacity:1 !important; transform:none !important; }
+  }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ NAVBAR ══════════════════ -->
+<header id="navbar" role="banner">
+  <div class="container">
+    <nav class="nav-inner" aria-label="التنقل الرئيسي">
+      <a href="index.html" class="nav-logo" aria-label="الصفحة الرئيسية">
+        <img src="img/logo-dark.png"  alt="شعار شرق تك" class="nav-logo-img logo-dark"  
+          onerror="this.style.display='none';document.getElementById('lf').style.display='flex';" />
+        <img src="img/logo-light.png" alt="شعار شرق تك" class="nav-logo-img logo-light" 
+          onerror="this.style.display='none';" />
+        <div class="nav-logo-fallback" id="lf" style="display:none" aria-hidden="true">شرق</div>
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html"        class="nav-link">الرئيسية</a></li>
+        <li><a href="team.html"         class="nav-link">الفريق</a></li>
+        <li><a href="projects.html"     class="nav-link">المشاريع</a></li>
+        <li><a href="blog.html"         class="nav-link">المدونة</a></li>
+        <li><a href="hall-of-fame.html" class="nav-link">قاعة المجد</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="تبديل المظهر">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <a href="auth.html" class="nav-auth" aria-label="تسجيل الدخول">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          تسجيل الدخول
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile Bottom Nav -->
+<nav class="mobile-nav" aria-label="التنقل السريع">
+  <a href="index.html"        class="mob-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>الرئيسية</a>
+  <a href="team.html"         class="mob-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>الفريق</a>
+  <a href="projects.html"     class="mob-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>المشاريع</a>
+  <a href="blog.html"         class="mob-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>المدونة</a>
+  <a href="hall-of-fame.html" class="mob-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>المجد</a>
+</nav>
+
+<!-- Hidden file input for avatar -->
+<input type="file" id="avatarFileInput" accept="image/jpeg,image/png,image/webp" aria-label="تحميل صورة الملف الشخصي" />
+
+
+<!-- ══════════════════ MAIN ══════════════════ -->
+<main id="main-content">
+
+  <!-- PROFILE HEADER -->
+  <div id="profile-header">
+
+    <!-- Banner -->
+    <div class="profile-banner" role="img" aria-label="خلفية الملف الشخصي">
+      <div class="banner-gem banner-gem-1" aria-hidden="true"></div>
+      <div class="banner-gem banner-gem-2" aria-hidden="true"></div>
+      <div class="banner-gem banner-gem-3" aria-hidden="true"></div>
+      <div class="banner-line" aria-hidden="true"></div>
+    </div>
+
+    <div class="container">
+      <div class="profile-row">
+
+        <!-- Avatar -->
+        <div class="avatar-wrap">
+          <div class="avatar-ring" id="avatarRing">
+            <img id="avatarImg" class="avatar-img" src="" alt="صورة المستخدم" style="display:none"
+              onerror="this.style.display='none';document.getElementById('avatarInitials').style.display='flex';" />
+            <div class="avatar-initials" id="avatarInitials" aria-hidden="true">؟</div>
+            <!-- Camera overlay — only visible on hover when is-owner -->
+            <div class="avatar-upload-overlay" id="avatarOverlay" role="button"
+              tabindex="0" aria-label="تغيير الصورة الشخصية">
+              <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              <span>تغيير</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Info -->
+        <div class="profile-info" style="flex:1">
+          <div class="profile-name-row">
+            <h1 class="profile-name" id="profileName">جاري التحميل...</h1>
+            <span id="profileRoleBadge"></span>
+          </div>
+          <div class="profile-username" id="profileUsername">@username</div>
+          <div class="profile-meta-row" id="profileMetaRow">
+            <div class="profile-meta-item">
+              <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span id="metaBirthdate">—</span>
+            </div>
+            <div class="profile-meta-item">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span id="metaJoinDate">—</span>
+            </div>
+            <div class="profile-meta-item">
+              <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+              <span id="metaSection" class="badge badge-green" style="font-size:0.68rem">—</span>
+            </div>
+          </div>
+
+          <!-- Edit button — owner only -->
+          <button class="btn btn-outline btn-sm edit-profile-btn" id="editProfileBtn" aria-label="تعديل الملف الشخصي">
+            <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            تعديل الملف
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip" role="list" aria-label="إحصائيات المستخدم">
+    <div class="container">
+      <div class="stats-inner">
+        <div class="stat-cell" role="listitem">
+          <div class="stat-num"><span id="statPoints">0</span></div>
+          <div class="stat-lbl">نقطة</div>
+        </div>
+        <div class="stat-cell" role="listitem">
+          <div class="stat-num"><span id="statProjects">0</span></div>
+          <div class="stat-lbl">مشروع</div>
+        </div>
+        <div class="stat-cell" role="listitem">
+          <div class="stat-num"><span id="statBlogs">0</span></div>
+          <div class="stat-lbl">مقال</div>
+        </div>
+        <div class="stat-cell" role="listitem">
+          <div class="stat-num"><span id="statBadges">0</span></div>
+          <div class="stat-lbl">شارة</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFILE BODY -->
+  <section id="profile-body">
+    <div class="container">
+      <div class="body-grid">
+
+        <!-- ── MAIN COLUMN ── -->
+        <div>
+          <!-- Tabs -->
+          <div class="tabs-bar" role="tablist" aria-label="أقسام الملف الشخصي">
+            <button class="tab-btn active" data-tab="overview"  role="tab" aria-selected="true"  aria-controls="tab-overview">Overview</button>
+            <button class="tab-btn"        data-tab="projects"  role="tab" aria-selected="false" aria-controls="tab-projects">Projects</button>
+            <button class="tab-btn"        data-tab="blogs"     role="tab" aria-selected="false" aria-controls="tab-blogs">Blog Posts</button>
+            <button class="tab-btn"        data-tab="badges"    role="tab" aria-selected="false" aria-controls="tab-badges">Badges</button>
+          </div>
+
+          <!-- ── Overview ── -->
+          <div id="tab-overview" class="tab-panel active" role="tabpanel">
+            <div class="overview-bio reveal" id="bioCont">
+              <div class="overview-bio-title">About</div>
+              <p class="overview-bio-text" id="bioText">
+                <span class="overview-bio-empty">لم يُضف هذا العضو نبذة عنه بعد.</span>
+              </p>
+            </div>
+
+            <!-- Recent projects -->
+            <div class="reveal" style="transition-delay:.06s">
+              <div class="recent-section-title">
+                <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                Recent Projects
+              </div>
+              <div class="two-col-grid" id="overviewProjects"></div>
+            </div>
+
+            <!-- Recent blogs -->
+            <div class="reveal" style="transition-delay:.12s;margin-top:28px">
+              <div class="recent-section-title">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Recent Blog Posts
+              </div>
+              <div class="two-col-grid" id="overviewBlogs"></div>
+            </div>
+          </div>
+
+          <!-- ── Projects ── -->
+          <div id="tab-projects" class="tab-panel" role="tabpanel">
+            <div class="two-col-grid reveal" id="allProjects"></div>
+          </div>
+
+          <!-- ── Blogs ── -->
+          <div id="tab-blogs" class="tab-panel" role="tabpanel">
+            <div class="two-col-grid reveal" id="allBlogs"></div>
+          </div>
+
+          <!-- ── Badges ── -->
+          <div id="tab-badges" class="tab-panel" role="tabpanel">
+            <div class="badges-grid reveal" id="allBadges"></div>
+          </div>
+
+        </div>
+
+        <!-- ── SIDEBAR ── -->
+        <aside>
+
+          <!-- Points card -->
+          <div class="side-card reveal">
+            <div class="side-card-title">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+              Season Points
+            </div>
+            <div class="points-display">
+              <span class="points-num" id="sidePoints">0</span>
+              <span class="points-label">pts</span>
+            </div>
+            <div class="points-bar-wrap">
+              <div class="points-bar-track">
+                <div class="points-bar-fill" id="pointsBar" style="width:0%"></div>
+              </div>
+              <div class="points-bar-label">
+                <span>0</span>
+                <span id="pointsBarMax">1000</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Info card -->
+          <div class="side-card reveal" style="transition-delay:.06s">
+            <div class="side-card-title">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Member Info
+            </div>
+            <div class="info-list" id="sideInfoList">
+              <div class="info-row">
+                <div class="info-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+                <div><div class="info-key">Birthdate</div><div class="info-val" id="sideBirthdate">—</div></div>
+              </div>
+              <div class="info-row">
+                <div class="info-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                <div><div class="info-key">Joined</div><div class="info-val" id="sideJoined">—</div></div>
+              </div>
+              <div class="info-row">
+                <div class="info-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+                <div><div class="info-key">Role</div><div class="info-val" id="sideRole">—</div></div>
+              </div>
+            </div>
+            <!-- Section badge -->
+            <div class="section-display" id="sideSection" style="margin-top:18px">
+              <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+              <span id="sideSectionLabel">—</span>
+            </div>
+          </div>
+
+          <!-- Top badges preview -->
+          <div class="side-card reveal" style="transition-delay:.12s">
+            <div class="side-card-title">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              Top Badges
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap" id="topBadges"></div>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <p class="footer-tagline">فريق التكنولوجيا لإدارة شرق — نبني حلولاً تقنية من قلب الإسكندرية.</p>
+        <div class="social-row" aria-label="وسائل التواصل الاجتماعي">
+          <a href="#" class="social-a" aria-label="تويتر X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.738l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" class="social-a" aria-label="تيليغرام"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+          <a href="#" class="social-a" aria-label="جيت هاب"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+        </div>
+      </div>
+      <nav aria-label="روابط سريعة">
+        <div class="foot-col-h">روابط سريعة</div>
+        <ul class="foot-links">
+          <li><a href="index.html"        class="foot-link">الرئيسية</a></li>
+          <li><a href="team.html"         class="foot-link">الفريق</a></li>
+          <li><a href="projects.html"     class="foot-link">المشاريع</a></li>
+          <li><a href="blog.html"         class="foot-link">المدونة</a></li>
+          <li><a href="hall-of-fame.html" class="foot-link">قاعة المجد</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="روابط أخرى">
+        <div class="foot-col-h">أخرى</div>
+        <ul class="foot-links">
+          <li><a href="auth.html" class="foot-link">تسجيل الدخول</a></li>
+          <li><a href="#"         class="foot-link">تواصل معنا</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p class="foot-copy">© 2026 شرق تك — جميع الحقوق محفوظة</p>
+    </div>
+  </div>
+  <div class="footer-stripe" aria-hidden="true"></div>
+</footer>
+
+
+<!-- ══════════════════ EDIT PROFILE MODAL ══════════════════ -->
+<div class="modal-overlay" id="editModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modalTitle">Edit Profile</h2>
+      <button class="modal-close" id="modalClose" aria-label="إغلاق">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- Alert -->
+    <div class="inline-alert" id="editAlert" role="alert" aria-live="polite">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span id="editAlertText"></span>
+    </div>
+
+    <!-- Display Name -->
+    <div class="field-group">
+      <label class="field-label" for="editName">
+        <span class="req">*</span> Display Name
+      </label>
+      <div class="field-wrap">
+        <svg class="field-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <input type="text" class="field-input" id="editName"
+          placeholder="Your display name"
+          maxlength="40" autocomplete="off" aria-required="true"
+          aria-describedby="editNameHint" />
+      </div>
+      <div class="field-hint" id="editNameHint">Letters and spaces only — 3 to 40 characters</div>
+    </div>
+
+    <!-- Bio -->
+    <div class="field-group">
+      <label class="field-label" for="editBio">Bio</label>
+      <div class="field-wrap" style="align-items:flex-start">
+        <svg class="field-icon" viewBox="0 0 24 24" style="top:13px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <textarea class="field-input" id="editBio"
+          placeholder="Write a short bio about yourself..."
+          rows="3" maxlength="160" style="resize:vertical;padding-top:11px"
+          aria-describedby="editBioHint"></textarea>
+      </div>
+      <div class="field-hint" id="editBioHint">Max 160 characters</div>
+    </div>
+
+    <!-- Section -->
+    <div class="field-group">
+      <label class="field-label" for="editSection">
+        <span class="req">*</span> Section
+      </label>
+      <div class="field-wrap">
+        <svg class="field-icon" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        <select class="field-input" id="editSection" aria-required="true">
+          <option value="Desgin">Desgin</option>
+          <option value="AI">AI</option>
+          <option value="Robotics">Robotics</option>
+          <option value="Programming">Programming</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Birthdate -->
+    <div class="field-group">
+      <label class="field-label" for="editBirthdate">Birthdate</label>
+      <div class="field-wrap">
+        <svg class="field-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <input type="date" class="field-input" id="editBirthdate" aria-label="تاريخ الميلاد" />
+      </div>
+    </div>
+
+    <!-- Save -->
+    <button class="btn btn-gold" id="editSaveBtn" style="width:100%;justify-content:center;margin-top:8px">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      Save Changes
+    </button>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════ JAVASCRIPT ══════════════════ -->
+<script>
+'use strict';
+
+/* ─── 1. THEME ────────────────────────────── */
+const html = document.documentElement;
+const THEME_KEY = 'sharq-theme';
+function applyTheme(t) { html.setAttribute('data-theme', t); localStorage.setItem(THEME_KEY, t); }
+applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
+document.getElementById('themeToggle').addEventListener('click', () => {
+  applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+/* ─── 2. NAVBAR SCROLL ────────────────────── */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
+navbar.classList.toggle('scrolled', window.scrollY > 40);
+
+/* ─── 3. REVEAL ───────────────────────────── */
+const revealObs = new IntersectionObserver(
+  entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } }),
+  { threshold: 0.08, rootMargin: '0px 0px -28px 0px' }
+);
+function observeReveals() { document.querySelectorAll('.reveal:not(.visible)').forEach(el => revealObs.observe(el)); }
+observeReveals();
+
+/* ─── 4. TABS ─────────────────────────────── */
+const tabBtns   = document.querySelectorAll('.tab-btn');
+const tabPanels = document.querySelectorAll('.tab-panel');
+
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.tab;
+    tabBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+    tabPanels.forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    document.getElementById(`tab-${target}`)?.classList.add('active');
+    observeReveals();
+  });
+});
+
+/* ─── 5. SECTIONS DEFINITIONS ─────────────── */
+const SECTIONS = ['Circuits', 'AI', 'Robotics', 'Programming'];
+
+/* ─── 6. MOCK DATA — replace with API ────── */
+const MOCK_USER = {
+  id:           'user-001',
+  name:         'اسم العضو الكامل',
+  username:     'username',
+  bio:          'مطور شغوف بالتكنولوجيا والبرمجة، أعمل مع فريق شرق تك من قلب الإسكندرية.',
+  avatar:       '',
+  role:         'Member',           // Member | Section Leader | Team Leader | Senior Supervisor
+  section:      'Programming',
+  birthdate:    '2003-05-15',
+  joined:       '2024-01-10',
+  points:       740,
+  points_max:   1000,
+  projects: [
+    { id:1, title:'اسم المشروع الأول',  desc:'وصف مختصر للمشروع.', status:'active',      tags:['Python','Django'], img:'img/project-1.jpg', href:'project.html?id=1' },
+    { id:2, title:'اسم المشروع الثاني', desc:'وصف مختصر للمشروع.', status:'completed',   tags:['React','Node.js'], img:'img/project-2.jpg', href:'project.html?id=2' },
+  ],
+  blogs: [
+    { id:1, title:'عنوان المقال الأول',  excerpt:'مقدمة مختصرة للمقال.',  date:'١٥ يناير ٢٠٢٥', tag:'تقنية',   img:'img/blog-1.jpg', href:'blog.html' },
+    { id:2, title:'عنوان المقال الثاني', excerpt:'مقدمة مختصرة للمقال.', date:'٢٢ فبراير ٢٠٢٥', tag:'إنجازات', img:'img/blog-2.jpg', href:'blog.html' },
+  ],
+  badges: [
+    { id:'first-project', name:'First Project',  desc:'Completed first team project', icon:'project', color:'gold',   earned: true },
+    { id:'writer',        name:'Writer',          desc:'Published 5 blog posts',        icon:'pen',     color:'green',  earned: true },
+    { id:'top3',          name:'Top 3',           desc:'Finished in top 3 this season', icon:'trophy',  color:'gold',   earned: false },
+    { id:'100pts',        name:'100 Points',      desc:'Reached 100 season points',     icon:'star',    color:'blue',   earned: true },
+    { id:'team-player',   name:'Team Player',     desc:'Part of 3+ projects',           icon:'users',   color:'green',  earned: true },
+    { id:'pioneer',       name:'Pioneer',         desc:'One of the founding members',   icon:'flag',    color:'purple', earned: false },
+  ]
+};
+
+/* Simulate: is the viewer the profile owner? */
+const IS_OWNER = true;   // ← replace with: currentUser.id === profileUser.id
+
+/* ─── 7. RENDER PROFILE ──────────────────── */
+function formatDate(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  return d.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+const STATUS_CLASS = { active:'badge-green', completed:'badge-gold', 'in-progress':'badge-silver' };
+const STATUS_LABEL = { active:'نشط', completed:'مكتمل', 'in-progress':'قيد التطوير' };
+
+const ROLE_BADGE_MAP = {
+  'Senior Supervisor': 'badge-gold',
+  'Team Leader':       'badge-gold',
+  'Section Leader':    'badge-green',
+  'Member':            'badge-silver',
+};
+
+const BADGE_ICON = {
+  project: `<svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+  pen:     `<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`,
+  trophy:  `<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>`,
+  star:    `<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+  users:   `<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  flag:    `<svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>`,
+};
+
+function projMiniHTML(p) {
+  const scls = STATUS_CLASS[p.status] || 'badge-silver';
+  const slbl = STATUS_LABEL[p.status] || p.status;
+  return `
+    <a class="proj-mini" href="${p.href}" aria-label="مشروع: ${p.title}">
+      <div class="proj-mini-img">
+        <img src="${p.img}" alt="${p.title}" loading="lazy" width="300" height="168"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="proj-mini-img-ph" style="display:none" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+      </div>
+      <div class="proj-mini-body">
+        <div class="proj-mini-title">${p.title}</div>
+        <div class="proj-mini-desc">${p.desc}</div>
+        <div class="proj-mini-foot">
+          <div class="proj-mini-tags">${p.tags.map(t=>`<span class="proj-tag">${t}</span>`).join('')}</div>
+          <span class="badge ${scls}" style="font-size:.63rem">${slbl}</span>
+        </div>
+      </div>
+    </a>`;
+}
+
+function blogMiniHTML(b) {
+  return `
+    <a class="blog-mini" href="${b.href}" aria-label="مقال: ${b.title}">
+      <div class="blog-mini-cover">
+        <img src="${b.img}" alt="${b.title}" loading="lazy" width="300" height="168"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="blog-mini-cover-ph" style="display:none" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+      </div>
+      <div class="blog-mini-body">
+        <div class="blog-mini-meta">
+          <span class="badge badge-green" style="font-size:.62rem">${b.tag}</span>
+          <span class="blog-mini-date">${b.date}</span>
+        </div>
+        <div class="blog-mini-title">${b.title}</div>
+        <div class="blog-mini-excerpt">${b.excerpt}</div>
+      </div>
+    </a>`;
+}
+
+function badgeCardHTML(b) {
+  return `
+    <div class="badge-card ${b.earned ? '' : 'locked'}" title="${b.earned ? 'Earned' : 'Locked'}" aria-label="${b.name} — ${b.earned ? 'مكتسبة' : 'مقفلة'}">
+      <div class="badge-icon ${b.color}">${BADGE_ICON[b.icon] || ''}</div>
+      <div class="badge-name">${b.name}</div>
+      <div class="badge-desc">${b.desc}</div>
+    </div>`;
+}
+
+function renderUser(u) {
+  // Page title
+  document.getElementById('pageTitle').textContent = `${u.name} — شرق تك`;
+
+  // Avatar
+  const avatarImg = document.getElementById('avatarImg');
+  const avatarIni = document.getElementById('avatarInitials');
+  if (u.avatar) {
+    avatarImg.src = u.avatar;
+    avatarImg.style.display = 'block';
+    avatarIni.style.display = 'none';
+  } else {
+    avatarIni.textContent = u.name.trim().charAt(0);
+  }
+
+  // Name + role badge
+  document.getElementById('profileName').textContent = u.name;
+  document.getElementById('profileUsername').textContent = `@${u.username}`;
+  const roleCls = ROLE_BADGE_MAP[u.role] || 'badge-silver';
+  document.getElementById('profileRoleBadge').innerHTML = `<span class="badge ${roleCls}">${u.role}</span>`;
+
+  // Meta row
+  document.getElementById('metaBirthdate').textContent = formatDate(u.birthdate);
+  document.getElementById('metaJoinDate').textContent   = `Joined ${formatDate(u.joined)}`;
+  document.getElementById('metaSection').textContent    = u.section;
+
+  // Sidebar
+  document.getElementById('sidePoints').textContent    = u.points.toLocaleString('ar-EG');
+  document.getElementById('sideRole').textContent      = u.role;
+  document.getElementById('sideBirthdate').textContent = formatDate(u.birthdate);
+  document.getElementById('sideJoined').textContent    = formatDate(u.joined);
+  document.getElementById('sideSectionLabel').textContent = u.section;
+
+  // Points bar
+  document.getElementById('sidePoints').textContent = u.points.toLocaleString();
+  document.getElementById('statPoints').textContent  = u.points.toLocaleString();
+  document.getElementById('pointsBarMax').textContent = u.points_max.toLocaleString();
+  setTimeout(() => {
+    const pct = Math.min((u.points / u.points_max) * 100, 100);
+    document.getElementById('pointsBar').style.width = pct + '%';
+  }, 300);
+
+  // Stat cells
+  document.getElementById('statProjects').textContent = u.projects.length;
+  document.getElementById('statBlogs').textContent    = u.blogs.length;
+  const earned = u.badges.filter(b => b.earned).length;
+  document.getElementById('statBadges').textContent   = earned;
+
+  // Bio
+  if (u.bio) {
+    document.getElementById('bioText').innerHTML = `<span class="overview-bio-text">${u.bio}</span>`;
+  }
+
+  // Overview — recent 2 projects + 2 blogs
+  const ovProj = document.getElementById('overviewProjects');
+  const ovBlog = document.getElementById('overviewBlogs');
+  if (u.projects.length) {
+    ovProj.innerHTML = u.projects.slice(0,2).map(projMiniHTML).join('');
+  } else {
+    ovProj.innerHTML = `<div class="empty-state"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/></svg><p>No projects yet.</p></div>`;
+  }
+  if (u.blogs.length) {
+    ovBlog.innerHTML = u.blogs.slice(0,2).map(blogMiniHTML).join('');
+  } else {
+    ovBlog.innerHTML = `<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg><p>No blog posts yet.</p></div>`;
+  }
+
+  // All projects tab
+  document.getElementById('allProjects').innerHTML = u.projects.length
+    ? u.projects.map(projMiniHTML).join('')
+    : `<div class="empty-state"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/></svg><p>No projects yet.</p></div>`;
+
+  // All blogs tab
+  document.getElementById('allBlogs').innerHTML = u.blogs.length
+    ? u.blogs.map(blogMiniHTML).join('')
+    : `<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg><p>No blog posts yet.</p></div>`;
+
+  // All badges tab
+  document.getElementById('allBadges').innerHTML = u.badges.length
+    ? u.badges.map(badgeCardHTML).join('')
+    : `<div class="empty-state"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><p>No badges yet.</p></div>`;
+
+  // Top badges sidebar (earned only, max 4)
+  const topB = u.badges.filter(b => b.earned).slice(0, 4);
+  document.getElementById('topBadges').innerHTML = topB.map(b => `
+    <div class="badge-icon ${b.color}" style="width:40px;height:40px;border-radius:10px;flex-shrink:0" title="${b.name}">
+      ${BADGE_ICON[b.icon] || ''}
+    </div>`).join('') || '<span style="font-size:.78rem;color:var(--text-muted)">No badges yet.</span>';
+
+  // Populate edit modal
+  document.getElementById('editName').value     = u.name;
+  document.getElementById('editBio').value      = u.bio || '';
+  document.getElementById('editSection').value  = u.section;
+  document.getElementById('editBirthdate').value = u.birthdate || '';
+
+  observeReveals();
+}
+
+// ── Get user ID from URL ──
+const params = new URLSearchParams(window.location.search);
+const userId = params.get('id') || 'user-001';
+
+/* ══════════════════════════════════════════════════════════
+   FUTURE API CALL — REPLACE MOCK BELOW WHEN BACKEND READY
+
+   async function loadProfile(id) {
+     try {
+       const [userRes, projRes, blogRes] = await Promise.all([
+         fetch(`/api/users/${id}`),
+         fetch(`/api/users/${id}/projects`),
+         fetch(`/api/users/${id}/blogs`),
+       ]);
+       const user     = await userRes.json();
+       user.projects  = (await projRes.json()).data;
+       user.blogs     = (await blogRes.json()).data;
+       user.badges    = user.badges || [];
+       renderUser(user);
+
+       const currentUser = JSON.parse(localStorage.getItem('sharq-user') || '{}');
+       if (currentUser.id === user.id) {
+         document.body.classList.add('is-owner');
+       }
+     } catch (err) {
+       document.getElementById('profileName').textContent = 'User not found';
+     }
+   }
+   loadProfile(userId);
+══════════════════════════════════════════════════════════ */
+
+// CURRENT: mock
+renderUser(MOCK_USER);
+if (IS_OWNER) document.body.classList.add('is-owner');
+
+
+/* ─── 8. AVATAR UPLOAD ───────────────────── */
+const avatarFileInput = document.getElementById('avatarFileInput');
+const avatarOverlay   = document.getElementById('avatarOverlay');
+
+const ALLOWED_TYPES    = ['image/jpeg', 'image/png', 'image/webp'];
+const MAX_SIZE_MB      = 2;
+const MAX_SIZE_BYTES   = MAX_SIZE_MB * 1024 * 1024;
+
+function triggerAvatarUpload() { avatarFileInput.click(); }
+avatarOverlay.addEventListener('click', triggerAvatarUpload);
+avatarOverlay.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerAvatarUpload(); } });
+
+avatarFileInput.addEventListener('change', () => {
+  const file = avatarFileInput.files[0];
+  if (!file) return;
+
+  // Type filter
+  if (!ALLOWED_TYPES.includes(file.type)) {
+    alert('Only JPG, PNG, and WebP images are allowed.');
+    avatarFileInput.value = '';
+    return;
+  }
+  // Size filter
+  if (file.size > MAX_SIZE_BYTES) {
+    alert(`Image must be under ${MAX_SIZE_MB}MB. Your file is ${(file.size / 1024 / 1024).toFixed(1)}MB.`);
+    avatarFileInput.value = '';
+    return;
+  }
+
+  // Preview immediately
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const avatarImg = document.getElementById('avatarImg');
+    const avatarIni = document.getElementById('avatarInitials');
+    avatarImg.src = e.target.result;
+    avatarImg.style.display = 'block';
+    avatarIni.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+
+  /* ── FUTURE API UPLOAD ──────────────────────────
+     const fd = new FormData();
+     fd.append('avatar', file);
+     await fetch(`/api/users/${userId}/avatar`, { method: 'POST', body: fd });
+  ─────────────────────────────────────────────── */
+});
+
+
+/* ─── 9. EDIT PROFILE MODAL ──────────────── */
+const editModal   = document.getElementById('editModal');
+const editNameIn  = document.getElementById('editName');
+const editBioIn   = document.getElementById('editBio');
+const editSectIn  = document.getElementById('editSection');
+const editBdayIn  = document.getElementById('editBirthdate');
+const editAlert   = document.getElementById('editAlert');
+const editAlertTx = document.getElementById('editAlertText');
+
+function openModal()  { editModal.classList.add('open');  document.body.style.overflow = 'hidden'; editNameIn.focus(); }
+function closeModal() { editModal.classList.remove('open'); document.body.style.overflow = ''; editAlert.className = 'inline-alert'; }
+
+document.getElementById('editProfileBtn').addEventListener('click', openModal);
+document.getElementById('modalClose').addEventListener('click', closeModal);
+editModal.addEventListener('click', e => { if (e.target === editModal) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && editModal.classList.contains('open')) closeModal(); });
+
+/* Name validation */
+function validateName(v) {
+  if (!v.trim()) return 'Name cannot be empty.';
+  if (v.trim().length < 3) return 'Name must be at least 3 characters.';
+  if (v.trim().length > 40) return 'Name must be 40 characters or less.';
+  if (!/^[\u0600-\u06FFa-zA-Z\s]+$/.test(v.trim())) return 'Name must contain letters only (Arabic or English).';
+  return null;
+}
+
+document.getElementById('editSaveBtn').addEventListener('click', async () => {
+  editAlert.className = 'inline-alert';
+
+  const name    = editNameIn.value.trim();
+  const bio     = editBioIn.value.trim();
+  const section = editSectIn.value;
+  const bday    = editBdayIn.value;
+
+  // Validate name
+  const nameErr = validateName(name);
+  if (nameErr) {
+    editAlertTx.textContent = nameErr;
+    editAlert.className = 'inline-alert error visible';
+    editNameIn.classList.add('error');
+    editNameIn.focus();
+    return;
+  }
+  editNameIn.classList.remove('error');
+
+  if (!section) {
+    editAlertTx.textContent = 'Please select your section.';
+    editAlert.className = 'inline-alert error visible';
+    return;
+  }
+
+  const saveBtn = document.getElementById('editSaveBtn');
+  saveBtn.disabled = true;
+  saveBtn.textContent = 'Saving...';
+
+  try {
+    /* ── FUTURE API CALL ──────────────────────────
+       await fetch(`/api/users/${userId}`, {
+         method: 'PATCH',
+         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+         body: JSON.stringify({ name, bio, section, birthdate: bday })
+       });
+    ─────────────────────────────────────────────── */
+
+    // Simulate save
+    await new Promise(r => setTimeout(r, 800));
+
+    // Update UI immediately (optimistic)
+    document.getElementById('profileName').textContent       = name;
+    document.getElementById('avatarInitials').textContent    = name.trim().charAt(0);
+    document.getElementById('pageTitle').textContent         = `${name} — شرق تك`;
+    document.getElementById('bioText').innerHTML             = bio ? `<span class="overview-bio-text">${bio}</span>` : `<span class="overview-bio-empty">No bio added yet.</span>`;
+    document.getElementById('metaSection').textContent       = section;
+    document.getElementById('sideSectionLabel').textContent  = section;
+    document.getElementById('metaBirthdate').textContent     = bday ? formatDate(bday) : '—';
+    document.getElementById('sideBirthdate').textContent     = bday ? formatDate(bday) : '—';
+
+    editAlertTx.textContent = 'Profile updated successfully!';
+    editAlert.className = 'inline-alert success visible';
+
+    setTimeout(closeModal, 1000);
+
+  } catch (err) {
+    editAlertTx.textContent = 'Something went wrong. Please try again.';
+    editAlert.className = 'inline-alert error visible';
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Save Changes';
+  }
+});
+
+
+/* ─── 10. PAGE FADE-IN ───────────────────── */
+document.body.style.opacity = '0';
+document.body.style.transition = 'opacity 0.38s ease';
+window.addEventListener('load', () => { document.body.style.opacity = '1'; });
+
+</script>
+</body>
+</html>
