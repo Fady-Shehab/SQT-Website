@@ -1073,11 +1073,14 @@
         <div class="featured-img">
           <img
             id="featuredImg"
-            src=""
             alt="غلاف المقال المميز"
             loading="lazy"
-            onerror="this.parentElement.innerHTML='<div class=\'featured-img-ph\'><div class=\'featured-img-ph-icon\'></div><p class=\'featured-img-ph-text\'>blog-featured.jpg</p></div>'"
+            style="display:none"
           />
+          <div class="featured-img-ph" id="featuredImgPh">
+            <div class="featured-img-ph-icon"></div>
+            <p class="featured-img-ph-text" id="featuredImgPhText">blog-featured.jpg</p>
+          </div>
           <div class="featured-ribbon" aria-label="مقال مميز">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
             مميز
@@ -1643,8 +1646,17 @@ function renderFeatured(post) {
   featured.dataset.cat = post.category || '';
 
   const img = document.getElementById('featuredImg');
-  img.src = post.image || '';
-  img.alt = post.title || '';
+  const imgPh = document.getElementById('featuredImgPh');
+  if (post.image) {
+    img.src = post.image;
+    img.alt = post.title || '';
+    img.style.display = 'block';
+    imgPh.style.display = 'none';
+    img.onerror = () => { img.style.display = 'none'; imgPh.style.display = 'flex'; };
+  } else {
+    img.style.display = 'none';
+    imgPh.style.display = 'flex';
+  }
 
   document.getElementById('featuredAuthorThumb').textContent = (post.author || '?').trim().charAt(0);
   document.getElementById('featuredAuthorName').textContent  = post.author || '';
