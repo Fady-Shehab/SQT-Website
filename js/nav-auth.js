@@ -97,7 +97,7 @@
           display: none;
           position: absolute;
           top: calc(100% + 12px);
-          right: 0;
+          right: -75px;
           min-width: 190px;
           background: var(--bg-card, #131F35);
           border: 1px solid var(--border-mid, rgba(255,255,255,0.09));
@@ -106,6 +106,11 @@
           box-shadow: 0 16px 48px rgba(0,0,0,0.55);
           z-index: 9999;
           animation: sqtMenuIn 0.18s ease;
+          @media (max-width: 768px) {
+            right: -140px;
+
+          }
+
         ">
 
         <!-- User info header -->
