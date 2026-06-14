@@ -1609,13 +1609,9 @@ seasonPills.forEach(pill => {
     seasonPills.forEach(p => { p.classList.remove('active'); p.setAttribute('aria-pressed','false'); });
     this.classList.add('active');
     this.setAttribute('aria-pressed','true');
-    /*
-     * API INTEGRATION POINT:
-     * const season = this.dataset.season;
-     * fetchSeasonData(season);  ← call your API here
-     * e.g.: fetch(`/api/hof/season/${season}/top3`).then(renderPodium);
-     *        fetch(`/api/hof/season/${season}/leaderboard`).then(renderLeaderboard);
-     */
+    const seasonNum = this.dataset.season;
+    fetchPodium(seasonNum);
+    fetchLeaderboard(seasonNum, document.getElementById('sortSelect').value);
   });
 });
 
@@ -1684,112 +1680,251 @@ document.body.style.opacity = '0';
 document.body.style.transition = 'opacity 0.38s ease';
 window.addEventListener('load', () => { document.body.style.opacity = '1'; });
 
-/* ═══════════════════════════════════════════════════════
-   API INTEGRATION BLUEPRINT
-   ═══════════════════════════════════════════════════════
-   كل الدوال دي جاهزة للربط بالـ API — بس uncommenting والـ fetch
+/* ─── API CONFIG ──────────────────────────────── */
+const API_BASE = 'http://localhost:5000/api';
 
-const API_BASE = '/api';  // ← غيّر ده للـ base URL بتاع السيرفر
-
+/* ─── fetchStats ──────────────────────────────── */
 async function fetchStats() {
-  const res = await fetch(`${API_BASE}/hof/stats`);
-  const data = await res.json();
-  // data = { total_members, total_seasons, total_points, top_score }
-  document.querySelectorAll('.counter[data-api-key]').forEach(el => {
-    const key = el.dataset.apiKey;
-    if (data[key] !== undefined) {
-      el.dataset.target = data[key];
-      runCounter(el);
-    }
-  });
-}
-
-async function fetchPodium(seasonId) {
-  document.getElementById('podiumSkeleton').style.display = 'flex';
-  document.getElementById('podiumRow').style.display = 'none';
-  const res = await fetch(`${API_BASE}/hof/season/${seasonId}/top3`);
-  const data = await res.json();
-  // data = [{ rank, member_id, name, role, dept, points, avatar_url, bars }]
-  data.forEach(member => {
-    const card = document.querySelector(`.pod-card.r${member.rank}`);
-    if (!card) return;
-    card.dataset.memberId = member.member_id;
-    card.querySelector('[data-field="name"]').textContent  = member.name;
-    card.querySelector('[data-field="role"]').textContent  = member.role;
-    card.querySelector('[data-field="dept"]').textContent  = member.dept;
-    const ptsEl = card.querySelector('[data-field="points"]');
-    ptsEl.dataset.target = member.points;
-    runCounter(ptsEl);
-    const av = card.querySelector('.pod-avatar');
-    if (member.avatar_url) av.innerHTML = `<img src="${member.avatar_url}" alt="${member.name}" />`;
-    if (member.bars) {
-      const fills = card.querySelectorAll('.pod-bar-fill');
-      fills[0].style.width = member.bars.projects  + '%';
-      fills[1].style.width = member.bars.commits   + '%';
-      fills[2].style.width = member.bars.reviews   + '%';
-    }
-  });
-  document.getElementById('podiumSkeleton').style.display = 'none';
-  document.getElementById('podiumRow').style.display = '';
-}
-
-async function fetchLeaderboard(seasonId, sort = 'points', search = '') {
-  document.getElementById('lbSkeleton').style.display = 'block';
-  document.getElementById('lbTable').style.display = 'none';
-  const res = await fetch(`${API_BASE}/hof/season/${seasonId}/leaderboard?sort=${sort}&search=${encodeURIComponent(search)}`);
-  const data = await res.json();
-  // data = [{ rank, member_id, name, dept, role, points, trend, badges[], avatar_url, progress_pct }]
-  const tbody = document.getElementById('lbBody');
-  tbody.innerHTML = '';
-  data.forEach(m => {
-    const tr = document.createElement('tr');
-    tr.className = 'lb-row' + (m.rank <= 3 ? ' top3' : '');
-    tr.dataset.memberId = m.member_id;
-    tr.dataset.name   = m.name;
-    tr.dataset.dept   = m.dept;
-    tr.dataset.points = m.points;
-    const rankBadge = m.rank <= 3
-      ? `<span class="lb-rank-badge r${m.rank}">${m.rank.toLocaleString('ar-EG')}</span>`
-      : `<span class="lb-rank-num">${m.rank.toLocaleString('ar-EG')}</span>`;
-    const trendClass = m.trend > 0 ? 'trend-up' : m.trend < 0 ? 'trend-down' : 'trend-same';
-    const trendSym   = m.trend > 0 ? '▲' : m.trend < 0 ? '▼' : '—';
-    const trendAbs   = Math.abs(m.trend).toLocaleString('ar-EG');
-    const badges = (m.badges || []).map(b => `<span class="badge badge-gold" title="${b.name}">${b.icon}</span>`).join('');
-    const av = m.avatar_url
-      ? `<img src="${m.avatar_url}" alt="${m.name}" />`
-      : m.name.charAt(0);
-    tr.innerHTML = `
-      <td class="lb-rank">${rankBadge}</td>
-      <td><div class="lb-member"><div class="lb-avatar ${m.rank===1?'gold-border':''}">${av}</div>
-        <div class="lb-member-info"><div class="lb-name">${m.name}</div><div class="lb-dept">${m.role}</div></div></div></td>
-      <td><span class="badge badge-silver">${m.dept}</span></td>
-      <td class="lb-pts">${m.points.toLocaleString('ar-EG')} نقطة</td>
-      <td class="lb-prog"><div class="lb-prog-bg"><div class="lb-prog-fill" style="width:${m.progress_pct}%"></div></div></td>
-      <td class="lb-trend"><span class="${trendClass}">${trendSym} ${trendAbs}</span></td>
-      <td class="lb-badges">${badges}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-  document.getElementById('lbSkeleton').style.display = 'none';
-  document.getElementById('lbTable').style.display = '';
-  document.getElementById('lbCount').textContent = data.length.toLocaleString('ar-EG') + ' عضو';
-  // animate progress bars
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    tbody.querySelectorAll('.lb-prog-fill').forEach(bar => {
-      const w = bar.style.width; bar.style.width = '0';
-      requestAnimationFrame(() => requestAnimationFrame(() => { bar.style.width = w; }));
+  try {
+    const res  = await fetch(`${API_BASE}/hof/stats`);
+    if (!res.ok) return;
+    const data = await res.json();
+    document.querySelectorAll('.counter[data-api-key]').forEach(el => {
+      const key = el.dataset.apiKey;
+      if (data[key] !== undefined) {
+        el.dataset.target = data[key];
+        runCounter(el);
+      }
     });
-  }));
+  } catch (err) { console.error('[HOF stats]', err); }
 }
 
-// ── Initial load
-// Active season
-const CURRENT_SEASON = 1;
+/* ─── fetchSeasonPills ────────────────────────── */
+async function fetchSeasonPills() {
+  try {
+    const res     = await fetch(`${API_BASE}/hof/seasons`);
+    if (!res.ok) return 1;
+    const seasons = await res.json();
+    if (!seasons.length) return 1;
 
-fetchStats();
-fetchPodium(CURRENT_SEASON);
-fetchLeaderboard(CURRENT_SEASON);
-═══════════════════════════════════════════════════════ */
+    const container = document.getElementById('seasonPills');
+    container.innerHTML = '';
+    seasons.forEach((s, i) => {
+      const isActive = s.is_active || i === 0;
+      const btn = document.createElement('button');
+      btn.className      = 'season-pill' + (isActive ? ' active' : '');
+      btn.dataset.season = s.id;
+      btn.setAttribute('aria-pressed', String(isActive));
+      btn.textContent    = s.label;
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.season-pill').forEach(p => {
+          p.classList.remove('active');
+          p.setAttribute('aria-pressed', 'false');
+        });
+        this.classList.add('active');
+        this.setAttribute('aria-pressed', 'true');
+        fetchPodium(this.dataset.season);
+        fetchLeaderboard(this.dataset.season, document.getElementById('sortSelect').value);
+      });
+      container.appendChild(btn);
+    });
+    return (seasons.find(s => s.is_active) || seasons[0]).id;
+  } catch (err) { console.error('[HOF seasons]', err); return 1; }
+}
+
+/* ─── fetchPodium ─────────────────────────────── */
+async function fetchPodium(seasonNum) {
+  document.getElementById('podiumSkeleton').style.display = 'flex';
+  document.getElementById('podiumRow').style.display      = 'none';
+  try {
+    const res  = await fetch(`${API_BASE}/hof/season/${seasonNum}/top3`);
+    if (!res.ok) return;
+    const data = await res.json();
+
+    data.forEach(member => {
+      const card = document.querySelector(`.pod-card.r${member.rank}`);
+      if (!card) return;
+      card.dataset.memberId = member.member_id;
+      card.style.cursor     = 'pointer';
+
+      const fresh = card.cloneNode(true);
+      card.parentNode.replaceChild(fresh, card);
+      fresh.addEventListener('click', () => {
+        window.location.href = `profile.html?id=${member.member_id}`;
+      });
+
+      fresh.querySelector('[data-field="name"]').textContent = member.name;
+      fresh.querySelector('[data-field="role"]').textContent = member.role;
+      const deptEl = fresh.querySelector('[data-field="dept"]');
+      if (deptEl) deptEl.textContent = member.dept;
+
+      const ptsEl = fresh.querySelector('[data-field="points"]');
+      ptsEl.dataset.target = member.points;
+      runCounter(ptsEl);
+
+      const av = fresh.querySelector('.pod-avatar');
+      const initial = member.name.charAt(0);
+      av.innerHTML = member.avatar_url
+        ? `<img src="${member.avatar_url}" alt="${member.name}" onerror="this.parentElement.textContent='${initial}'" />`
+        : initial;
+
+      if (member.bars) {
+        const fills = fresh.querySelectorAll('.pod-bar-fill');
+        if (fills[0]) fills[0].style.width = member.bars.projects + '%';
+        if (fills[1]) fills[1].style.width = member.bars.commits  + '%';
+        if (fills[2]) fills[2].style.width = member.bars.reviews  + '%';
+      }
+    });
+  } catch (err) { console.error('[HOF podium]', err); }
+  finally {
+    document.getElementById('podiumSkeleton').style.display = 'none';
+    document.getElementById('podiumRow').style.display      = '';
+  }
+}
+
+/* ─── fetchLeaderboard ────────────────────────── */
+async function fetchLeaderboard(seasonNum, sort = 'points', search = '') {
+  const skeleton = document.getElementById('lbSkeleton');
+  const table    = document.getElementById('lbTable');
+  skeleton.style.display = 'block';
+  table.style.display    = 'none';
+  try {
+    const url = `${API_BASE}/hof/season/${seasonNum}/leaderboard?sort=${sort}&search=${encodeURIComponent(search)}`;
+    const res = await fetch(url);
+    if (!res.ok) return;
+    const data = await res.json();
+
+    const tbody = document.getElementById('lbBody');
+    tbody.innerHTML = '';
+    data.forEach(m => {
+      const tr = document.createElement('tr');
+      tr.className        = 'lb-row' + (m.rank <= 3 ? ' top3' : '');
+      tr.dataset.memberId = m.member_id;
+      tr.dataset.name     = m.name;
+      tr.dataset.dept     = m.dept;
+      tr.dataset.points   = m.points;
+      tr.style.cursor     = 'pointer';
+      tr.addEventListener('click', () => { window.location.href = `profile.html?id=${m.member_id}`; });
+
+      const rankBadge = m.rank <= 3
+        ? `<span class="lb-rank-badge r${m.rank}" aria-label="المركز ${m.rank}">${m.rank.toLocaleString('ar-EG')}</span>`
+        : `<span class="lb-rank-num">${m.rank.toLocaleString('ar-EG')}</span>`;
+
+      const trendClass = m.trend > 0 ? 'trend-up' : m.trend < 0 ? 'trend-down' : 'trend-same';
+      const trendSym   = m.trend > 0 ? '▲' : m.trend < 0 ? '▼' : '—';
+      const trendAbs   = m.trend !== 0 ? Math.abs(m.trend).toLocaleString('ar-EG') : '';
+      const initial    = m.name.charAt(0);
+
+      const badgesHtml = (m.badges || [])
+        .map(b => `<span class="badge badge-gold" title="${b.name}">${b.icon || '⭐'}</span>`)
+        .join('');
+
+      const avatarHtml = m.avatar_url
+        ? `<img src="${m.avatar_url}" alt="${m.name}" onerror="this.parentElement.textContent='${initial}'" />`
+        : initial;
+
+      tr.innerHTML = `
+        <td class="lb-rank">${rankBadge}</td>
+        <td>
+          <div class="lb-member">
+            <div class="lb-avatar ${m.rank === 1 ? 'gold-border' : ''}">${avatarHtml}</div>
+            <div class="lb-member-info">
+              <div class="lb-name">${m.name}</div>
+              <div class="lb-dept">${m.role}</div>
+            </div>
+          </div>
+        </td>
+        <td><span class="badge badge-silver">${m.dept}</span></td>
+        <td class="lb-pts">${m.points.toLocaleString('ar-EG')} نقطة</td>
+        <td class="lb-prog"><div class="lb-prog-bg"><div class="lb-prog-fill" style="width:${m.progress_pct}%"></div></div></td>
+        <td class="lb-trend"><span class="${trendClass}">${trendSym} ${trendAbs}</span></td>
+        <td class="lb-badges">${badgesHtml}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    document.getElementById('lbCount').textContent = data.length.toLocaleString('ar-EG') + ' عضو';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      tbody.querySelectorAll('.lb-prog-fill').forEach(bar => {
+        const w = bar.style.width;
+        bar.style.width = '0';
+        requestAnimationFrame(() => requestAnimationFrame(() => { bar.style.width = w; }));
+      });
+    }));
+  } catch (err) { console.error('[HOF leaderboard]', err); }
+  finally {
+    skeleton.style.display = 'none';
+    table.style.display    = '';
+  }
+}
+
+/* ─── fetchSeasonHistory ──────────────────────── */
+async function fetchSeasonHistory() {
+  try {
+    const res  = await fetch(`${API_BASE}/hof/seasons/history`);
+    if (!res.ok) return;
+    const data = await res.json();
+    if (!data.length) return;
+
+    const timeline = document.getElementById('historyTimeline');
+    timeline.innerHTML = '';
+    const dotColors = ['gold', 'silver', 'green'];
+
+    data.forEach((s, i) => {
+      const dotCls = s.is_active ? 'gold' : dotColors[i % dotColors.length];
+      const winnersHtml = s.winners.length
+        ? s.winners.map(w => {
+            const ini = w.name.charAt(0);
+            return `<div class="tl-winner" role="listitem">
+              <div class="tl-winner-av">
+                ${w.avatar_url
+                  ? `<img src="${w.avatar_url}" alt="${w.name}" onerror="this.parentElement.textContent='${ini}'" />`
+                  : ini}
+              </div>
+              <div class="tl-winner-info">
+                <div class="tl-winner-name">${w.name}</div>
+                <div class="tl-winner-pts">${w.points.toLocaleString('ar-EG')} نقطة</div>
+              </div>
+            </div>`;
+          }).join('')
+        : '<span style="font-size:.8rem;color:var(--text-muted)">لا توجد بيانات بعد</span>';
+
+      const item = document.createElement('div');
+      item.className = 'tl-item reveal';
+      item.setAttribute('role', 'listitem');
+      item.dataset.seasonId      = s.id;
+      item.style.transitionDelay = `${i * 0.05}s`;
+      item.innerHTML = `
+        <div class="tl-dot ${dotCls}" aria-hidden="true"></div>
+        <div class="tl-card">
+          <div class="tl-head">
+            <span class="tl-season">${s.label} • ${s.year}</span>
+            <h3 class="tl-title">${s.title}</h3>
+            ${s.is_active
+              ? '<span class="badge badge-gold">الموسم الحالي</span>'
+              : '<span class="badge badge-silver">منتهي</span>'}
+          </div>
+          <div class="tl-winners" role="list" aria-label="أبطال ${s.label}">
+            ${winnersHtml}
+          </div>
+        </div>`;
+      timeline.appendChild(item);
+    });
+
+    timeline.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+  } catch (err) { console.error('[HOF history]', err); }
+}
+
+/* ─── Initial load ────────────────────────────── */
+(async () => {
+  const seasonNum = await fetchSeasonPills();
+  await Promise.all([
+    fetchStats(),
+    fetchPodium(seasonNum || 1),
+    fetchLeaderboard(seasonNum || 1),
+    fetchSeasonHistory()
+  ]);
+})();
 
 </script>
 </body>
