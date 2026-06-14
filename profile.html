@@ -304,10 +304,10 @@
   #profile-header { padding-top: 72px; position: relative; }
 
   .profile-banner {
-    height: 180px; background: var(--banner-bg);
+    height: 210px; background: var(--banner-bg);
     position: relative; overflow: hidden;
   }
-  @media (min-width: 768px) { .profile-banner { height: 220px; } }
+  @media (min-width: 768px) { .profile-banner { height: 255px; } }
 
   /* Egyptian geometric pattern overlay on banner */
   .profile-banner::before {
@@ -354,30 +354,34 @@
   .banner-edit-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; }
   body.is-owner .banner-edit-btn { display: flex; }
 
-  /* Profile row — avatar + info */
+  /* Avatar is in banner — row contains info only, centered */
   .profile-row {
-    display: flex; flex-direction: column; gap: 16px;
-    padding: 0 0 32px;
+    padding: 24px 0 32px;
+    text-align: center;
     position: relative;
   }
-  @media (min-width: 768px) { .profile-row { flex-direction: row; align-items: flex-end; gap: 28px; } }
+  .profile-name-row { justify-content: center; }
+  .profile-meta-row { justify-content: center; }
 
-  /* Avatar wrapper */
+  /* Avatar is absolutely centered inside the banner */
   .avatar-wrap {
-    position: relative; flex-shrink: 0;
-    margin-top: -52px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    flex-shrink: 0;
   }
-  @media (min-width: 768px) { .avatar-wrap { margin-top: -60px; } }
 
   .avatar-ring {
-    width: 108px; height: 108px;
+    width: 120px; height: 120px;
     border-radius: 50%;
-    border: 4px solid var(--bg-base);
+    border: 4px solid rgba(201,168,76,0.6);
     overflow: hidden; position: relative;
     background: var(--bg-subtle);
-    box-shadow: 0 0 0 2px var(--gold-border);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.15), 0 8px 32px rgba(0,0,0,0.5);
   }
-  @media (min-width: 768px) { .avatar-ring { width: 128px; height: 128px; } }
+  @media (min-width: 768px) { .avatar-ring { width: 136px; height: 136px; } }
 
   .avatar-img {
     width: 100%; height: 100%; object-fit: cover;
@@ -752,28 +756,26 @@
       <div class="banner-gem banner-gem-2" aria-hidden="true"></div>
       <div class="banner-gem banner-gem-3" aria-hidden="true"></div>
       <div class="banner-line" aria-hidden="true"></div>
+      <!-- Avatar centered in banner -->
+      <div class="avatar-wrap">
+        <div class="avatar-ring" id="avatarRing">
+          <img id="avatarImg" class="avatar-img" src="" alt="صورة المستخدم" style="display:none"
+            onerror="this.style.display='none';document.getElementById('avatarInitials').style.display='flex';" />
+          <div class="avatar-initials" id="avatarInitials" aria-hidden="true">؟</div>
+          <div class="avatar-upload-overlay" id="avatarOverlay" role="button"
+            tabindex="0" aria-label="تغيير الصورة الشخصية">
+            <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            <span>تغيير</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="container">
       <div class="profile-row">
 
-        <!-- Avatar -->
-        <div class="avatar-wrap">
-          <div class="avatar-ring" id="avatarRing">
-            <img id="avatarImg" class="avatar-img" src="" alt="صورة المستخدم" style="display:none"
-              onerror="this.style.display='none';document.getElementById('avatarInitials').style.display='flex';" />
-            <div class="avatar-initials" id="avatarInitials" aria-hidden="true">؟</div>
-            <!-- Camera overlay — only visible on hover when is-owner -->
-            <div class="avatar-upload-overlay" id="avatarOverlay" role="button"
-              tabindex="0" aria-label="تغيير الصورة الشخصية">
-              <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-              <span>تغيير</span>
-            </div>
-          </div>
-        </div>
-
         <!-- Info -->
-        <div class="profile-info" style="flex:1">
+        <div class="profile-info">
           <div class="profile-name-row">
             <h1 class="profile-name" id="profileName">جاري التحميل...</h1>
             <span id="profileRoleBadge"></span>
@@ -1047,7 +1049,7 @@
       <div class="field-wrap">
         <svg class="field-icon" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
         <select class="field-input" id="editSection" aria-required="true">
-          <option value="Desgin">Desgin</option>
+          <option value="Design">Design</option>
           <option value="AI">AI</option>
           <option value="Robotics">Robotics</option>
           <option value="Programming">Programming</option>
@@ -1117,41 +1119,21 @@ tabBtns.forEach(btn => {
 });
 
 /* ─── 5. SECTIONS DEFINITIONS ─────────────── */
-const SECTIONS = ['Circuits', 'AI', 'Robotics', 'Programming'];
+const SECTIONS = ['Programming', 'AI', 'Robotics', 'Design'];
 
-/* ─── 6. MOCK DATA — replace with API ────── */
-const MOCK_USER = {
-  id:           'user-001',
-  name:         'اسم العضو الكامل',
-  username:     'username',
-  bio:          'مطور شغوف بالتكنولوجيا والبرمجة، أعمل مع فريق شرق تك من قلب الإسكندرية.',
-  avatar:       '',
-  role:         'Member',           // Member | Section Leader | Team Leader | Senior Supervisor
-  section:      'Programming',
-  birthdate:    '2003-05-15',
-  joined:       '2024-01-10',
-  points:       740,
-  points_max:   1000,
-  projects: [
-    { id:1, title:'اسم المشروع الأول',  desc:'وصف مختصر للمشروع.', status:'active',      tags:['Python','Django'], img:'img/project-1.jpg', href:'project.html?id=1' },
-    { id:2, title:'اسم المشروع الثاني', desc:'وصف مختصر للمشروع.', status:'completed',   tags:['React','Node.js'], img:'img/project-2.jpg', href:'project.html?id=2' },
-  ],
-  blogs: [
-    { id:1, title:'عنوان المقال الأول',  excerpt:'مقدمة مختصرة للمقال.',  date:'١٥ يناير ٢٠٢٥', tag:'تقنية',   img:'img/blog-1.jpg', href:'blog.html' },
-    { id:2, title:'عنوان المقال الثاني', excerpt:'مقدمة مختصرة للمقال.', date:'٢٢ فبراير ٢٠٢٥', tag:'إنجازات', img:'img/blog-2.jpg', href:'blog.html' },
-  ],
-  badges: [
-    { id:'first-project', name:'First Project',  desc:'Completed first team project', icon:'project', color:'gold',   earned: true },
-    { id:'writer',        name:'Writer',          desc:'Published 5 blog posts',        icon:'pen',     color:'green',  earned: true },
-    { id:'top3',          name:'Top 3',           desc:'Finished in top 3 this season', icon:'trophy',  color:'gold',   earned: false },
-    { id:'100pts',        name:'100 Points',      desc:'Reached 100 season points',     icon:'star',    color:'blue',   earned: true },
-    { id:'team-player',   name:'Team Player',     desc:'Part of 3+ projects',           icon:'users',   color:'green',  earned: true },
-    { id:'pioneer',       name:'Pioneer',         desc:'One of the founding members',   icon:'flag',    color:'purple', earned: false },
-  ]
-};
+/* ─── 6. CONFIG + AUTH ─────────────────────── */
+const API_BASE   = 'http://localhost:5000';
+const token      = localStorage.getItem('sharq-token') || sessionStorage.getItem('sharq-token');
+const storedUser = JSON.parse(
+  localStorage.getItem('sharq-user') || sessionStorage.getItem('sharq-user') || 'null'
+);
 
-/* Simulate: is the viewer the profile owner? */
-const IS_OWNER = true;   // ← replace with: currentUser.id === profileUser.id
+// Update nav auth button based on login state
+const navAuthEl = document.querySelector('.nav-auth');
+if (storedUser && navAuthEl) {
+  navAuthEl.href        = `profile.html?id=${storedUser.id}`;
+  navAuthEl.innerHTML   = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ملفي الشخصي`;
+}
 
 /* ─── 7. RENDER PROFILE ──────────────────── */
 function formatDate(iso) {
@@ -1330,40 +1312,88 @@ function renderUser(u) {
   observeReveals();
 }
 
-// ── Get user ID from URL ──
-const params = new URLSearchParams(window.location.search);
-const userId = params.get('id') || 'user-001';
+// ── Get user ID from URL or from logged-in user ──
+const urlParams = new URLSearchParams(window.location.search);
+const profileId = urlParams.get('id') || (storedUser && storedUser.id);
 
-/* ══════════════════════════════════════════════════════════
-   FUTURE API CALL — REPLACE MOCK BELOW WHEN BACKEND READY
+if (!profileId) {
+  // No id in URL and not logged in — redirect to login
+  window.location.href = 'auth.html';
+} else {
+  loadProfile(profileId);
+}
 
-   async function loadProfile(id) {
-     try {
-       const [userRes, projRes, blogRes] = await Promise.all([
-         fetch(`/api/users/${id}`),
-         fetch(`/api/users/${id}/projects`),
-         fetch(`/api/users/${id}/blogs`),
-       ]);
-       const user     = await userRes.json();
-       user.projects  = (await projRes.json()).data;
-       user.blogs     = (await blogRes.json()).data;
-       user.badges    = user.badges || [];
-       renderUser(user);
+async function loadProfile(id) {
+  try {
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-       const currentUser = JSON.parse(localStorage.getItem('sharq-user') || '{}');
-       if (currentUser.id === user.id) {
-         document.body.classList.add('is-owner');
-       }
-     } catch (err) {
-       document.getElementById('profileName').textContent = 'User not found';
-     }
-   }
-   loadProfile(userId);
-══════════════════════════════════════════════════════════ */
+    const [userRes, projRes, blogRes] = await Promise.all([
+      fetch(`${API_BASE}/api/users/${id}`, { headers }),
+      fetch(`${API_BASE}/api/users/${id}/projects`, { headers }),
+      fetch(`${API_BASE}/api/users/${id}/blogs`,    { headers }),
+    ]);
 
-// CURRENT: mock
-renderUser(MOCK_USER);
-if (IS_OWNER) document.body.classList.add('is-owner');
+    if (!userRes.ok) {
+      document.getElementById('profileName').textContent = 'مستخدم غير موجود';
+      return;
+    }
+
+    const user     = await userRes.json();
+    const projData = projRes.ok ? await projRes.json() : { data: [] };
+    const blogData = blogRes.ok ? await blogRes.json() : { data: [] };
+
+    // Map API fields to the shape renderUser() expects
+    const profile = {
+      id:         user.id,
+      name:       user.name,
+      username:   user.username || user.email || 'user',
+      bio:        user.bio || '',
+      avatar:     user.avatar
+                    ? (user.avatar.startsWith('http') ? user.avatar : `${API_BASE}${user.avatar}`)
+                    : '',
+      role:       user.teamRole || 'Member',
+      section:    user.department || '',
+      birthdate:  user.birthdate || '',
+      joined:     user.createdAt ? user.createdAt.split('T')[0] : '',
+      points:     user.points     || 0,
+      points_max: user.points_max || 1000,
+      projects: (projData.data || []).map(p => ({
+        id:     p._id,
+        title:  p.title,
+        desc:   p.short_desc || '',
+        status: p.status     || 'active',
+        tags:   p.tech       || [],
+        img:    p.cover      || '',
+        href:   `project.html?id=${p._id}`
+      })),
+      blogs: (blogData.data || []).map(b => ({
+        id:      b._id,
+        title:   b.title,
+        excerpt: b.excerpt  || '',
+        date:    b.date
+                   ? new Date(b.date).toLocaleDateString('ar-EG', { year:'numeric', month:'long', day:'numeric' })
+                   : '',
+        tag:     b.category || '',
+        img:     b.image    || '',
+        href:    `post.html?id=${b._id}`
+      })),
+      badges: user.badges || []
+    };
+
+    // Check ownership
+    const IS_OWNER = storedUser && (storedUser.id === String(user.id) || storedUser.role === 'admin');
+    if (IS_OWNER) document.body.classList.add('is-owner');
+
+    renderUser(profile);
+
+    // Store profileId for avatar upload and edit save handlers
+    window._profileId = String(user.id);
+
+  } catch (err) {
+    console.error('[loadProfile]', err);
+    document.getElementById('profileName').textContent = 'تعذّر تحميل الملف الشخصي';
+  }
+}
 
 
 /* ─── 8. AVATAR UPLOAD ───────────────────── */
@@ -1406,11 +1436,24 @@ avatarFileInput.addEventListener('change', () => {
   };
   reader.readAsDataURL(file);
 
-  /* ── FUTURE API UPLOAD ──────────────────────────
-     const fd = new FormData();
-     fd.append('avatar', file);
-     await fetch(`/api/users/${userId}/avatar`, { method: 'POST', body: fd });
-  ─────────────────────────────────────────────── */
+  // Upload avatar to server
+  if (token && window._profileId) {
+    try {
+      const fd = new FormData();
+      fd.append('avatar', file);
+      const uploadRes = await fetch(`${API_BASE}/api/users/${window._profileId}/avatar`, {
+        method:  'POST',
+        headers: { Authorization: `Bearer ${token}` },
+        body:    fd
+      });
+      if (!uploadRes.ok) {
+        const errData = await uploadRes.json().catch(() => ({}));
+        console.warn('[Avatar Upload]', errData.message || 'Upload failed');
+      }
+    } catch (uploadErr) {
+      console.error('[Avatar Upload]', uploadErr);
+    }
+  }
 });
 
 
@@ -1470,16 +1513,15 @@ document.getElementById('editSaveBtn').addEventListener('click', async () => {
   saveBtn.textContent = 'Saving...';
 
   try {
-    /* ── FUTURE API CALL ──────────────────────────
-       await fetch(`/api/users/${userId}`, {
-         method: 'PATCH',
-         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-         body: JSON.stringify({ name, bio, section, birthdate: bday })
-       });
-    ─────────────────────────────────────────────── */
-
-    // Simulate save
-    await new Promise(r => setTimeout(r, 800));
+    const res = await fetch(`${API_BASE}/api/users/${window._profileId}`, {
+      method:  'PATCH',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body:    JSON.stringify({ name, bio, department: section, birthdate: bday })
+    });
+    if (!res.ok) {
+      const errData = await res.json().catch(() => ({}));
+      throw new Error(errData.message || 'حدث خطأ أثناء الحفظ');
+    }
 
     // Update UI immediately (optimistic)
     document.getElementById('profileName').textContent       = name;
@@ -1491,13 +1533,13 @@ document.getElementById('editSaveBtn').addEventListener('click', async () => {
     document.getElementById('metaBirthdate').textContent     = bday ? formatDate(bday) : '—';
     document.getElementById('sideBirthdate').textContent     = bday ? formatDate(bday) : '—';
 
-    editAlertTx.textContent = 'Profile updated successfully!';
+    editAlertTx.textContent = 'تم تحديث الملف الشخصي بنجاح.';
     editAlert.className = 'inline-alert success visible';
 
     setTimeout(closeModal, 1000);
 
   } catch (err) {
-    editAlertTx.textContent = 'Something went wrong. Please try again.';
+    editAlertTx.textContent = err.message || 'حدث خطأ. حاول مجدداً.';
     editAlert.className = 'inline-alert error visible';
   } finally {
     saveBtn.disabled = false;
