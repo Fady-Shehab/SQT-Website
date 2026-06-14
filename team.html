@@ -454,9 +454,6 @@
   #team-members {
     position: relative;
     padding: 0;
-    background: var(--bg-base);
-    box-shadow: var(--shadow-card);
-    margin-bottom: 42px;
   }
   .members-grid {
     display: grid; grid-template-columns: 1fr;
@@ -918,7 +915,7 @@
 
   <!-- ══════════════════ TEAM MEMBERS GRID ══════════════════ -->
   <section id="team-members" class="section-pad" aria-labelledby="members-h2">
-    <div class="container" style="padding: 56px 0px 56px 0px;">
+    <div class="container" style="padding: 0 56px 20px 56px;">
       <div class="stb">
         <div class="stb-eye">فريقنا</div>
         <h2 id="members-h2" class="stb-h">الموهوبون <em>الذين يصنعون الفرق</em></h2>
@@ -1224,12 +1221,22 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
+// Ensure social URLs are always absolute so the browser does not
+// treat them as relative paths (which would prepend the page's origin).
+// e.g. 'github.com/user' → 'https://github.com/user'
+function ensureAbsolute(url) {
+  if (!url) return '';
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  if (url.startsWith('//')) return 'https:' + url;
+  return 'https://' + url;
+}
+
 function buildSocialsHtml(socials) {
   if (!socials) return '';
   const links = Object.keys(SOCIAL_ICONS)
     .filter(key => socials[key])
     .map(key => `
-      <a href="${escapeHtml(socials[key])}" class="member-social" target="_blank" rel="noopener noreferrer" aria-label="${SOCIAL_LABELS[key]}">
+      <a href="${escapeHtml(ensureAbsolute(socials[key]))}" class="member-social" target="_blank" rel="noopener noreferrer" aria-label="${SOCIAL_LABELS[key]}">
         ${SOCIAL_ICONS[key]}
       </a>
     `)
