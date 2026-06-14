@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const API_BASE = 'http://localhost:5000';
+  const API_BASE = 'https://sqt-website-backend-production.up.railway.app/api';
 
   /* ─── Read auth data from storage ───────────────────────── */
   const token = localStorage.getItem('sharq-token') || sessionStorage.getItem('sharq-token');
