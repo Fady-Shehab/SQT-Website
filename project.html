@@ -970,6 +970,10 @@
 <script>
 'use strict';
 
+/* ─── 0. CONFIG ───────────────────────────── */
+// TODO: replace with your deployed backend URL, e.g. 'https://sqt-backend.onrender.com/api'
+const API_BASE = 'http://localhost:5000/api';
+
 /* ─── 1. THEME ─────────────────── */
 const html = document.documentElement;
 const THEME_KEY = 'sharq-theme';
@@ -1037,77 +1041,54 @@ window.addEventListener('load', () => { document.body.style.opacity = '1'; });
    Replace MOCK fetch with the real endpoint when backend is ready.
 ════════════════════════════════════════════════════════════ */
 
-/* ── Mock data store (placeholder for API response) ── */
-const MOCK_PROJECTS = {
-  "1": {
-    title: "اسم المشروع الأول",
-    short_desc: "وصف مختصر يوضح هدف المشروع والقيمة التي يضيفها للمستخدمين والفريق.",
-    status: "active",        // active | completed | in-progress
-    status_label: "نشط",
-    section: "القسم التقني الأول",
-    cover: "img/project-1.jpg",
-    start_date: "يناير ٢٠٢٥",
-    duration: "٣ أشهر",
-    tech: ["Python", "Django", "PostgreSQL"],
-    github: "#",
-    demo: "#",
-    body: [
-      { type: "h2", text: "نظرة عامة" },
-      { type: "p",  text: "هذا المشروع يهدف إلى حل مشكلة حقيقية يواجهها المستخدمون يومياً، من خلال بناء نظام متكامل يجمع بين سهولة الاستخدام والأداء العالي." },
-      { type: "p",  text: "تم تطوير المشروع باستخدام أحدث الممارسات البرمجية، مع التركيز على قابلية التوسع وسهولة الصيانة على المدى الطويل." },
-      { type: "h2", text: "أبرز المزايا" },
-      { type: "ul", items: [
-        "واجهة مستخدم بسيطة وسريعة الاستجابة",
-        "نظام صلاحيات متكامل لإدارة المستخدمين",
-        "لوحة تحكم لعرض الإحصائيات والتقارير",
-        "تكامل كامل مع واجهات برمجية خارجية"
-      ]},
-      { type: "h2", text: "التحديات والحلول" },
-      { type: "p",  text: "واجه الفريق عدة تحديات تقنية أثناء التطوير، تم التغلب عليها من خلال التخطيط الجيد والعمل الجماعي المستمر بين أعضاء الفريق." }
-    ],
-    gallery: ["img/project-1-shot1.jpg", "img/project-1-shot2.jpg"],
-    team: [
-      { name: "اسم العضو الأول",  role: "قائد المشروع" },
-      { name: "اسم العضو الثاني", role: "مطوّر Backend" },
-      { name: "اسم العضو الثالث", role: "مصمم UI/UX" }
-    ]
-  },
-  "featured": {
-    title: "اسم المشروع المميز الرئيسي",
-    short_desc: "وصف تفصيلي للمشروع المميز يوضح الهدف منه والمشكلة التي يحلها والقيمة التي يضيفها.",
-    status: "active",
-    status_label: "نشط",
-    section: "القسم التقني الأول",
-    cover: "img/project-featured.jpg",
-    start_date: "يناير ٢٠٢٥",
-    duration: "٤ أشهر",
-    tech: ["Python", "Web", "PostgreSQL"],
-    github: "#",
-    demo: "#",
-    body: [
-      { type: "h2", text: "نظرة عامة" },
-      { type: "p",  text: "المشروع المميز هو أبرز إنجازات الفريق هذا الموسم، ويمثل نقلة نوعية في طريقة تعامل الفريق مع المشاريع الكبيرة." },
-      { type: "h2", text: "أبرز المزايا" },
-      { type: "ul", items: [
-        "بنية تقنية قابلة للتوسع",
-        "تجربة مستخدم سلسة عبر جميع الأجهزة",
-        "نظام مراقبة وتقارير لحظية"
-      ]}
-    ],
-    gallery: [],
-    team: [
-      { name: "اسم العضو الأول",  role: "قائد المشروع" },
-      { name: "اسم العضو الثاني", role: "مطوّر Frontend" }
-    ]
-  }
-};
-
 /* Status badge class map */
 const STATUS_CLASS = {
-  active:      'badge-green',
-  completed:   'badge-gold',
+  active:        'badge-green',
+  completed:     'badge-gold',
   'in-progress': 'badge-silver'
 };
+
+/* Renders the "related projects" grid */
+function renderRelated(related) {
+  const section = document.getElementById('related');
+  const grid    = document.getElementById('relatedGrid');
+
+  if (!related || !related.length) {
+    section.style.display = 'none';
+    return;
+  }
+
+  grid.innerHTML = related.map((p, i) => {
+    const statusCls = STATUS_CLASS[p.status] || 'badge-silver';
+    const tags = (p.tech || []).slice(0, 2)
+      .map(t => `<span class="proj-tag">${t}</span>`)
+      .join('');
+
+    return `
+      <article class="proj-card reveal" role="listitem" style="transition-delay:${(i * 0.05).toFixed(2)}s" tabindex="0">
+        <div class="proj-img">
+          <img src="${p.cover || ''}" alt="صورة مشروع ذو صلة" width="400" height="225" loading="lazy"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="proj-img-ph" style="display:none" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div class="proj-status-overlay"><span class="badge ${statusCls}">${p.status_label}</span></div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-tags">${tags}</div>
+          <h3 class="proj-title">${p.title}</h3>
+          <p class="proj-desc">${p.short_desc}</p>
+          <a href="project.html?id=${p.id}" class="btn-text" style="font-size:.82rem">
+            عرض
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          </a>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  grid.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+}
 
 function renderProject(p) {
   // Title + breadcrumb + page <title>
@@ -1228,31 +1209,36 @@ function renderProject(p) {
 const params    = new URLSearchParams(window.location.search);
 const projectId = params.get('id') || '1';
 
-/* ── FUTURE API CALL ────────────────────────────────────
-   async function loadProject(id) {
-     try {
-       const res = await fetch(`/api/projects/${id}`);
-       if (!res.ok) throw new Error('not found');
-       const project = await res.json();
-       renderProject(project);
+/* ── Load project from the API ── */
+async function loadProject(id) {
+  try {
+    const res = await fetch(`${API_BASE}/projects/${id}`);
+    if (!res.ok) throw new Error('not found');
 
-       // Load related projects
-       const relatedRes = await fetch(`/api/projects/${id}/related?limit=3`);
-       const related = await relatedRes.json();
-       renderRelated(related);
-     } catch (err) {
-       // Show 404 / error state
-       document.getElementById('proj-title').textContent = 'المشروع غير موجود';
-       document.getElementById('phDesc').textContent = 'عذراً، لم نتمكن من العثور على هذا المشروع.';
-     }
-   }
-   loadProject(projectId);
-──────────────────────────────────────────────────────── */
+    const project = await res.json();
+    renderProject(project);
 
-// CURRENT: Use mock data (replace block above when API ready)
-const project = MOCK_PROJECTS[projectId] || MOCK_PROJECTS["1"];
-renderProject(project);
+    // Load related projects (best-effort — don't block on failure)
+    try {
+      const relatedRes = await fetch(`${API_BASE}/projects/${id}/related?limit=3`);
+      const related = relatedRes.ok ? await relatedRes.json() : [];
+      renderRelated(related);
+    } catch (relErr) {
+      console.error('[loadProject related]', relErr);
+      document.getElementById('related').style.display = 'none';
+    }
+  } catch (err) {
+    console.error('[loadProject]', err);
+    document.getElementById('proj-title').textContent = 'المشروع غير موجود';
+    document.getElementById('crumbTitle').textContent  = 'المشروع غير موجود';
+    document.getElementById('phDesc').textContent      = 'عذراً، لم نتمكن من العثور على هذا المشروع.';
+    document.getElementById('statusRow').innerHTML     = '';
+    document.getElementById('proseSkeleton').style.display = 'none';
+    document.getElementById('related').style.display   = 'none';
+  }
+}
 
+loadProject(projectId);
 </script>
 <script src="js/nav-auth.js"></script>
 
