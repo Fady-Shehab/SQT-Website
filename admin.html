@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>لوحة التحكم - شرق تك</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+  /* ═══════════════════════════════════════
+     DESIGN TOKENS
+  ═══════════════════════════════════════ */
+  :root, [data-theme="dark"] {
+    --bg-base:       #080E1A;
+    --bg-surface:    #0F172A;
+    --bg-card:       #131F35;
+    --bg-subtle:     #1a2744;
+    --bg-sidebar:    #0a1020;
+
+    --gold:          #C9A84C;
+    --gold-bright:   #E8C76B;
+    --gold-dim:      rgba(201,168,76,0.10);
+    --gold-border:   rgba(201,168,76,0.22);
+    --gold-glow:     rgba(201,168,76,0.15);
+
+    --green:         #1A5C45;
+    --green-light:   #22735A;
+    --green-dim:     rgba(26,92,69,0.18);
+    --green-border:  rgba(26,92,69,0.35);
+
+    --text-primary:  #EEF2F7;
+    --text-secondary:#94A3B8;
+    --text-muted:    #475569;
+
+    --border-subtle: rgba(255,255,255,0.05);
+    --border-mid:    rgba(255,255,255,0.09);
+
+    --error:         #F87171;
+    --error-dim:     rgba(248,113,113,0.10);
+    --success:       #4ADE80;
+    --success-dim:   rgba(74,222,128,0.10);
+    --warning:       #FBBF24;
+    --warning-dim:   rgba(251,191,36,0.10);
+    --info:          #60A5FA;
+    --info-dim:      rgba(96,165,250,0.10);
+
+    --sidebar-w:     240px;
+    --header-h:      64px;
+  }
+
+  [data-theme="light"] {
+    --bg-base:       #F0EDE6;
+    --bg-surface:    #FFFFFF;
+    --bg-card:       #FFFFFF;
+    --bg-subtle:     #F0EDE6;
+    --bg-sidebar:    #0a1020;
+
+    --gold:          #B8922A;
+    --gold-bright:   #D4AF37;
+    --gold-dim:      rgba(184,146,42,0.08);
+    --gold-border:   rgba(184,146,42,0.28);
+
+    --text-primary:  #0F1923;
+    --text-secondary:#3D4F61;
+    --text-muted:    #8A96A3;
+
+    --border-subtle: rgba(0,0,0,0.06);
+    --border-mid:    rgba(0,0,0,0.10);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg-base);
+    color: var(--text-primary);
+    direction: rtl;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg,  var(--gold-border) 0, var(--gold-border) 1px, transparent 1px, transparent 56px),
+      repeating-linear-gradient(-45deg, var(--gold-border) 0, var(--gold-border) 1px, transparent 1px, transparent 56px);
+    opacity: 0.10;
+    pointer-events: none; z-index: 0;
+  }
+  [data-theme="light"] body::before { opacity: 0.35; }
+
+  a { text-decoration: none; color: inherit; }
+  button { font-family: 'Cairo', sans-serif; cursor: pointer; border: none; background: none; }
+  input, select, textarea { font-family: 'Cairo', sans-serif; }
+
+  /* ═══════════════════════════════════════
+     LOGIN SCREEN
+  ═══════════════════════════════════════ */
+  #login-screen {
+    position: fixed; inset: 0; z-index: 1000;
+    background: var(--bg-base);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  #login-screen.hidden { display: none; }
+
+  .login-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-mid);
+    border-radius: 20px;
+    padding: 44px 40px;
+    width: 100%; max-width: 420px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    position: relative; z-index: 1;
+    animation: fadeUp 0.5s cubic-bezier(0,0,0.2,1) both;
+  }
+
+  .login-logo {
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 32px;
+  }
+  .login-logo img { width: 140px; height: 140px; object-fit: contain; }
+  .login-logo-fallback {
+    width: 64px; height: 64px; border-radius: 14px;
+    background: var(--green-dim); border: 1px solid var(--green-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; font-weight: 900; color: var(--gold);
+  }
+
+  .login-title { font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin-bottom: 4px; text-align: center; }
+  .login-sub   { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 28px; text-align: center; }
+
+  .form-group   { margin-bottom: 18px; }
+  .form-label   { display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 7px; }
+  .input-wrap   { position: relative; }
+  .form-input   {
+    width: 100%; padding: 12px 40px 12px 14px;
+    background: var(--bg-subtle); border: 1px solid var(--border-mid);
+    border-radius: 10px; font-size: 0.88rem; color: var(--text-primary);
+    outline: none; direction: rtl;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .form-input:focus { border-color: var(--gold-border); box-shadow: 0 0 0 3px var(--gold-dim); }
+  .form-input.error { border-color: var(--error); }
+  .input-icon {
+    position: absolute; right: 13px; top: 50%; transform: translateY(-50%);
+    stroke: var(--text-muted); fill: none; stroke-width: 2;
+    width: 15px; height: 15px; pointer-events: none;
+    transition: stroke 0.2s;
+  }
+  .form-input:focus ~ .input-icon { stroke: var(--gold); }
+
+  .btn-login {
+    width: 100%; padding: 13px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+    color: #0F1923; border-radius: 10px;
+    font-size: 0.95rem; font-weight: 800;
+    transition: all 0.25s; margin-top: 8px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    box-shadow: 0 4px 16px var(--gold-glow);
+  }
+  .btn-login:hover { transform: translateY(-1px); filter: brightness(1.08); }
+  .btn-login.loading { opacity: 0.7; pointer-events: none; }
+
+  .login-alert {
+    display: none; padding: 10px 14px; border-radius: 8px;
+    font-size: 0.8rem; margin-bottom: 16px;
+    background: var(--error-dim); border: 1px solid rgba(248,113,113,0.25); color: var(--error);
+    align-items: center; gap: 8px;
+  }
+  .login-alert.show { display: flex; }
+
+  /* ═══════════════════════════════════════
+     DASHBOARD LAYOUT
+  ═══════════════════════════════════════ */
+  #dashboard { display: none; min-height: 100vh; position: relative; z-index: 1; }
+  #dashboard.visible { display: flex; }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: var(--sidebar-w); flex-shrink: 0;
+    background: var(--bg-sidebar);
+    border-left: 1px solid rgba(201,168,76,0.12);
+    display: flex; flex-direction: column;
+    position: fixed; top: 0; right: 0; bottom: 0;
+    z-index: 100;
+    transition: transform 0.3s ease;
+  }
+  .sidebar-logo {
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sidebar-logo img { width: 140px; height: 140px; object-fit: contain; flex-shrink: 0; }
+  .sidebar-logo-fallback {
+    width: 40px; height: 40px; border-radius: 9px; flex-shrink: 0;
+    background: var(--green-dim); border: 1px solid var(--green-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.95rem; font-weight: 900; color: var(--gold);
+  }
+  .sidebar-brand { line-height: 1.2; }
+  .sidebar-brand-name { font-size: 0.95rem; font-weight: 800; color: #EEF2F7; }
+  .sidebar-brand-sub  { font-size: 0.68rem; color: rgba(238,242,247,0.4); }
+
+  .sidebar-nav { flex: 1; padding: 16px 12px; overflow-y: auto; }
+  .nav-group-label {
+    font-size: 0.62rem; font-weight: 700; color: rgba(238,242,247,0.3);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0 8px; margin: 16px 0 6px;
+  }
+  .nav-group-label:first-child { margin-top: 0; }
+
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; border-radius: 9px;
+    font-size: 0.85rem; font-weight: 600;
+    color: rgba(238,242,247,0.55);
+    cursor: pointer; margin-bottom: 2px;
+    transition: all 0.2s; user-select: none;
+    position: relative;
+  }
+  .nav-item:hover { background: rgba(255,255,255,0.06); color: #EEF2F7; }
+  .nav-item.active { background: var(--gold-dim); color: var(--gold); border: 1px solid var(--gold-border); }
+  .nav-item svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; flex-shrink: 0; }
+
+  .nav-badge {
+    margin-right: auto; margin-left: 0;
+    background: var(--error); color: #fff;
+    font-size: 0.65rem; font-weight: 700;
+    padding: 1px 6px; border-radius: 99px;
+    min-width: 18px; text-align: center;
+  }
+
+  .sidebar-footer {
+    padding: 12px; border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .admin-profile {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px; border-radius: 10px;
+    background: rgba(255,255,255,0.04);
+    margin-bottom: 8px;
+  }
+  .admin-avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--gold-dim); border: 1px solid var(--gold-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; font-weight: 700; color: var(--gold); flex-shrink: 0;
+    overflow: hidden;
+  }
+  .admin-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .admin-name  { font-size: 0.8rem; font-weight: 700; color: #EEF2F7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .admin-role  { font-size: 0.66rem; color: var(--gold); }
+
+  .btn-logout {
+    width: 100%; padding: 9px;
+    border-radius: 8px; border: 1px solid rgba(248,113,113,0.25);
+    color: var(--error); font-size: 0.8rem; font-weight: 700;
+    transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 7px;
+  }
+  .btn-logout:hover { background: var(--error-dim); }
+  .btn-logout svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  /* MAIN */
+  .main {
+    margin-right: var(--sidebar-w);
+    flex: 1; display: flex; flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* TOP HEADER */
+  .top-header {
+    height: var(--header-h);
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex; align-items: center;
+    padding: 0 28px; gap: 16px;
+    position: sticky; top: 0; z-index: 50;
+  }
+  .menu-toggle {
+    display: none; width: 36px; height: 36px;
+    align-items: center; justify-content: center;
+    border-radius: 8px; border: 1px solid var(--border-mid);
+    color: var(--text-secondary);
+  }
+  .menu-toggle svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  .breadcrumb { flex: 1; font-size: 0.85rem; color: var(--text-muted); }
+  .breadcrumb span { color: var(--text-primary); font-weight: 700; }
+
+  .header-actions { display: flex; align-items: center; gap: 10px; }
+  .theme-btn {
+    width: 36px; height: 36px; border-radius: 8px;
+    border: 1px solid var(--border-mid); color: var(--text-secondary);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .theme-btn:hover { border-color: var(--gold-border); color: var(--gold); }
+  .theme-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+  .icon-sun { display: none; }
+  [data-theme="light"] .icon-sun  { display: block; }
+  [data-theme="light"] .icon-moon { display: none; }
+
+  /* CONTENT AREA */
+  .content-area { flex: 1; padding: 28px; }
+
+  .section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+  }
+  .section-title { font-size: 1.3rem; font-weight: 800; color: var(--text-primary); }
+  .section-sub   { font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; }
+
+  /* STATS GRID */
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px; margin-bottom: 28px;
+  }
+  .stat-card {
+    background: var(--bg-card); border: 1px solid var(--border-subtle);
+    border-radius: 14px; padding: 20px;
+    transition: border-color 0.2s;
+  }
+  .stat-card:hover { border-color: var(--gold-border); }
+  .stat-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .stat-icon {
+    width: 36px; height: 36px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .stat-icon svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
+  .stat-icon.gold   { background: var(--gold-dim);    border: 1px solid var(--gold-border);   color: var(--gold); }
+  .stat-icon.green  { background: var(--green-dim);   border: 1px solid var(--green-border);  color: var(--success); }
+  .stat-icon.red    { background: var(--error-dim);   border: 1px solid rgba(248,113,113,0.25); color: var(--error); }
+  .stat-icon.blue   { background: var(--info-dim);    border: 1px solid rgba(96,165,250,0.25); color: var(--info); }
+  .stat-value { font-size: 1.8rem; font-weight: 900; color: var(--text-primary); line-height: 1; }
+  .stat-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+
+  /* TABLE */
+  .table-wrap {
+    background: var(--bg-card); border: 1px solid var(--border-subtle);
+    border-radius: 14px; overflow: hidden;
+  }
+  .table-toolbar {
+    padding: 16px 20px; border-bottom: 1px solid var(--border-subtle);
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .search-input {
+    padding: 8px 14px; background: var(--bg-subtle);
+    border: 1px solid var(--border-mid); border-radius: 8px;
+    font-size: 0.83rem; color: var(--text-primary); outline: none;
+    min-width: 200px; direction: rtl;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--gold-border); }
+  .search-input::placeholder { color: var(--text-muted); }
+
+  .filter-select {
+    padding: 8px 14px; background: var(--bg-subtle);
+    border: 1px solid var(--border-mid); border-radius: 8px;
+    font-size: 0.83rem; color: var(--text-primary); outline: none;
+    cursor: pointer; -webkit-appearance: none; direction: rtl;
+    transition: border-color 0.2s;
+  }
+  .filter-select:focus { border-color: var(--gold-border); }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { border-bottom: 1px solid var(--border-subtle); }
+  th {
+    padding: 12px 16px; text-align: right;
+    font-size: 0.72rem; font-weight: 700; color: var(--text-muted);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    white-space: nowrap;
+  }
+  td { padding: 14px 16px; font-size: 0.83rem; color: var(--text-secondary); border-bottom: 1px solid var(--border-subtle); }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+  /* BADGES / CHIPS */
+  .chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 10px; border-radius: 99px;
+    font-size: 0.72rem; font-weight: 700; white-space: nowrap;
+  }
+  .chip-pending  { background: var(--warning-dim); border: 1px solid rgba(251,191,36,0.3);  color: var(--warning); }
+  .chip-approved { background: var(--success-dim); border: 1px solid rgba(74,222,128,0.3);  color: var(--success); }
+  .chip-rejected { background: var(--error-dim);   border: 1px solid rgba(248,113,113,0.3); color: var(--error); }
+  .chip-admin    { background: var(--gold-dim);     border: 1px solid var(--gold-border);    color: var(--gold); }
+  .chip-member   { background: var(--bg-subtle);    border: 1px solid var(--border-mid);     color: var(--text-muted); }
+  .chip-active     { background: var(--success-dim); border: 1px solid rgba(74,222,128,0.3);  color: var(--success); }
+  .chip-completed  { background: var(--info-dim);    border: 1px solid rgba(96,165,250,0.25); color: var(--info); }
+  .chip-in-progress{ background: var(--warning-dim); border: 1px solid rgba(251,191,36,0.3);  color: var(--warning); }
+
+  /* ACTION BUTTONS */
+  .action-btns { display: flex; align-items: center; gap: 6px; }
+  .btn-action {
+    width: 30px; height: 30px; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; flex-shrink: 0;
+  }
+  .btn-action svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+  .btn-action.approve { background: var(--success-dim); border: 1px solid rgba(74,222,128,0.3);  color: var(--success); }
+  .btn-action.reject  { background: var(--error-dim);   border: 1px solid rgba(248,113,113,0.3); color: var(--error); }
+  .btn-action.edit    { background: var(--gold-dim);    border: 1px solid var(--gold-border);    color: var(--gold); }
+  .btn-action.delete  { background: var(--error-dim);   border: 1px solid rgba(248,113,113,0.3); color: var(--error); }
+  .btn-action.points  { background: var(--info-dim);    border: 1px solid rgba(96,165,250,0.25); color: var(--info); }
+  .btn-action:hover { transform: scale(1.1); filter: brightness(1.2); }
+
+  /* PRIMARY BUTTON */
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 18px; border-radius: 9px;
+    font-size: 0.83rem; font-weight: 700;
+    background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+    color: #0F1923; transition: all 0.25s;
+    box-shadow: 0 2px 10px var(--gold-glow);
+  }
+  .btn-primary:hover { transform: translateY(-1px); filter: brightness(1.08); }
+  .btn-primary svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 18px; border-radius: 9px;
+    font-size: 0.83rem; font-weight: 700;
+    background: var(--bg-subtle); border: 1px solid var(--border-mid);
+    color: var(--text-secondary); transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--gold-border); color: var(--gold); }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center; padding: 56px 24px;
+    color: var(--text-muted);
+  }
+  .empty-state svg {
+    width: 48px; height: 48px; stroke: var(--text-muted);
+    fill: none; stroke-width: 1.5; margin: 0 auto 16px;
+    opacity: 0.5;
+  }
+  .empty-state p { font-size: 0.88rem; }
+
+  /* USER CARD (for overview) */
+  .user-cell { display: flex; align-items: center; gap: 10px; }
+  .user-avatar-sm {
+    width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+    background: var(--gold-dim); border: 1px solid var(--gold-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 700; color: var(--gold);
+    overflow: hidden;
+  }
+  .user-avatar-sm img { width: 100%; height: 100%; object-fit: cover; }
+  .user-name-cell  { font-size: 0.84rem; font-weight: 700; color: var(--text-primary); }
+  .user-email-cell { font-size: 0.72rem; color: var(--text-muted); }
+
+  /* POST / PROJECT CARD GRID */
+  .cards-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .content-card {
+    background: var(--bg-card); border: 1px solid var(--border-subtle);
+    border-radius: 14px; overflow: hidden; transition: border-color 0.2s;
+  }
+  .content-card:hover { border-color: var(--gold-border); }
+  .content-card-img {
+    height: 140px; background: var(--bg-subtle);
+    overflow: hidden; position: relative;
+  }
+  .content-card-img img { width: 100%; height: 100%; object-fit: cover; }
+  .content-card-img-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted);
+  }
+  .content-card-img-placeholder svg { width: 32px; height: 32px; stroke: currentColor; fill: none; stroke-width: 1.5; opacity: 0.4; }
+  .content-card-body { padding: 16px; }
+  .content-card-title { font-size: 0.9rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; line-height: 1.4; }
+  .content-card-meta  { font-size: 0.74rem; color: var(--text-muted); margin-bottom: 12px; }
+  .content-card-actions { display: flex; gap: 8px; }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.65); backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: var(--bg-card); border: 1px solid var(--border-mid);
+    border-radius: 18px; width: 100%; max-width: 560px;
+    max-height: 90vh; overflow-y: auto;
+    transform: translateY(20px);
+    transition: transform 0.25s;
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+
+  .modal-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .modal-title { font-size: 1rem; font-weight: 800; color: var(--text-primary); }
+  .modal-close {
+    width: 30px; height: 30px; border-radius: 7px;
+    background: var(--bg-subtle); border: 1px solid var(--border-mid);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); transition: all 0.2s;
+  }
+  .modal-close:hover { color: var(--error); border-color: rgba(248,113,113,0.3); }
+  .modal-close svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+  .modal-body   { padding: 20px 24px; }
+  .modal-footer { padding: 16px 24px 20px; border-top: 1px solid var(--border-subtle); display: flex; gap: 10px; justify-content: flex-end; }
+
+  /* MODAL FORM */
+  .modal .form-group { margin-bottom: 16px; }
+  .modal .form-input, .modal .form-select, .modal .form-textarea {
+    width: 100%; padding: 10px 14px;
+    background: var(--bg-subtle); border: 1px solid var(--border-mid);
+    border-radius: 8px; font-size: 0.85rem; color: var(--text-primary);
+    outline: none; direction: rtl;
+    transition: border-color 0.2s;
+  }
+  .modal .form-input:focus,
+  .modal .form-select:focus,
+  .modal .form-textarea:focus { border-color: var(--gold-border); }
+  .modal .form-textarea { resize: vertical; min-height: 80px; }
+  .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* CONFIRM DIALOG */
+  .confirm-icon {
+    width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 16px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .confirm-icon.danger { background: var(--error-dim); border: 1px solid rgba(248,113,113,0.3); }
+  .confirm-icon svg    { width: 24px; height: 24px; stroke: var(--error); fill: none; stroke-width: 2; }
+  .confirm-msg  { text-align: center; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 4px; }
+  .confirm-name { text-align: center; font-size: 1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 4px; }
+
+  /* TOAST */
+  #toast-container {
+    position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+    z-index: 500; display: flex; flex-direction: column; gap: 8px;
+    pointer-events: none;
+  }
+  .toast {
+    padding: 10px 18px; border-radius: 10px;
+    font-size: 0.83rem; font-weight: 600;
+    display: flex; align-items: center; gap: 8px;
+    animation: toastIn 0.3s ease both;
+    pointer-events: all; min-width: 240px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .toast.success { background: var(--success-dim); border: 1px solid rgba(74,222,128,0.3);  color: var(--success); }
+  .toast.error   { background: var(--error-dim);   border: 1px solid rgba(248,113,113,0.3); color: var(--error); }
+  .toast.info    { background: var(--info-dim);    border: 1px solid rgba(96,165,250,0.25); color: var(--info); }
+  .toast svg     { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; flex-shrink: 0; }
+  @keyframes toastIn { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:translateY(0); } }
+
+  /* SPINNER */
+  .spinner {
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 2px solid var(--border-mid); border-top-color: var(--gold);
+    animation: spin 0.7s linear infinite; display: inline-block;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* LOADING OVERLAY */
+  .loading-row td { text-align: center; padding: 32px; }
+
+  /* POINTS BADGE ROW */
+  .badge-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .badge-chip {
+    padding: 4px 10px; border-radius: 99px;
+    font-size: 0.72rem; font-weight: 700;
+    background: var(--gold-dim); border: 1px solid var(--gold-border); color: var(--gold);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .sidebar {
+      transform: translateX(100%);
+    }
+    .sidebar.open { transform: translateX(0); box-shadow: -10px 0 40px rgba(0,0,0,0.5); }
+    .main { margin-right: 0; }
+    .menu-toggle { display: flex; }
+    .form-grid-2 { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .content-area { padding: 16px; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(20px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  /* OVERLAY for mobile sidebar close */
+  .sidebar-overlay {
+    display: none; position: fixed; inset: 0; z-index: 99;
+    background: rgba(0,0,0,0.5);
+  }
+  .sidebar-overlay.show { display: block; }
+
+  /* NOT IMPLEMENTED NOTE */
+  .not-impl {
+    background: var(--warning-dim); border: 1px solid rgba(251,191,36,0.25);
+    border-radius: 10px; padding: 12px 16px; margin-bottom: 16px;
+    font-size: 0.8rem; color: var(--warning); line-height: 1.7;
+  }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ TOAST CONTAINER ══════════════════ -->
+<div id="toast-container"></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- ══════════════════ LOGIN SCREEN ══════════════════ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="img/logo-dark.png" alt="شرق تك" class="nav-logo-dark"
+        onerror="this.style.display='none';document.getElementById('login-logo-fallback').style.display='flex';" />
+      <img src="img/logo-light.png" alt="شرق تك" class="nav-logo-light" style="display:none;"
+        onerror="this.style.display='none';" />
+      <div class="login-logo-fallback" id="login-logo-fallback" style="display:none;">ش</div>
+    </div>
+    <div class="login-title">لوحة التحكم</div>
+    <div class="login-sub">تسجيل دخول المشرف</div>
+
+    <div class="login-alert" id="login-alert">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span id="login-alert-msg">خطأ في البيانات</span>
+    </div>
+
+    <form id="login-form" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="l-email">البريد الإلكتروني</label>
+        <div class="input-wrap">
+          <input type="email" id="l-email" class="form-input" placeholder="admin@sharqtech.com" autocomplete="email" required />
+          <svg class="input-icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="l-password">كلمة المرور</label>
+        <div class="input-wrap">
+          <input type="password" id="l-password" class="form-input" placeholder="••••••••" autocomplete="current-password" required />
+          <svg class="input-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+      </div>
+      <button type="submit" class="btn-login" id="btn-login">
+        <span id="btn-login-label">دخول</span>
+        <div class="spinner" id="btn-login-spinner" style="display:none;border-top-color:#0F1923;border-color:rgba(15,25,35,0.25);"></div>
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ══════════════════ DASHBOARD ══════════════════ -->
+<div id="dashboard">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <img src="img/logo-dark.png" alt="شرق تك" style="display:block;"
+        onerror="this.style.display='none';document.getElementById('sb-fallback').style.display='flex';" />
+      <div class="sidebar-logo-fallback" id="sb-fallback" style="display:none;">ش</div>
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-name">شرق تك</div>
+        <div class="sidebar-brand-sub">لوحة التحكم</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-group-label">عام</div>
+      <div class="nav-item active" data-section="overview">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        نظرة عامة
+      </div>
+
+      <div class="nav-group-label">الاعضاء</div>
+      <div class="nav-item" data-section="pending">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        طلبات الانضمام
+        <span class="nav-badge" id="pending-badge" style="display:none;">0</span>
+      </div>
+      <div class="nav-item" data-section="members">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        كل الاعضاء
+      </div>
+
+      <div class="nav-group-label">المحتوى</div>
+      <div class="nav-item" data-section="posts">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        المقالات
+      </div>
+      <div class="nav-item" data-section="projects">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        المشاريع
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="admin-profile">
+        <div class="admin-avatar" id="admin-avatar-sb">م</div>
+        <div>
+          <div class="admin-name"  id="admin-name-sb">المشرف</div>
+          <div class="admin-role">Admin</div>
+        </div>
+      </div>
+      <button class="btn-logout" id="btn-logout">
+        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        تسجيل الخروج
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <!-- TOP HEADER -->
+    <header class="top-header">
+      <button class="menu-toggle" id="menuToggle">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="breadcrumb">لوحة التحكم &rsaquo; <span id="breadcrumb-label">نظرة عامة</span></div>
+      <div class="header-actions">
+        <button class="theme-btn" id="themeToggle" aria-label="تبديل المظهر">
+          <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <a href="index.html" class="btn-secondary" style="padding:7px 14px;font-size:0.78rem;">
+          الموقع الرئيسي
+        </a>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="content-area" id="content-area">
+      <!-- Sections rendered by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ MODAL: EDIT USER ══════════════════ -->
+<div class="modal-overlay" id="modal-edit-user">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">تعديل بيانات العضو</div>
+      <button class="modal-close" data-close="modal-edit-user"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="eu-id" />
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label class="form-label">الاسم</label>
+          <input type="text" id="eu-name" class="form-input" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">الدور في الفريق</label>
+          <select id="eu-team-role" class="form-select">
+            <option value="Member">Member</option>
+            <option value="Section Leader">Section Leader</option>
+            <option value="Team Leader">Team Leader</option>
+            <option value="Senior Supervisor">Senior Supervisor</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label class="form-label">الصلاحية</label>
+          <select id="eu-role" class="form-select">
+            <option value="member">Member</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">الترتيب في صفحة الفريق</label>
+          <input type="number" id="eu-order" class="form-input" min="1" max="999" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">التسمية المختصرة (role tag)</label>
+        <input type="text" id="eu-role-tag" class="form-input" placeholder="مثال: Founder & Lead" maxlength="60" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" data-close="modal-edit-user">الغاء</button>
+      <button class="btn-primary" id="btn-save-user">
+        <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        حفظ التغييرات
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ MODAL: POINTS & BADGES ══════════════════ -->
+<div class="modal-overlay" id="modal-points">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">النقاط والانجازات</div>
+      <button class="modal-close" data-close="modal-points"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="not-impl">
+        هذه الميزة تحتاج إلى endpoints جديدة في الباك:
+        <br><code>PATCH /api/admin/users/:id/points</code> — لتعديل النقاط
+        <br><code>POST  /api/admin/users/:id/badges</code> — لإضافة إنجاز
+      </div>
+      <input type="hidden" id="pts-user-id" />
+      <div class="form-group">
+        <label class="form-label">اسم العضو</label>
+        <input type="text" id="pts-user-name" class="form-input" disabled />
+      </div>
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label class="form-label">النقاط الحالية</label>
+          <input type="number" id="pts-current" class="form-input" min="0" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">اضف نقاط</label>
+          <input type="number" id="pts-add" class="form-input" placeholder="مثال: 50" min="0" />
+        </div>
+      </div>
+      <div style="border-top:1px solid var(--border-subtle);margin:16px 0;padding-top:16px;">
+        <div class="form-label" style="margin-bottom:10px;">اضافة انجاز جديد</div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">اسم الانجاز</label>
+            <input type="text" id="badge-name" class="form-input" placeholder="مثال: البطل الاول" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">لون الانجاز</label>
+            <select id="badge-color" class="form-select">
+              <option value="gold">ذهبي</option>
+              <option value="green">اخضر</option>
+              <option value="blue">ازرق</option>
+              <option value="purple">بنفسجي</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">وصف الانجاز</label>
+          <input type="text" id="badge-desc" class="form-input" placeholder="وصف مختصر" />
+        </div>
+      </div>
+      <div id="current-badges-wrap">
+        <div class="form-label" style="margin-bottom:8px;">الانجازات الحالية</div>
+        <div class="badge-list" id="current-badges"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" data-close="modal-points">اغلاق</button>
+      <button class="btn-primary" id="btn-save-points" disabled title="يحتاج endpoint في الباك">
+        حفظ (يحتاج باك)
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ MODAL: ADD/EDIT POST ══════════════════ -->
+<div class="modal-overlay" id="modal-post">
+  <div class="modal" style="max-width:680px;">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-post-title">اضافة مقال</div>
+      <button class="modal-close" data-close="modal-post"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="not-impl">
+        هذه الميزة تحتاج endpoints جديدة:<br>
+        <code>POST   /api/posts</code> — اضافة مقال<br>
+        <code>PATCH  /api/posts/:id</code> — تعديل مقال<br>
+        <code>DELETE /api/posts/:id</code> — حذف مقال<br>
+        كل هذه الـ endpoints يجب ان تكون محمية بـ protect + adminOnly
+      </div>
+      <input type="hidden" id="post-edit-id" />
+      <div class="form-group">
+        <label class="form-label">عنوان المقال</label>
+        <input type="text" id="post-title" class="form-input" placeholder="عنوان المقال" />
+      </div>
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label class="form-label">الكاتب</label>
+          <input type="text" id="post-author" class="form-input" placeholder="اسم الكاتب" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">التصنيف</label>
+          <input type="text" id="post-category" class="form-input" placeholder="مثال: برمجة" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">المقتطف</label>
+        <textarea id="post-excerpt" class="form-textarea" placeholder="وصف مختصر للمقال"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">المحتوى (HTML)</label>
+        <textarea id="post-content" class="form-textarea" style="min-height:120px;" placeholder="محتوى المقال بصيغة HTML"></textarea>
+      </div>
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label class="form-label">رابط الصورة</label>
+          <input type="text" id="post-image" class="form-input" placeholder="https://..." />
+        </div>
+        <div class="form-group">
+          <label class="form-label">وقت القراءة (دقيقة)</label>
+          <input type="number" id="post-readtime" class="form-input" value="5" min="1" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tags (مفصولة بفاصلة)</label>
+        <input type="text" id="post-tags" class="form-input" placeholder="Python, AI, Web" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" data-close="modal-post">الغاء</button>
+      <button class="btn-primary" id="btn-save-post" disabled title="يحتاج endpoint في الباك">
+        حفظ (يحتاج باك)
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ MODAL: ADD/EDIT PROJECT ══════════════════ -->
+<div class="modal-overlay" id="modal-project">
+  <div class="modal" style="max-width:680px;">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-project-title">اضافة مشروع</div>
+      <button class="modal-close" data-close="modal-project"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="not-impl">
+        هذه الميزة تحتاج endpoints جديدة:<br>
+        <code>POST   /api/projects</code> — اضافة مشروع<br>
+        <code>PATCH  /api/projects/:id</code> — تعديل مشروع<br>
+        <code>DELETE /api/projects/:id</code> — حذف مشروع<br>
+        كل هذه الـ endpoints يجب ان تكون محمية بـ protect + adminOnly
+      </div>
+      <input type="hidden" id="proj-edit-id" />
+      <div class="form-group">
+        <label class="form-label">اسم المشروع</label>
+        <input type="text" id="proj-title" class="form-input" placeholder="اسم المشروع" />
+      </div>
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label class="form-label">الحالة</label>
+          <select id="proj-status" class="form-select">
+            <option value="active">نشط</option>
+            <option value="completed">مكتمل</option>
+            <option value="in-progress">قيد التطوير</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">القسم</label>
+          <input type="text" id="proj-section" class="form-input" placeholder="مثال: Programming" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">الوصف المختصر</label>
+        <textarea id="proj-desc" class="form-textarea" placeholder="وصف مختصر للمشروع"></textarea>
+      </div>
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label class="form-label">رابط GitHub</label>
+          <input type="text" id="proj-github" class="form-input" placeholder="https://github.com/..." />
+        </div>
+        <div class="form-group">
+          <label class="form-label">رابط Demo</label>
+          <input type="text" id="proj-demo" class="form-input" placeholder="https://..." />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">التقنيات (مفصولة بفاصلة)</label>
+        <input type="text" id="proj-tech" class="form-input" placeholder="React, Node.js, MongoDB" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" data-close="modal-project">الغاء</button>
+      <button class="btn-primary" id="btn-save-project" disabled title="يحتاج endpoint في الباك">
+        حفظ (يحتاج باك)
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ MODAL: CONFIRM DELETE ══════════════════ -->
+<div class="modal-overlay" id="modal-confirm">
+  <div class="modal" style="max-width:400px;">
+    <div class="modal-body" style="padding-top:28px;text-align:center;">
+      <div class="confirm-icon danger">
+        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+      </div>
+      <div class="confirm-name" id="confirm-name"></div>
+      <div class="confirm-msg"  id="confirm-msg">هل انت متاكد من حذف هذا العنصر؟ لا يمكن التراجع عن هذا الاجراء.</div>
+    </div>
+    <div class="modal-footer" style="justify-content:center;">
+      <button class="btn-secondary" data-close="modal-confirm">الغاء</button>
+      <button class="btn-primary" id="btn-confirm-delete" style="background:linear-gradient(135deg,var(--error),#ff8080);box-shadow:0 2px 10px rgba(248,113,113,0.2);">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+        حذف نهائي
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ JAVASCRIPT ══════════════════ */
+<script>
+'use strict';
+
+/* ─── CONFIG ─────────────────────────────────────────── */
+const API_BASE   = 'http://localhost:5000';
+const THEME_KEY  = 'sharq-theme';
+const TOKEN_KEY  = 'sharq-token';
+const USER_KEY   = 'sharq-user';
+
+/* ─── STATE ──────────────────────────────────────────── */
+let currentSection = 'overview';
+let confirmCallback = null;
+let pendingCount    = 0;
+
+/* ─── SANITIZE (XSS prevention) ─────────────────────── */
+function esc(str) {
+  if (typeof str !== 'string') return '';
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+            .replace(/"/g,'&quot;').replace(/'/g,'&#x27;');
+}
+
+/* ─── THEME ──────────────────────────────────────────── */
+const html = document.documentElement;
+function applyTheme(t) {
+  html.setAttribute('data-theme', t);
+  localStorage.setItem(THEME_KEY, t);
+  // sync login logos
+  document.querySelectorAll('.nav-logo-dark').forEach(el => el.style.display = t === 'dark' ? 'block' : 'none');
+  document.querySelectorAll('.nav-logo-light').forEach(el => el.style.display = t === 'light' ? 'block' : 'none');
+}
+applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
+document.getElementById('themeToggle').addEventListener('click', () => {
+  applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+/* ─── API HELPER ─────────────────────────────────────── */
+async function api(method, path, body) {
+  const token = localStorage.getItem(TOKEN_KEY);
+  const opts  = {
+    method,
+    headers: {
+      'Content-Type':  'application/json',
+      ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+    }
+  };
+  if (body) opts.body = JSON.stringify(body);
+  const res  = await fetch(`${API_BASE}${path}`, opts);
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw { status: res.status, message: data.message || 'Server error' };
+  return data;
+}
+
+/* ─── TOAST ──────────────────────────────────────────── */
+function toast(msg, type = 'success') {
+  const icons = {
+    success: '<circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/>',
+    error:   '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>',
+    info:    '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>'
+  };
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.innerHTML = `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">${icons[type]||icons.info}</svg><span>${esc(msg)}</span>`;
+  document.getElementById('toast-container').appendChild(el);
+  setTimeout(() => el.remove(), 3200);
+}
+
+/* ─── MODAL ──────────────────────────────────────────── */
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('[data-close]').forEach(btn => {
+  btn.addEventListener('click', () => closeModal(btn.dataset.close));
+});
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) closeModal(overlay.id);
+  });
+});
+
+/* ─── CONFIRM DIALOG ─────────────────────────────────── */
+function confirm(name, msg, cb) {
+  document.getElementById('confirm-name').textContent = name;
+  document.getElementById('confirm-msg').textContent  = msg || 'هل انت متاكد؟ لا يمكن التراجع.';
+  confirmCallback = cb;
+  openModal('modal-confirm');
+}
+document.getElementById('btn-confirm-delete').addEventListener('click', () => {
+  closeModal('modal-confirm');
+  if (confirmCallback) { confirmCallback(); confirmCallback = null; }
+});
+
+/* ─── AUTH ───────────────────────────────────────────── */
+// Check if already logged in
+async function checkAuth() {
+  const token = localStorage.getItem(TOKEN_KEY);
+  const user  = JSON.parse(localStorage.getItem(USER_KEY) || 'null');
+  if (!token || !user) return showLogin();
+  if (user.role !== 'admin') { localStorage.clear(); return showLogin(); }
+  showDashboard(user);
+  loadSection('overview');
+}
+
+function showLogin() {
+  document.getElementById('login-screen').classList.remove('hidden');
+  document.getElementById('dashboard').classList.remove('visible');
+}
+
+function showDashboard(user) {
+  document.getElementById('login-screen').classList.add('hidden');
+  document.getElementById('dashboard').classList.add('visible');
+  const initials = (user.name || 'A').charAt(0).toUpperCase();
+  const avatarEl = document.getElementById('admin-avatar-sb');
+  if (user.avatar) {
+    avatarEl.innerHTML = `<img src="${esc(user.avatar)}" alt="${esc(user.name)}" />`;
+  } else {
+    avatarEl.textContent = initials;
+  }
+  document.getElementById('admin-name-sb').textContent = user.name || 'المشرف';
+}
+
+/* ─── LOGIN FORM ─────────────────────────────────────── */
+document.getElementById('login-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const email    = document.getElementById('l-email').value.trim().slice(0, 320);
+  const password = document.getElementById('l-password').value.slice(0, 128);
+  const alert    = document.getElementById('login-alert');
+  const btn      = document.getElementById('btn-login');
+  const label    = document.getElementById('btn-login-label');
+  const spinner  = document.getElementById('btn-login-spinner');
+
+  alert.classList.remove('show');
+  btn.classList.add('loading');
+  label.style.display  = 'none';
+  spinner.style.display = 'inline-block';
+
+  try {
+    const data = await api('POST', '/api/auth/login', { email, password });
+    if (data.user.role !== 'admin') throw { message: 'ليس لديك صلاحية الوصول للوحة التحكم' };
+    localStorage.setItem(TOKEN_KEY, data.token);
+    localStorage.setItem(USER_KEY,  JSON.stringify(data.user));
+    showDashboard(data.user);
+    loadSection('overview');
+  } catch (err) {
+    const msgEl = document.getElementById('login-alert-msg');
+    msgEl.textContent = err.message || 'خطأ في تسجيل الدخول';
+    alert.classList.add('show');
+  } finally {
+    btn.classList.remove('loading');
+    label.style.display  = '';
+    spinner.style.display = 'none';
+  }
+});
+
+/* ─── LOGOUT ─────────────────────────────────────────── */
+document.getElementById('btn-logout').addEventListener('click', () => {
+  localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(USER_KEY);
+  showLogin();
+  document.getElementById('l-email').value    = '';
+  document.getElementById('l-password').value = '';
+});
+
+/* ─── SIDEBAR NAVIGATION ─────────────────────────────── */
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    loadSection(item.dataset.section);
+    // close mobile sidebar
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('show');
+  });
+});
+
+document.getElementById('menuToggle').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebarOverlay').classList.add('show');
+});
+document.getElementById('sidebarOverlay').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('show');
+});
+
+function setActiveNav(section) {
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.toggle('active', i.dataset.section === section));
+  const labels = {
+    overview: 'نظرة عامة', pending: 'طلبات الانضمام',
+    members: 'كل الاعضاء', posts: 'المقالات', projects: 'المشاريع'
+  };
+  document.getElementById('breadcrumb-label').textContent = labels[section] || section;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SECTION RENDERERS
+═══════════════════════════════════════════════════════ */
+function loadSection(section) {
+  currentSection = section;
+  setActiveNav(section);
+  const area = document.getElementById('content-area');
+  area.innerHTML = `<div style="text-align:center;padding:60px;"><div class="spinner" style="width:32px;height:32px;border-width:3px;margin:auto;"></div></div>`;
+  const fns = { overview: renderOverview, pending: renderPending, members: renderMembers, posts: renderPosts, projects: renderProjects };
+  if (fns[section]) fns[section]();
+}
+
+/* ── OVERVIEW ──────────────────────────────────────── */
+async function renderOverview() {
+  try {
+    const [usersData, postsData, projectsData] = await Promise.all([
+      api('GET', '/api/admin/users?status=all&limit=5'),
+      api('GET', '/api/posts'),
+      api('GET', '/api/projects?limit=100')
+    ]);
+
+    const pending  = (usersData.users || []).filter(u => u.status === 'pending').length;
+    const total    = usersData.total || 0;
+    const posts    = Array.isArray(postsData) ? postsData.length : 0;
+    const projects = projectsData.total || 0;
+
+    pendingCount = pending;
+    updatePendingBadge(pending);
+
+    const recentUsers = (usersData.users || []).slice(0, 5);
+
+    document.getElementById('content-area').innerHTML = `
+      <div class="section-header">
+        <div><div class="section-title">نظرة عامة</div><div class="section-sub">ملخص بيانات الموقع</div></div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon gold"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          </div>
+          <div class="stat-value">${total}</div>
+          <div class="stat-label">اجمالي الاعضاء</div>
+        </div>
+        <div class="stat-card" style="cursor:pointer;" onclick="loadSection('pending')">
+          <div class="stat-top">
+            <div class="stat-icon red"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          </div>
+          <div class="stat-value" style="color:var(--${pending > 0 ? 'error' : 'text-primary'})">${pending}</div>
+          <div class="stat-label">طلبات الانضمام</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon blue"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          </div>
+          <div class="stat-value">${posts}</div>
+          <div class="stat-label">المقالات</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon green"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          </div>
+          <div class="stat-value">${projects}</div>
+          <div class="stat-label">المشاريع</div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <div class="table-toolbar" style="justify-content:space-between;">
+          <div style="font-size:.85rem;font-weight:700;color:var(--text-primary);">اخر الاعضاء المسجلين</div>
+          <button class="btn-secondary" onclick="loadSection('members')" style="font-size:.78rem;padding:6px 12px;">عرض الكل</button>
+        </div>
+        <table>
+          <thead><tr>
+            <th>العضو</th><th>القسم</th><th>الحالة</th><th>الدور</th><th>تاريخ التسجيل</th>
+          </tr></thead>
+          <tbody>
+            ${recentUsers.length === 0 ? `<tr><td colspan="5" class="empty-state"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><p>لا يوجد اعضاء بعد</p></td></tr>` :
+              recentUsers.map(u => `
+                <tr>
+                  <td><div class="user-cell">
+                    <div class="user-avatar-sm">${u.avatar ? `<img src="${esc(u.avatar)}" alt="${esc(u.name)}" />` : esc((u.name||'?').charAt(0).toUpperCase())}</div>
+                    <div><div class="user-name-cell">${esc(u.name)}</div><div class="user-email-cell">${esc(u.email)}</div></div>
+                  </div></td>
+                  <td>${esc(u.department||'-')}</td>
+                  <td><span class="chip chip-${u.status}">${statusLabel(u.status)}</span></td>
+                  <td><span class="chip chip-${u.role}">${u.role === 'admin' ? 'Admin' : 'Member'}</span></td>
+                  <td>${formatDate(u.createdAt)}</td>
+                </tr>
+              `).join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
+  } catch (err) {
+    showError(err.message);
+  }
+}
+
+/* ── PENDING REQUESTS ──────────────────────────────── */
+async function renderPending() {
+  try {
+    const data  = await api('GET', '/api/admin/users?status=pending&limit=100');
+    const users = data.users || [];
+    pendingCount = users.length;
+    updatePendingBadge(users.length);
+
+    document.getElementById('content-area').innerHTML = `
+      <div class="section-header">
+        <div><div class="section-title">طلبات الانضمام</div><div class="section-sub">${users.length} طلب بانتظار المراجعة</div></div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>المتقدم</th><th>القسم</th><th>تاريخ الطلب</th><th>الاجراءات</th>
+          </tr></thead>
+          <tbody id="pending-tbody">
+            ${users.length === 0
+              ? `<tr><td colspan="4"><div class="empty-state"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><p>لا توجد طلبات معلقة</p></div></td></tr>`
+              : users.map(u => pendingRow(u)).join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
+    bindPendingActions();
+  } catch (err) { showError(err.message); }
+}
+
+function pendingRow(u) {
+  return `
+    <tr id="prow-${esc(u._id)}">
+      <td><div class="user-cell">
+        <div class="user-avatar-sm">${u.avatar ? `<img src="${esc(u.avatar)}" alt="${esc(u.name)}" />` : esc((u.name||'?').charAt(0).toUpperCase())}</div>
+        <div><div class="user-name-cell">${esc(u.name)}</div><div class="user-email-cell">${esc(u.email)}</div></div>
+      </div></td>
+      <td>${esc(u.department||'-')}</td>
+      <td>${formatDate(u.createdAt)}</td>
+      <td><div class="action-btns">
+        <button class="btn-action approve" data-id="${esc(u._id)}" data-name="${esc(u.name)}" title="قبول">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </button>
+        <button class="btn-action reject" data-id="${esc(u._id)}" data-name="${esc(u.name)}" title="رفض">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div></td>
+    </tr>
+  `;
+}
+
+function bindPendingActions() {
+  document.querySelectorAll('.btn-action.approve').forEach(btn => {
+    btn.addEventListener('click', () => updateUserStatus(btn.dataset.id, btn.dataset.name, 'approved'));
+  });
+  document.querySelectorAll('.btn-action.reject').forEach(btn => {
+    btn.addEventListener('click', () => updateUserStatus(btn.dataset.id, btn.dataset.name, 'rejected'));
+  });
+}
+
+async function updateUserStatus(id, name, status) {
+  const label = status === 'approved' ? 'قبول' : 'رفض';
+  const msg   = status === 'approved'
+    ? `سيتم قبول طلب ${name} والسماح له بالدخول`
+    : `سيتم رفض طلب ${name}`;
+  confirm(name, msg, async () => {
+    try {
+      await api('PATCH', `/api/admin/users/${id}`, { status });
+      document.getElementById(`prow-${id}`)?.remove();
+      pendingCount = Math.max(0, pendingCount - 1);
+      updatePendingBadge(pendingCount);
+      toast(`تم ${label} طلب ${name}`, status === 'approved' ? 'success' : 'info');
+      // update overview sub text
+      const sub = document.querySelector('.section-sub');
+      if (sub) sub.textContent = `${pendingCount} طلب بانتظار المراجعة`;
+    } catch (err) { toast(err.message, 'error'); }
+  });
+}
+
+/* ── ALL MEMBERS ───────────────────────────────────── */
+async function renderMembers() {
+  try {
+    const data  = await api('GET', '/api/admin/users?status=all&limit=100');
+    const users = (data.users || []).filter(u => u.status !== 'pending');
+
+    document.getElementById('content-area').innerHTML = `
+      <div class="section-header">
+        <div><div class="section-title">كل الاعضاء</div><div class="section-sub">${users.length} عضو</div></div>
+      </div>
+      <div class="table-wrap">
+        <div class="table-toolbar">
+          <input type="text" class="search-input" id="member-search" placeholder="بحث بالاسم او الايميل..." />
+          <select class="filter-select" id="member-dept-filter">
+            <option value="">كل الاقسام</option>
+            <option value="Programming">Programming</option>
+            <option value="AI">AI</option>
+            <option value="Robotics">Robotics</option>
+            <option value="Design">Design</option>
+          </select>
+          <select class="filter-select" id="member-role-filter">
+            <option value="">كل الادوار</option>
+            <option value="admin">Admin</option>
+            <option value="member">Member</option>
+          </select>
+        </div>
+        <table>
+          <thead><tr>
+            <th>العضو</th><th>القسم</th><th>الدور</th><th>النقاط</th><th>الحالة</th><th>الاجراءات</th>
+          </tr></thead>
+          <tbody id="members-tbody">
+            ${users.length === 0
+              ? `<tr><td colspan="6"><div class="empty-state"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><p>لا يوجد اعضاء</p></div></td></tr>`
+              : users.map(u => memberRow(u)).join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
+
+    // Search + filter
+    const allRows = users;
+    function filterMembers() {
+      const q    = document.getElementById('member-search').value.trim().toLowerCase();
+      const dept = document.getElementById('member-dept-filter').value;
+      const role = document.getElementById('member-role-filter').value;
+      const filtered = allRows.filter(u =>
+        (!q    || u.name?.toLowerCase().includes(q) || u.email?.toLowerCase().includes(q)) &&
+        (!dept || u.department === dept) &&
+        (!role || u.role === role)
+      );
+      document.getElementById('members-tbody').innerHTML =
+        filtered.length ? filtered.map(u => memberRow(u)).join('') :
+        `<tr><td colspan="6"><div class="empty-state"><svg viewBox="0 0 24 24"><line x1="21" y1="21" x2="16.65" y2="16.65"/><circle cx="11" cy="11" r="8"/></svg><p>لا توجد نتائج</p></div></td></tr>`;
+      bindMemberActions();
+    }
+    document.getElementById('member-search').addEventListener('input', filterMembers);
+    document.getElementById('member-dept-filter').addEventListener('change', filterMembers);
+    document.getElementById('member-role-filter').addEventListener('change', filterMembers);
+    bindMemberActions();
+
+  } catch (err) { showError(err.message); }
+}
+
+function memberRow(u) {
+  return `
+    <tr id="mrow-${esc(u._id)}">
+      <td><div class="user-cell">
+        <div class="user-avatar-sm">${u.avatar ? `<img src="${esc(u.avatar)}" alt="${esc(u.name)}" />` : esc((u.name||'?').charAt(0).toUpperCase())}</div>
+        <div><div class="user-name-cell">${esc(u.name)}</div><div class="user-email-cell">${esc(u.email)}</div></div>
+      </div></td>
+      <td>${esc(u.department||'-')}</td>
+      <td><span class="chip chip-${u.role}">${u.role==='admin'?'Admin':'Member'}</span></td>
+      <td>${u.points||0}</td>
+      <td><span class="chip chip-${u.status}">${statusLabel(u.status)}</span></td>
+      <td><div class="action-btns">
+        <button class="btn-action edit"   data-user='${JSON.stringify(u).replace(/'/g,"&#39;")}' title="تعديل"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+        <button class="btn-action points" data-user='${JSON.stringify(u).replace(/'/g,"&#39;")}' title="نقاط وانجازات"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+        <button class="btn-action delete" data-id="${esc(u._id)}" data-name="${esc(u.name)}" title="حذف"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
+      </div></td>
+    </tr>
+  `;
+}
+
+function bindMemberActions() {
+  document.querySelectorAll('.btn-action.edit').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const u = JSON.parse(btn.dataset.user);
+      openEditUser(u);
+    });
+  });
+  document.querySelectorAll('.btn-action.points').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const u = JSON.parse(btn.dataset.user);
+      openPointsModal(u);
+    });
+  });
+  document.querySelectorAll('.btn-action.delete').forEach(btn => {
+    btn.addEventListener('click', () => {
+      confirm(btn.dataset.name, 'سيتم حذف هذا العضو بشكل نهائي من النظام.', async () => {
+        try {
+          await api('DELETE', `/api/admin/users/${btn.dataset.id}`);
+          document.getElementById(`mrow-${btn.dataset.id}`)?.remove();
+          toast(`تم حذف ${btn.dataset.name}`, 'success');
+        } catch (err) { toast(err.message, 'error'); }
+      });
+    });
+  });
+}
+
+function openEditUser(u) {
+  document.getElementById('eu-id').value        = u._id;
+  document.getElementById('eu-name').value      = u.name || '';
+  document.getElementById('eu-team-role').value = u.teamRole || 'Member';
+  document.getElementById('eu-role').value      = u.role || 'member';
+  document.getElementById('eu-order').value     = u.displayOrder || 999;
+  document.getElementById('eu-role-tag').value  = u.roleTag || '';
+  openModal('modal-edit-user');
+}
+
+document.getElementById('btn-save-user').addEventListener('click', async () => {
+  const id       = document.getElementById('eu-id').value;
+  const teamRole = document.getElementById('eu-team-role').value;
+  const role     = document.getElementById('eu-role').value;
+  const order    = parseInt(document.getElementById('eu-order').value) || 999;
+  const roleTag  = document.getElementById('eu-role-tag').value.trim().slice(0, 60);
+  try {
+    // Team profile update
+    await api('PATCH', `/api/admin/users/${id}/team-profile`, { teamRole, roleTag, displayOrder: order });
+    // Role update (separate endpoint)
+    const storedUser = JSON.parse(localStorage.getItem(USER_KEY) || '{}');
+    if (id !== storedUser.id) {
+      await api('PATCH', `/api/admin/users/${id}/role`, { role });
+    }
+    closeModal('modal-edit-user');
+    toast('تم حفظ التغييرات', 'success');
+    renderMembers();
+  } catch (err) { toast(err.message, 'error'); }
+});
+
+function openPointsModal(u) {
+  document.getElementById('pts-user-id').value   = u._id;
+  document.getElementById('pts-user-name').value = u.name;
+  document.getElementById('pts-current').value   = u.points || 0;
+  document.getElementById('pts-add').value       = '';
+  document.getElementById('badge-name').value    = '';
+  document.getElementById('badge-desc').value    = '';
+  const badgeList = document.getElementById('current-badges');
+  badgeList.innerHTML = (u.badges || []).length
+    ? u.badges.map(b => `<span class="badge-chip">${esc(b.name)}</span>`).join('')
+    : '<span style="font-size:.78rem;color:var(--text-muted);">لا توجد انجازات بعد</span>';
+  openModal('modal-points');
+}
+
+/* ── POSTS ─────────────────────────────────────────── */
+async function renderPosts() {
+  try {
+    const data  = await api('GET', '/api/posts');
+    const posts = Array.isArray(data) ? data : [];
+    document.getElementById('content-area').innerHTML = `
+      <div class="section-header">
+        <div><div class="section-title">المقالات</div><div class="section-sub">${posts.length} مقال</div></div>
+        <button class="btn-primary" onclick="openAddPost()">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          اضافة مقال
+        </button>
+      </div>
+      <div class="not-impl">
+        عرض المقالات متاح. اضافة/تعديل/حذف تحتاج endpoints جديدة في الباك (POST/PATCH/DELETE /api/posts محمية بـ adminOnly).
+      </div>
+      <div class="cards-grid">
+        ${posts.length === 0
+          ? `<div class="empty-state" style="grid-column:1/-1"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg><p>لا توجد مقالات بعد</p></div>`
+          : posts.map(p => `
+            <div class="content-card">
+              <div class="content-card-img">
+                ${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy" />` :
+                  `<div class="content-card-img-placeholder"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></div>`}
+              </div>
+              <div class="content-card-body">
+                <div class="content-card-title">${esc(p.title)}</div>
+                <div class="content-card-meta">${esc(p.author)} &middot; ${esc(p.category)} &middot; ${formatDate(p.date)}</div>
+                <div class="content-card-actions">
+                  <button class="btn-secondary" style="font-size:.75rem;padding:5px 10px;" onclick="openEditPost(${JSON.stringify(p).replace(/"/g,'&quot;')})">تعديل</button>
+                  <button class="btn-action delete" onclick="deletePost('${esc(p.id)}','${esc(p.title)}')" title="حذف"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+      </div>
+    `;
+  } catch (err) { showError(err.message); }
+}
+
+function openAddPost() {
+  document.getElementById('modal-post-title').textContent = 'اضافة مقال';
+  document.getElementById('post-edit-id').value  = '';
+  document.getElementById('post-title').value    = '';
+  document.getElementById('post-author').value   = '';
+  document.getElementById('post-category').value = '';
+  document.getElementById('post-excerpt').value  = '';
+  document.getElementById('post-content').value  = '';
+  document.getElementById('post-image').value    = '';
+  document.getElementById('post-readtime').value = '5';
+  document.getElementById('post-tags').value     = '';
+  openModal('modal-post');
+}
+
+function openEditPost(p) {
+  document.getElementById('modal-post-title').textContent = 'تعديل مقال';
+  document.getElementById('post-edit-id').value  = p.id || p._id || '';
+  document.getElementById('post-title').value    = p.title    || '';
+  document.getElementById('post-author').value   = p.author   || '';
+  document.getElementById('post-category').value = p.category || '';
+  document.getElementById('post-excerpt').value  = p.excerpt  || '';
+  document.getElementById('post-content').value  = p.content  || '';
+  document.getElementById('post-image').value    = p.image    || '';
+  document.getElementById('post-readtime').value = p.readTime || 5;
+  document.getElementById('post-tags').value     = (p.tags||[]).join(', ');
+  openModal('modal-post');
+}
+
+function deletePost(id, title) {
+  confirm(title, 'سيتم حذف هذا المقال نهائياً.', async () => {
+    toast('حذف المقالات يحتاج endpoint في الباك: DELETE /api/posts/:id', 'info');
+  });
+}
+
+/* ── PROJECTS ──────────────────────────────────────── */
+async function renderProjects() {
+  try {
+    const data     = await api('GET', '/api/projects?limit=100');
+    const projects = data.data || [];
+    document.getElementById('content-area').innerHTML = `
+      <div class="section-header">
+        <div><div class="section-title">المشاريع</div><div class="section-sub">${projects.length} مشروع</div></div>
+        <button class="btn-primary" onclick="openAddProject()">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          اضافة مشروع
+        </button>
+      </div>
+      <div class="not-impl">
+        عرض المشاريع متاح. اضافة/تعديل/حذف تحتاج endpoints جديدة في الباك (POST/PATCH/DELETE /api/projects محمية بـ adminOnly).
+      </div>
+      <div class="cards-grid">
+        ${projects.length === 0
+          ? `<div class="empty-state" style="grid-column:1/-1"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/></svg><p>لا توجد مشاريع بعد</p></div>`
+          : projects.map(p => `
+            <div class="content-card">
+              <div class="content-card-img">
+                ${p.cover ? `<img src="${esc(p.cover)}" alt="${esc(p.title)}" loading="lazy" />` :
+                  `<div class="content-card-img-placeholder"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg></div>`}
+              </div>
+              <div class="content-card-body">
+                <div class="content-card-title">${esc(p.title)}</div>
+                <div class="content-card-meta">
+                  <span class="chip chip-${p.status}" style="margin-left:6px;">${esc(p.status_label||p.status)}</span>
+                  ${esc(p.section||'')}
+                </div>
+                <div class="content-card-actions">
+                  <button class="btn-secondary" style="font-size:.75rem;padding:5px 10px;" onclick="openEditProject(${JSON.stringify(p).replace(/"/g,'&quot;')})">تعديل</button>
+                  <button class="btn-action delete" onclick="deleteProject('${esc(p.id)}','${esc(p.title)}')" title="حذف"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+      </div>
+    `;
+  } catch (err) { showError(err.message); }
+}
+
+function openAddProject() {
+  document.getElementById('modal-project-title').textContent = 'اضافة مشروع';
+  ['proj-edit-id','proj-title','proj-section','proj-desc','proj-github','proj-demo','proj-tech'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('proj-status').value = 'active';
+  openModal('modal-project');
+}
+
+function openEditProject(p) {
+  document.getElementById('modal-project-title').textContent = 'تعديل مشروع';
+  document.getElementById('proj-edit-id').value = p.id || p._id || '';
+  document.getElementById('proj-title').value   = p.title     || '';
+  document.getElementById('proj-status').value  = p.status    || 'active';
+  document.getElementById('proj-section').value = p.section   || '';
+  document.getElementById('proj-desc').value    = p.short_desc|| '';
+  document.getElementById('proj-github').value  = p.github    || '';
+  document.getElementById('proj-demo').value    = p.demo      || '';
+  document.getElementById('proj-tech').value    = (p.tech||[]).join(', ');
+  openModal('modal-project');
+}
+
+function deleteProject(id, title) {
+  confirm(title, 'سيتم حذف هذا المشروع نهائياً.', async () => {
+    toast('حذف المشاريع يحتاج endpoint في الباك: DELETE /api/projects/:id', 'info');
+  });
+}
+
+/* ─── HELPERS ────────────────────────────────────────── */
+function statusLabel(s) {
+  return { pending: 'معلق', approved: 'مقبول', rejected: 'مرفوض' }[s] || s;
+}
+
+function formatDate(d) {
+  if (!d) return '-';
+  return new Date(d).toLocaleDateString('ar-EG', { year:'numeric', month:'short', day:'numeric' });
+}
+
+function updatePendingBadge(n) {
+  const badge = document.getElementById('pending-badge');
+  if (!badge) return;
+  badge.textContent  = n;
+  badge.style.display = n > 0 ? 'inline-block' : 'none';
+}
+
+function showError(msg) {
+  document.getElementById('content-area').innerHTML = `
+    <div class="empty-state" style="padding:80px 24px;">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <p style="color:var(--error);margin-top:8px;">${esc(msg)}</p>
+      <p style="font-size:.78rem;margin-top:6px;">تاكد ان السيرفر شغال على ${API_BASE}</p>
+    </div>`;
+}
+
+/* ─── INIT ───────────────────────────────────────────── */
+window.addEventListener('load', checkAuth);
+</script>
+</body>
+</html>
