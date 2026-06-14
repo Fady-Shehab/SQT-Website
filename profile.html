@@ -1408,7 +1408,7 @@ function triggerAvatarUpload() { avatarFileInput.click(); }
 avatarOverlay.addEventListener('click', triggerAvatarUpload);
 avatarOverlay.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerAvatarUpload(); } });
 
-avatarFileInput.addEventListener('change', () => {
+avatarFileInput.addEventListener('change', async () => {
   const file = avatarFileInput.files[0];
   if (!file) return;
 
