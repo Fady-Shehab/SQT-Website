@@ -1748,6 +1748,11 @@ async function fetchSeasonPills() {
 async function fetchPodium(seasonNum) {
   document.getElementById('podiumSkeleton').style.display = 'flex';
   document.getElementById('podiumRow').style.display      = 'none';
+
+  // Hide all pod cards immediately — prevents placeholder images (img/member-X.jpg)
+  // from appearing if fewer than 3 members exist in the database
+  document.querySelectorAll('.pod-card').forEach(c => { c.style.display = 'none'; });
+
   try {
     const res  = await fetch(`${API_BASE}/hof/season/${seasonNum}/top3`);
     if (!res.ok) return;
@@ -1761,6 +1766,10 @@ async function fetchPodium(seasonNum) {
 
       const fresh = card.cloneNode(true);
       card.parentNode.replaceChild(fresh, card);
+
+      // Show this card — it has real data
+      fresh.style.display = '';
+
       fresh.addEventListener('click', () => {
         window.location.href = `profile.html?id=${member.member_id}`;
       });

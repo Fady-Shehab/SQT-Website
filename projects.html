@@ -1323,6 +1323,68 @@ async function loadHeroStats() {
 
 loadProjects({ replace: true });
 loadHeroStats();
+
+/* ─── FEATURED PROJECT FROM API ──────────────── */
+(async function loadFeaturedProject() {
+  try {
+    // Get the first active project to use as the featured one
+    const res = await fetch(`${API_BASE}/projects?status=active&page=1&limit=1`);
+    if (!res.ok) return;
+    const { data } = await res.json();
+    if (!data || !data.length) return;
+
+    const p = data[0];
+
+    // Title
+    const titleEl = document.getElementById('featured-title');
+    if (titleEl) titleEl.textContent = p.title;
+
+    // Description
+    const descEl = document.querySelector('.featured-desc');
+    if (descEl) descEl.textContent = p.short_desc || p.title;
+
+    // Tags
+    const tagsEl = document.querySelector('.featured-tags');
+    if (tagsEl && p.tech?.length) {
+      const icons = [
+        `<svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+        `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+        `<svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>`
+      ];
+      tagsEl.innerHTML = p.tech.slice(0, 3).map((t, i) =>
+        `<span class="tech-tag">${icons[i % icons.length]} ${t}</span>`
+      ).join('');
+    }
+
+    // Meta: date, team count, status
+    const metaItems = document.querySelectorAll('.featured-meta-item');
+    if (metaItems[0] && p.start_date) {
+      const d = new Date(p.start_date);
+      metaItems[0].innerHTML = metaItems[0].innerHTML.replace(
+        /[\u0600-\u06FF\s\u0660-\u0669]+/,
+        d.toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' }) + ' '
+      );
+    }
+    if (metaItems[1] && p.team?.length) {
+      metaItems[1].innerHTML = metaItems[1].innerHTML.replace(
+        /[\u0600-\u06FF\s\u0660-\u0669]+/,
+        `${p.team.length} أعضاء `
+      );
+    }
+
+    // Cover image
+    const imgEl = document.querySelector('.featured-img-wrap img');
+    if (imgEl && p.cover) {
+      imgEl.src = p.cover;
+      imgEl.alt = `صورة ${p.title}`;
+    }
+
+    // View project link
+    const viewLink = document.querySelector('.featured-actions .btn-gold');
+    if (viewLink) viewLink.href = `project.html?id=${p.id || p._id}`;
+
+  } catch (err) { console.error('[Featured project]', err); }
+})();
 </script>
 <script src="js/nav-auth.js"></script>
 
