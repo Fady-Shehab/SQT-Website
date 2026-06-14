@@ -17,7 +17,6 @@
     --bg-surface:    #0F172A;
     --bg-card:       #131F35;
     --bg-subtle:     #1a2744;
-    --bg-sidebar:    #0a1020;
 
     --gold:          #C9A84C;
     --gold-bright:   #E8C76B;
@@ -55,7 +54,6 @@
     --bg-surface:    #FFFFFF;
     --bg-card:       #FFFFFF;
     --bg-subtle:     #F0EDE6;
-    --bg-sidebar:    #0a1020;
 
     --gold:          #B8922A;
     --gold-bright:   #D4AF37;
@@ -125,6 +123,7 @@
     display: flex; align-items: center; justify-content: center;
     margin-bottom: 32px;
   }
+  
   .login-logo img { width: 140px; height: 140px; object-fit: contain; }
   .login-logo-fallback {
     width: 64px; height: 64px; border-radius: 14px;
@@ -185,7 +184,7 @@
   /* SIDEBAR */
   .sidebar {
     width: var(--sidebar-w); flex-shrink: 0;
-    background: var(--bg-sidebar);
+    background: var(--bg-surface);
     border-left: 1px solid rgba(201,168,76,0.12);
     display: flex; flex-direction: column;
     position: fixed; top: 0; right: 0; bottom: 0;
@@ -196,8 +195,14 @@
     padding: 20px 20px 16px;
     border-bottom: 1px solid rgba(255,255,255,0.05);
     display: flex; align-items: center; gap: 10px;
+    justify-content: center;
   }
   .sidebar-logo img { width: 140px; height: 140px; object-fit: contain; flex-shrink: 0; }
+  .nav-logo-img   { height: 140px; width: 140px; }
+  .nav-logo-dark  { display: block; }
+  .nav-logo-light { display: none; }
+  [data-theme="light"] .nav-logo-dark  { display: none; }
+  [data-theme="light"] .nav-logo-light { display: block; }
   .sidebar-logo-fallback {
     width: 40px; height: 40px; border-radius: 9px; flex-shrink: 0;
     background: var(--green-dim); border: 1px solid var(--green-border);
@@ -206,11 +211,11 @@
   }
   .sidebar-brand { line-height: 1.2; }
   .sidebar-brand-name { font-size: 0.95rem; font-weight: 800; color: #EEF2F7; }
-  .sidebar-brand-sub  { font-size: 0.68rem; color: rgba(238,242,247,0.4); }
+  .sidebar-brand-sub  { font-size: 0.68rem; color: var(--text-secondary); }
 
   .sidebar-nav { flex: 1; padding: 16px 12px; overflow-y: auto; }
   .nav-group-label {
-    font-size: 0.62rem; font-weight: 700; color: rgba(238,242,247,0.3);
+    font-size: 0.62rem; font-weight: 700; color: var(--text-primary);
     letter-spacing: 0.1em; text-transform: uppercase;
     padding: 0 8px; margin: 16px 0 6px;
   }
@@ -220,7 +225,7 @@
     display: flex; align-items: center; gap: 10px;
     padding: 10px 12px; border-radius: 9px;
     font-size: 0.85rem; font-weight: 600;
-    color: rgba(238,242,247,0.55);
+    color: var(--text-secondary);
     cursor: pointer; margin-bottom: 2px;
     transition: all 0.2s; user-select: none;
     position: relative;
@@ -243,7 +248,7 @@
   .admin-profile {
     display: flex; align-items: center; gap: 10px;
     padding: 10px; border-radius: 10px;
-    background: rgba(255,255,255,0.04);
+    background: var(--bg-subtle); border: 1px solid var(--border-mid);
     margin-bottom: 8px;
   }
   .admin-avatar {
@@ -672,12 +677,9 @@
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
       <img src="img/logo-dark.png" alt="شرق تك" style="display:block;"
-        onerror="this.style.display='none';document.getElementById('sb-fallback').style.display='flex';" />
-      <div class="sidebar-logo-fallback" id="sb-fallback" style="display:none;">ش</div>
-      <div class="sidebar-brand">
-        <div class="sidebar-brand-name">شرق تك</div>
-        <div class="sidebar-brand-sub">لوحة التحكم</div>
-      </div>
+        onerror="this.style.display='none';document.getElementById('sb-fallback').style.display='flex';" class="nav-logo-img nav-logo-dark" />
+                <img src="img/logo-light.png" alt="شعار شرق تك" class="nav-logo-img nav-logo-light"  
+          onerror="this.style.display='none';" />
     </div>
 
     <nav class="sidebar-nav">
