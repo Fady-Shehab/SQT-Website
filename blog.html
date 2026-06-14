@@ -992,30 +992,30 @@
 
         <div class="blog-stat-cell reveal" role="listitem">
           <div class="blog-stat-num">
-            <span class="counter" data-target="34">0</span>+
+            <span class="counter" data-target="0">0</span>+
           </div>
           <div class="blog-stat-lbl">مقال منشور</div>
         </div>
 
         <div class="blog-stat-cell reveal" role="listitem" style="transition-delay:.08s">
           <div class="blog-stat-num">
-            <span class="counter" data-target="12">0</span>
+            <span class="counter" data-target="0">0</span>
           </div>
           <div class="blog-stat-lbl">كاتب من الفريق</div>
         </div>
 
         <div class="blog-stat-cell reveal" role="listitem" style="transition-delay:.16s">
           <div class="blog-stat-num">
-            <span class="counter" data-target="6">0</span>
+            <span class="counter" data-target="0">0</span>
           </div>
           <div class="blog-stat-lbl">تخصص ومجال</div>
         </div>
 
         <div class="blog-stat-cell reveal" role="listitem" style="transition-delay:.24s">
           <div class="blog-stat-num">
-            <span class="counter" data-target="1200">0</span>+
+            <span class="counter" data-target="0">0</span>+
           </div>
-          <div class="blog-stat-lbl">قارئ شهرياً</div>
+          <div class="blog-stat-lbl">وسم مختلف</div>
         </div>
 
       </div>
@@ -1067,16 +1067,13 @@
         <div class="gold-rule"><div class="gold-rule-diamond"></div></div>
       </div>
 
-      <article class="featured-card reveal" tabindex="0" data-cat="برمجة" aria-label="اقرأ المقال المميز">
+      <article class="featured-card reveal" id="featuredCard" tabindex="0" data-cat="" aria-label="اقرأ المقال المميز" style="display:none">
 
         <!-- Cover Image -->
         <div class="featured-img">
-          <!--
-            IMAGE REQUIRED: img/blog-featured.jpg
-            صورة غلاف المقال المميز — يُفضَّل أبعاد 800×500 px أو أكبر
-          -->
           <img
-            src="img/blog-featured.jpg"
+            id="featuredImg"
+            src=""
             alt="غلاف المقال المميز"
             loading="lazy"
             onerror="this.parentElement.innerHTML='<div class=\'featured-img-ph\'><div class=\'featured-img-ph-icon\'></div><p class=\'featured-img-ph-text\'>blog-featured.jpg</p></div>'"
@@ -1090,41 +1087,21 @@
         <!-- Content -->
         <div class="featured-body">
           <div class="featured-meta">
-            <div class="featured-author-thumb" aria-hidden="true">
-              <!--
-                IMAGE OPTIONAL: img/author-featured.jpg
-                صورة الكاتب في المقال المميز — دائرة 32×32 px
-              -->
-              <img
-                src="img/author-featured.jpg"
-                alt="صورة الكاتب"
-                onerror="this.parentElement.innerHTML='م'"
-              />
-            </div>
-            <span class="featured-author-name">اسم الكاتب</span>
+            <div class="featured-author-thumb" id="featuredAuthorThumb" aria-hidden="true"></div>
+            <span class="featured-author-name" id="featuredAuthorName">اسم الكاتب</span>
             <span class="meta-dot" aria-hidden="true"></span>
-            <time class="featured-date" datetime="2026-05-20">٢٠ مايو ٢٠٢٦</time>
+            <time class="featured-date" id="featuredDate" datetime="">—</time>
             <span class="meta-dot" aria-hidden="true"></span>
-            <span class="featured-read-time">٨ دقائق قراءة</span>
+            <span class="featured-read-time" id="featuredReadTime">—</span>
           </div>
 
-          <h3 class="featured-title">
-            عنوان المقال المميز: كيف بنينا مشروعنا من الصفر باستخدام أحدث التقنيات؟
-          </h3>
-          <p class="featured-excerpt">
-            في هذا المقال نحكي تجربتنا الكاملة في بناء مشروع تقني من الفكرة حتى الإطلاق —
-            التحديات التي واجهناها، القرارات التقنية التي اتخذناها، والدروس التي تعلمناها على الطريق.
-            رحلة حقيقية بأرقام وتفاصيل من قلب فريق شرق تك.
-          </p>
+          <h3 class="featured-title" id="featuredTitle"></h3>
+          <p class="featured-excerpt" id="featuredExcerpt"></p>
 
-          <div class="featured-tags" aria-label="تصنيفات المقال">
-            <span class="badge badge-gold">برمجة</span>
-            <span class="badge badge-blue">تجارب</span>
-            <span class="badge badge-silver">هندسة البرمجيات</span>
-          </div>
+          <div class="featured-tags" id="featuredTags" aria-label="تصنيفات المقال"></div>
 
           <div class="featured-footer">
-            <a href="post.html?id=featured" class="btn btn-gold">
+            <a href="post.html?id=featured" class="btn btn-gold" id="featuredLink">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
               اقرأ المقال
             </a>
@@ -1136,6 +1113,7 @@
         </div>
 
       </article>
+
 
     </div>
   </section>
@@ -1154,383 +1132,9 @@
 
       <div class="posts-grid" id="postsGrid" role="list">
 
-        <!-- ───── Post Card 1 ───── -->
-        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="برمجة" style="transition-delay:.05s" aria-label="اقرأ المقال" data-id="post-1">
-          <div class="blog-cover">
-            <!--
-              IMAGE OPTIONAL: img/blog-post-1.jpg
-              صورة غلاف المقال الأول — 640×360 px
-            -->
-            <img
-              src="img/blog-post-1.jpg" alt="غلاف المقال"
-              loading="lazy"
-              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'></div><p class=\'blog-cover-ph-label\'>blog-post-1.jpg</p></div>'"
-            />
-            <div class="blog-cat-bar">
-              <span class="badge badge-gold">برمجة</span>
-            </div>
-          </div>
-          <div class="blog-body">
-            <div class="blog-meta">
-              <div class="blog-author-mini">
-                <div class="blog-author-av" aria-hidden="true">أ</div>
-                <span class="blog-author-mini-name">اسم الكاتب</span>
-              </div>
-              <span class="blog-dot" aria-hidden="true"></span>
-              <time class="blog-date" datetime="2026-05-10">١٠ مايو ٢٠٢٦</time>
-              <span class="blog-dot" aria-hidden="true"></span>
-              <span class="blog-rt">٥ دقائق</span>
-            </div>
-            <h3 class="blog-title">مقدمة إلى React 19: أبرز المميزات الجديدة</h3>
-            <p class="blog-excerpt">
-              استعراض شامل لأهم التحديثات في React 19 وكيف تؤثر على طريقة بنائنا للتطبيقات.
-            </p>
-            <div class="blog-card-foot">
-              <div class="blog-tags">
-                <span class="badge badge-silver">React</span>
-                <span class="badge badge-blue">Frontend</span>
-              </div>
-              <a href="post.html?id=post-1" class="btn-text" aria-label="اقرأ المقال">اقرأ المقال<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- ───── Post Card 2 ───── -->
-        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="تصميم" style="transition-delay:.10s" data-id="post-2">
-          <div class="blog-cover">
-            <!--
-              IMAGE OPTIONAL: img/blog-post-2.jpg
-              صورة غلاف المقال الثاني — 640×360 px
-            -->
-            <img
-              src="img/blog-post-2.jpg" alt="غلاف المقال"
-              loading="lazy"
-              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'></div><p class=\'blog-cover-ph-label\'>blog-post-2.jpg</p></div>'"
-            />
-            <div class="blog-cat-bar">
-              <span class="badge badge-purple">تصميم</span>
-            </div>
-          </div>
-          <div class="blog-body">
-            <div class="blog-meta">
-              <div class="blog-author-mini">
-                <div class="blog-author-av" aria-hidden="true">م</div>
-                <span class="blog-author-mini-name">اسم الكاتب</span>
-              </div>
-              <span class="blog-dot" aria-hidden="true"></span>
-              <time class="blog-date" datetime="2026-05-03">٣ مايو ٢٠٢٦</time>
-              <span class="blog-dot" aria-hidden="true"></span>
-              <span class="blog-rt">٦ دقائق</span>
-            </div>
-            <h3 class="blog-title">مبادئ تصميم UI التي غيّرت طريقة تفكيري</h3>
-            <p class="blog-excerpt">
-              دروس عملية من بناء واجهات مستخدم حقيقية: ما يعمل، ما لا يعمل، وما لم أتوقعه.
-            </p>
-            <div class="blog-card-foot">
-              <div class="blog-tags">
-                <span class="badge badge-purple">UI/UX</span>
-                <span class="badge badge-silver">Figma</span>
-              </div>
-              <a href="post.html?id=post-2" class="btn-text" aria-label="اقرأ المقال">اقرأ المقال<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- ───── Post Card 3 ───── -->
-        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="ذكاء اصطناعي" style="transition-delay:.15s" data-id="post-3">
-          <div class="blog-cover">
-            <!--
-              IMAGE OPTIONAL: img/blog-post-3.jpg
-              صورة غلاف المقال الثالث — 640×360 px
-            -->
-            <img
-              src="img/blog-post-3.jpg" alt="غلاف المقال"
-              loading="lazy"
-              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'></div><p class=\'blog-cover-ph-label\'>blog-post-3.jpg</p></div>'"
-            />
-            <div class="blog-cat-bar">
-              <span class="badge badge-green">ذكاء اصطناعي</span>
-            </div>
-          </div>
-          <div class="blog-body">
-            <div class="blog-meta">
-              <div class="blog-author-mini">
-                <div class="blog-author-av" aria-hidden="true">ك</div>
-                <span class="blog-author-mini-name">اسم الكاتب</span>
-              </div>
-              <span class="blog-dot" aria-hidden="true"></span>
-              <time class="blog-date" datetime="2026-04-28">٢٨ أبريل ٢٠٢٦</time>
-              <span class="blog-dot" aria-hidden="true"></span>
-              <span class="blog-rt">٧ دقائق</span>
-            </div>
-            <h3 class="blog-title">كيف دمجنا نماذج الذكاء الاصطناعي في مشروعنا</h3>
-            <p class="blog-excerpt">
-              تجربتنا العملية في دمج LLMs داخل تطبيق حقيقي: الأدوات، التحديات، والنتائج.
-            </p>
-            <div class="blog-card-foot">
-              <div class="blog-tags">
-                <span class="badge badge-green">AI</span>
-                <span class="badge badge-silver">Python</span>
-              </div>
-              <a href="post.html?id=post-3" class="btn-text" aria-label="اقرأ المقال">اقرأ المقال<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- ───── Post Card 4 ───── -->
-        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="أمن سيبراني" style="transition-delay:.20s" data-id="post-4">
-          <div class="blog-cover">
-            <!--
-              IMAGE OPTIONAL: img/blog-post-4.jpg
-              صورة غلاف المقال الرابع — 640×360 px
-            -->
-            <img
-              src="img/blog-post-4.jpg" alt="غلاف المقال"
-              loading="lazy"
-              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'></div><p class=\'blog-cover-ph-label\'>blog-post-4.jpg</p></div>'"
-            />
-            <div class="blog-cat-bar">
-              <span class="badge badge-gold">أمن سيبراني</span>
-            </div>
-          </div>
-          <div class="blog-body">
-            <div class="blog-meta">
-              <div class="blog-author-mini">
-                <div class="blog-author-av" aria-hidden="true">س</div>
-                <span class="blog-author-mini-name">اسم الكاتب</span>
-              </div>
-              <span class="blog-dot" aria-hidden="true"></span>
-              <time class="blog-date" datetime="2026-04-20">٢٠ أبريل ٢٠٢٦</time>
-              <span class="blog-dot" aria-hidden="true"></span>
-              <span class="blog-rt">١٠ دقائق</span>
-            </div>
-            <h3 class="blog-title">أساسيات أمان تطبيقات الويب لكل مطوّر</h3>
-            <p class="blog-excerpt">
-              دليل عملي في أهم ثغرات OWASP وكيف تحمي تطبيقك منها بخطوات بسيطة.
-            </p>
-            <div class="blog-card-foot">
-              <div class="blog-tags">
-                <span class="badge badge-gold">Security</span>
-                <span class="badge badge-silver">OWASP</span>
-              </div>
-              <a href="post.html?id=post-4" class="btn-text" aria-label="اقرأ المقال">اقرأ المقال<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- ───── Post Card 5 ───── -->
-        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="تجارب" style="transition-delay:.25s" data-id="post-5">
-          <div class="blog-cover">
-            <!--
-              IMAGE OPTIONAL: img/blog-post-5.jpg
-              صورة غلاف المقال الخامس — 640×360 px
-            -->
-            <img
-              src="img/blog-post-5.jpg" alt="غلاف المقال"
-              loading="lazy"
-              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'></div><p class=\'blog-cover-ph-label\'>blog-post-5.jpg</p></div>'"
-            />
-            <div class="blog-cat-bar">
-              <span class="badge badge-silver">تجارب</span>
-            </div>
-          </div>
-          <div class="blog-body">
-            <div class="blog-meta">
-              <div class="blog-author-mini">
-                <div class="blog-author-av" aria-hidden="true">ه</div>
-                <span class="blog-author-mini-name">اسم الكاتب</span>
-              </div>
-              <span class="blog-dot" aria-hidden="true"></span>
-              <time class="blog-date" datetime="2026-04-14">١٤ أبريل ٢٠٢٦</time>
-              <span class="blog-dot" aria-hidden="true"></span>
-              <span class="blog-rt">٤ دقائق</span>
-            </div>
-            <h3 class="blog-title">ما تعلمته من أول هاكاثون شاركت فيه</h3>
-            <p class="blog-excerpt">
-              قصة حقيقية عن ٤٨ ساعة من الضغط والإبداع — ما نجح، ما فشل، وماذا أخذت معي.
-            </p>
-            <div class="blog-card-foot">
-              <div class="blog-tags">
-                <span class="badge badge-silver">Hackathon</span>
-                <span class="badge badge-blue">تجارب</span>
-              </div>
-              <a href="post.html?id=post-5" class="btn-text" aria-label="اقرأ المقال">اقرأ المقال<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- ───── Post Card 6 ───── -->
-        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="برمجة" style="transition-delay:.30s" data-id="post-6">
-          <div class="blog-cover">
-            <!--
-              IMAGE OPTIONAL: img/blog-post-6.jpg
-              صورة غلاف المقال السادس — 640×360 px
-            -->
-            <img
-              src="img/blog-post-6.jpg" alt="غلاف المقال"
-              loading="lazy"
-              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'>⚙️</div><p class=\'blog-cover-ph-label\'>blog-post-6.jpg</p></div>'"
-            />
-            <div class="blog-cat-bar">
-              <span class="badge badge-gold">برمجة</span>
-            </div>
-          </div>
-          <div class="blog-body">
-            <div class="blog-meta">
-              <div class="blog-author-mini">
-                <div class="blog-author-av" aria-hidden="true">ع</div>
-                <span class="blog-author-mini-name">اسم الكاتب</span>
-              </div>
-              <span class="blog-dot" aria-hidden="true"></span>
-              <time class="blog-date" datetime="2026-04-08">٨ أبريل ٢٠٢٦</time>
-              <span class="blog-dot" aria-hidden="true"></span>
-              <span class="blog-rt">٦ دقائق</span>
-            </div>
-            <h3 class="blog-title">بناء REST API احترافي مع Node.js وExpress</h3>
-            <p class="blog-excerpt">
-              الطريق من الصفر إلى API جاهز للإنتاج: الهيكل، الأمان، التوثيق، والأداء.
-            </p>
-            <div class="blog-card-foot">
-              <div class="blog-tags">
-                <span class="badge badge-green">Node.js</span>
-                <span class="badge badge-silver">API</span>
-              </div>
-              <a href="post.html?id=post-6" class="btn-text" aria-label="اقرأ المقال">اقرأ المقال<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- ───── Post Card 7 ───── -->
-        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="تصميم" style="transition-delay:.05s" data-id="post-7">
-          <div class="blog-cover">
-            <!--
-              IMAGE OPTIONAL: img/blog-post-7.jpg
-              صورة غلاف المقال السابع — 640×360 px
-            -->
-            <img
-              src="img/blog-post-7.jpg" alt="غلاف المقال"
-              loading="lazy"
-              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'>✏️</div><p class=\'blog-cover-ph-label\'>blog-post-7.jpg</p></div>'"
-            />
-            <div class="blog-cat-bar">
-              <span class="badge badge-purple">تصميم</span>
-            </div>
-          </div>
-          <div class="blog-body">
-            <div class="blog-meta">
-              <div class="blog-author-mini">
-                <div class="blog-author-av" aria-hidden="true">ن</div>
-                <span class="blog-author-mini-name">اسم الكاتب</span>
-              </div>
-              <span class="blog-dot" aria-hidden="true"></span>
-              <time class="blog-date" datetime="2026-04-01">١ أبريل ٢٠٢٦</time>
-              <span class="blog-dot" aria-hidden="true"></span>
-              <span class="blog-rt">٥ دقائق</span>
-            </div>
-            <h3 class="blog-title">الفرق بين تصميم الموبايل أولاً وسطح المكتب أولاً</h3>
-            <p class="blog-excerpt">
-              لماذا Mobile-First ليست مجرد ترتيب CSS — فلسفة كاملة في كيفية تفكيرك في التصميم.
-            </p>
-            <div class="blog-card-foot">
-              <div class="blog-tags">
-                <span class="badge badge-purple">Mobile</span>
-                <span class="badge badge-silver">CSS</span>
-              </div>
-              <a href="post.html?id=post-7" class="btn-text" aria-label="اقرأ المقال">اقرأ المقال<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- ───── Post Card 8 ───── -->
-        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="ذكاء اصطناعي" style="transition-delay:.10s" data-id="post-8">
-          <div class="blog-cover">
-            <!--
-              IMAGE OPTIONAL: img/blog-post-8.jpg
-              صورة غلاف المقال الثامن — 640×360 px
-            -->
-            <img
-              src="img/blog-post-8.jpg" alt="غلاف المقال"
-              loading="lazy"
-              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'></div><p class=\'blog-cover-ph-label\'>blog-post-8.jpg</p></div>'"
-            />
-            <div class="blog-cat-bar">
-              <span class="badge badge-green">ذكاء اصطناعي</span>
-            </div>
-          </div>
-          <div class="blog-body">
-            <div class="blog-meta">
-              <div class="blog-author-mini">
-                <div class="blog-author-av" aria-hidden="true">ب</div>
-                <span class="blog-author-mini-name">اسم الكاتب</span>
-              </div>
-              <span class="blog-dot" aria-hidden="true"></span>
-              <time class="blog-date" datetime="2026-03-22">٢٢ مارس ٢٠٢٦</time>
-              <span class="blog-dot" aria-hidden="true"></span>
-              <span class="blog-rt">٩ دقائق</span>
-            </div>
-            <h3 class="blog-title">دليل المبتدئ في هندسة الأوامر Prompt Engineering</h3>
-            <p class="blog-excerpt">
-              تعلّم كيف تكتب أوامر فعّالة للنماذج اللغوية الكبيرة وتحصل على نتائج أفضل.
-            </p>
-            <div class="blog-card-foot">
-              <div class="blog-tags">
-                <span class="badge badge-green">LLM</span>
-                <span class="badge badge-silver">Prompting</span>
-              </div>
-              <a href="post.html?id=post-8" class="btn-text" aria-label="اقرأ المقال">اقرأ المقال<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- ───── Post Card 9 ───── -->
-        <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="تجارب" style="transition-delay:.15s" data-id="post-9">
-          <div class="blog-cover">
-            <!--
-              IMAGE OPTIONAL: img/blog-post-9.jpg
-              صورة غلاف المقال التاسع — 640×360 px
-            -->
-            <img
-              src="img/blog-post-9.jpg" alt="غلاف المقال"
-              loading="lazy"
-              onerror="this.parentElement.innerHTML='<div class=\'blog-cover-ph\'><div class=\'blog-cover-ph-icon\'></div><p class=\'blog-cover-ph-label\'>blog-post-9.jpg</p></div>'"
-            />
-            <div class="blog-cat-bar">
-              <span class="badge badge-silver">تجارب</span>
-            </div>
-          </div>
-          <div class="blog-body">
-            <div class="blog-meta">
-              <div class="blog-author-mini">
-                <div class="blog-author-av" aria-hidden="true">ف</div>
-                <span class="blog-author-mini-name">اسم الكاتب</span>
-              </div>
-              <span class="blog-dot" aria-hidden="true"></span>
-              <time class="blog-date" datetime="2026-03-15">١٥ مارس ٢٠٢٦</time>
-              <span class="blog-dot" aria-hidden="true"></span>
-              <span class="blog-rt">٥ دقائق</span>
-            </div>
-            <h3 class="blog-title">من طالب إلى مطوّر: رحلتي مع شرق تك</h3>
-            <p class="blog-excerpt">
-              كيف أثّر انضمامي لفريق شرق تك على مسيرتي المهنية وما الذي اكتسبته خلال عام.
-            </p>
-            <div class="blog-card-foot">
-              <div class="blog-tags">
-                <span class="badge badge-blue">قصص</span>
-                <span class="badge badge-silver">نمو</span>
-              </div>
-              <a href="post.html?id=post-9" class="btn-text" aria-label="اقرأ المقال">اقرأ المقال<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-              </a>
-            </div>
-          </div>
-        </article>
+        <p id="postsStatus" style="grid-column: 1 / -1; text-align: center; color: var(--text-secondary); padding: 40px 0;">
+          جارِ تحميل المقالات...
+        </p>
 
       </div><!-- /posts-grid -->
 
@@ -1756,6 +1360,22 @@
 <script>
 'use strict';
 
+/* ─── 0. CONFIG ────────────────────────────────── */
+// TODO: replace with your deployed backend URL, e.g. 'https://sqt-backend.onrender.com/api'
+const API_BASE = 'http://localhost:5000/api';
+
+// Maps a post category to a badge color class
+const CATEGORY_BADGE = {
+  'برمجة':         'badge-gold',
+  'تصميم':         'badge-purple',
+  'ذكاء اصطناعي':  'badge-green',
+  'أمن سيبراني':   'badge-blue',
+  'تجارب':         'badge-silver'
+};
+function badgeClassFor(category) {
+  return CATEGORY_BADGE[category] || 'badge-silver';
+}
+
 /* ─── 1. THEME TOGGLE ─────────────────────────── */
 const html        = document.documentElement;
 const themeToggle = document.getElementById('themeToggle');
@@ -1810,7 +1430,18 @@ const counterObs = new IntersectionObserver(
   { threshold: 0.25 }
 );
 const statsEl = document.getElementById('blog-stats');
-if (statsEl) counterObs.observe(statsEl);
+
+// Called once real numbers are computed from /api/posts
+function startBlogStatsCounters(stats) {
+  if (!statsEl) return;
+  const counters = statsEl.querySelectorAll('.counter');
+  // Order in the markup: total posts, unique authors, unique categories, unique tags
+  const values = [stats.totalPosts, stats.authorCount, stats.categoryCount, stats.tagCount];
+  counters.forEach((el, i) => {
+    if (values[i] !== undefined) el.dataset.target = values[i];
+  });
+  counterObs.observe(statsEl);
+}
 
 /* ─── 5. SMOOTH SCROLL ────────────────────────── */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -1824,8 +1455,8 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 
 /* ─── 6. CATEGORY FILTER ─────────────────────── */
-const cards    = Array.from(document.querySelectorAll('#postsGrid .blog-card'));
-const featured = document.querySelector('.featured-card');
+let cards      = [];   // populated by renderGrid()
+const featured = document.getElementById('featuredCard');
 const pills    = document.querySelectorAll('#catPills .cat-pill');
 const noRes    = document.getElementById('noResults');
 const countEl  = document.getElementById('postCount');
@@ -1853,9 +1484,10 @@ function filterCards(cat) {
   });
 
   // Featured card filter
-  if (featured) {
+  if (featured && featured.style.display !== 'none') {
     const fcCat = featured.dataset.cat || '';
-    featured.style.display = (cat === 'all' || fcCat === cat) ? '' : 'none';
+    const showFeatured = (cat === 'all' || fcCat === cat);
+    featured.style.display = showFeatured ? '' : 'none';
   }
 
   noRes.classList.toggle('visible', visible === 0);
@@ -1908,16 +1540,10 @@ searchInput.addEventListener('input', function() {
   updateCount(visible);
 });
 
-/* ─── 9. LOAD MORE (simulated) ───────────────── */
-document.getElementById('loadMore').addEventListener('click', function() {
-  this.textContent = 'جاري التحميل…';
-  this.disabled = true;
-  setTimeout(() => {
-    this.textContent = 'لا توجد مقالات إضافية';
-    this.style.opacity = '0.5';
-    this.style.cursor = 'not-allowed';
-  }, 1200);
-});
+/* ─── 9. LOAD MORE ────────────────────────────── */
+// /api/posts returns every post in one response, so there is nothing more
+// to load — hide the button once the initial load finishes.
+const loadMoreWrap = document.getElementById('loadMore')?.closest('.load-more-wrap');
 
 /* ─── 10. NEWSLETTER FORM ────────────────────── */
 document.getElementById('nlSubmit').addEventListener('click', function() {
@@ -1934,17 +1560,166 @@ document.getElementById('nlSubmit').addEventListener('click', function() {
   setTimeout(() => { fb.textContent = 'يمكنك إلغاء الاشتراك في أي وقت.'; fb.style.color = ''; }, 4000);
 });
 
-/* ─── 11. CARD KEYBOARD SUPPORT ─────────────── */
-document.querySelectorAll('.blog-card[tabindex], .featured-card[tabindex]').forEach(c => {
-  c.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.querySelector('a')?.click(); }
-  });
-});
-
-/* ─── 12. PAGE FADE-IN ───────────────────────── */
+/* ─── 11. PAGE FADE-IN ───────────────────────── */
 document.body.style.opacity = '0';
 document.body.style.transition = 'opacity 0.38s ease';
 window.addEventListener('load', () => { document.body.style.opacity = '1'; });
+
+/* ═══════════════════════════════════════
+   12. POSTS DATA — fetch + render
+   ═══════════════════════════════════════ */
+
+function formatArabicDate(dateStr) {
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+  return d.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+function makePostCardHtml(post, delayIndex) {
+  const badgeCls = badgeClassFor(post.category);
+  const tags = (post.tags || []).slice(0, 2)
+    .map((t, i) => `<span class="badge ${i === 0 ? 'badge-silver' : 'badge-blue'}">${t}</span>`)
+    .join('');
+
+  return `
+    <article class="blog-card reveal" role="listitem" tabindex="0" data-cat="${post.category || ''}"
+      style="transition-delay:${(delayIndex * 0.05).toFixed(2)}s" aria-label="اقرأ المقال" data-id="${post.id}">
+      <div class="blog-cover">
+        <img
+          src="${post.image || ''}" alt="غلاف المقال"
+          loading="lazy"
+          onerror="this.parentElement.innerHTML='<div class=\\'blog-cover-ph\\'><div class=\\'blog-cover-ph-icon\\'></div><p class=\\'blog-cover-ph-label\\'>${post.image || 'blog-cover.jpg'}</p></div>'"
+        />
+        <div class="blog-cat-bar">
+          <span class="badge ${badgeCls}">${post.category || 'عام'}</span>
+        </div>
+      </div>
+      <div class="blog-body">
+        <div class="blog-meta">
+          <div class="blog-author-mini">
+            <div class="blog-author-av" aria-hidden="true">${(post.author || '?').trim().charAt(0)}</div>
+            <span class="blog-author-mini-name">${post.author || ''}</span>
+          </div>
+          <span class="blog-dot" aria-hidden="true"></span>
+          <time class="blog-date" datetime="${post.date || ''}">${formatArabicDate(post.date)}</time>
+          <span class="blog-dot" aria-hidden="true"></span>
+          <span class="blog-rt">${toArabicNum(post.readTime || 0)} دقائق</span>
+        </div>
+        <h3 class="blog-title">${post.title}</h3>
+        <p class="blog-excerpt">${post.excerpt || ''}</p>
+        <div class="blog-card-foot">
+          <div class="blog-tags">${tags}</div>
+          <a href="post.html?id=${post.id}" class="btn-text" aria-label="اقرأ المقال">اقرأ المقال<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function renderGrid(posts) {
+  const grid = document.getElementById('postsGrid');
+  grid.innerHTML = posts.map((p, i) => makePostCardHtml(p, i)).join('');
+
+  cards = Array.from(grid.querySelectorAll('.blog-card'));
+
+  cards.forEach(c => {
+    revealObs.observe(c);
+    c.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.querySelector('a')?.click(); }
+    });
+  });
+
+  updateCount(cards.length);
+}
+
+function renderFeatured(post) {
+  if (!post) {
+    featured.style.display = 'none';
+    return;
+  }
+
+  featured.style.display = '';
+  featured.dataset.cat = post.category || '';
+
+  const img = document.getElementById('featuredImg');
+  img.src = post.image || '';
+  img.alt = post.title || '';
+
+  document.getElementById('featuredAuthorThumb').textContent = (post.author || '?').trim().charAt(0);
+  document.getElementById('featuredAuthorName').textContent  = post.author || '';
+
+  const dateEl = document.getElementById('featuredDate');
+  dateEl.setAttribute('datetime', post.date || '');
+  dateEl.textContent = formatArabicDate(post.date);
+
+  document.getElementById('featuredReadTime').textContent = `${toArabicNum(post.readTime || 0)} دقائق قراءة`;
+  document.getElementById('featuredTitle').textContent     = post.title || '';
+  document.getElementById('featuredExcerpt').textContent   = post.excerpt || '';
+
+  const tagsHtml = (post.tags || [])
+    .map((t, i) => `<span class="badge ${i === 0 ? badgeClassFor(post.category) : (i === 1 ? 'badge-blue' : 'badge-silver')}">${t}</span>`)
+    .join('');
+  document.getElementById('featuredTags').innerHTML = tagsHtml;
+
+  document.getElementById('featuredLink').href = `post.html?id=${post.id}`;
+
+  featured.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); document.getElementById('featuredLink').click(); }
+  });
+
+  revealObs.observe(featured);
+}
+
+async function loadPosts() {
+  const status = document.getElementById('postsStatus');
+
+  try {
+    const res = await fetch(`${API_BASE}/posts`);
+    if (!res.ok) throw new Error('Request failed');
+
+    const posts = await res.json();
+
+    if (!posts.length) {
+      document.getElementById('postsGrid').innerHTML = '';
+      noRes.classList.add('visible');
+      updateCount(0);
+      featured.style.display = 'none';
+      if (loadMoreWrap) loadMoreWrap.style.display = 'none';
+      startBlogStatsCounters({ totalPosts: 0, authorCount: 0, categoryCount: 0, tagCount: 0 });
+      return;
+    }
+
+    // Featured = post explicitly marked featured, else the newest post
+    const featuredPost = posts.find(p => p.featured) || posts[0];
+    const gridPosts = posts.filter(p => p.id !== featuredPost.id);
+
+    renderFeatured(featuredPost);
+    renderGrid(gridPosts);
+
+    if (loadMoreWrap) loadMoreWrap.style.display = 'none';
+
+    // Compute stats from the full post list
+    const authors    = new Set(posts.map(p => p.author).filter(Boolean));
+    const categories = new Set(posts.map(p => p.category).filter(Boolean));
+    const tags       = new Set(posts.flatMap(p => p.tags || []));
+
+    startBlogStatsCounters({
+      totalPosts:    posts.length,
+      authorCount:   authors.size,
+      categoryCount: categories.size,
+      tagCount:      tags.size
+    });
+  } catch (err) {
+    console.error('[loadPosts]', err);
+    if (status) status.textContent = 'تعذر تحميل المقالات حالياً. حاول مرة أخرى لاحقاً.';
+    featured.style.display = 'none';
+    if (loadMoreWrap) loadMoreWrap.style.display = 'none';
+    startBlogStatsCounters({ totalPosts: 0, authorCount: 0, categoryCount: 0, tagCount: 0 });
+  }
+}
+
+loadPosts();
 
 </script>
 <script src="js/nav-auth.js"></script>

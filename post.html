@@ -605,6 +605,10 @@
   </main>
 
   <script>
+    /* ─── CONFIG ───────────────────────────────── */
+    // TODO: replace with your deployed backend URL, e.g. 'https://sqt-backend.onrender.com/api'
+    const API_BASE = 'http://localhost:5000/api';
+
     const html = document.documentElement;
     const themeToggle = document.getElementById('themeToggle');
     const navbar = document.getElementById('navbar');
@@ -671,17 +675,11 @@
       }
     }
 
-    function displayBackendNote() {
-      backendNote.textContent = 'هذه الصفحة جاهزة للاتصال بالواجهة الخلفية عبر /api/posts/{id}.';
-      backendNote.classList.remove('status-box--hidden');
-    }
-
     const postId = new URLSearchParams(window.location.search).get('id');
     if (!postId) {
       setError('لم يتم تحديد المقال. الرجاء فتح هذه الصفحة عبر رابط مقال صالح.');
     } else {
-      const endpoint = `/api/posts/${encodeURIComponent(postId)}`;
-      displayBackendNote();
+      const endpoint = `${API_BASE}/posts/${encodeURIComponent(postId)}`;
 
       fetch(endpoint, { headers: { 'Accept': 'application/json' } })
         .then(response => {
