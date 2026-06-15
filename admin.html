@@ -588,7 +588,40 @@
     padding: 4px 10px; border-radius: 99px;
     font-size: 0.72rem; font-weight: 700;
     background: var(--gold-dim); border: 1px solid var(--gold-border); color: var(--gold);
+    display: inline-flex; align-items: center; gap: 6px;
   }
+  .badge-chip.color-green  { background: var(--success-dim); border-color: rgba(74,222,128,0.3);  color: var(--success); }
+  .badge-chip.color-blue   { background: var(--info-dim);    border-color: rgba(96,165,250,0.25); color: var(--info); }
+  .badge-chip.color-purple { background: rgba(168,85,247,0.10); border-color: rgba(168,85,247,0.3); color: #c084fc; }
+  .badge-chip.color-gold   { background: var(--gold-dim); border-color: var(--gold-border); color: var(--gold); }
+  .badge-chip svg { width: 12px; height: 12px; }
+  .badge-chip-remove {
+    cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+    width: 14px; height: 14px; border-radius: 50%; opacity: 0.6; transition: opacity .15s, background .15s;
+  }
+  .badge-chip-remove:hover { opacity: 1; background: rgba(255,255,255,0.12); }
+  .badge-chip-remove svg { width: 10px; height: 10px; }
+
+  /* FORM CHECKBOX ROW */
+  .form-checkbox-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; margin-bottom: 16px;
+    background: var(--gold-dim); border: 1px solid var(--gold-border); border-radius: 10px;
+    font-size: 0.82rem; font-weight: 700; color: var(--text-primary); cursor: pointer;
+  }
+  .form-checkbox-row input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--gold); cursor: pointer; flex-shrink: 0; }
+
+  /* FEATURED RIBBON ON CONTENT CARDS */
+  .content-card { position: relative; }
+  .content-card-featured-tag {
+    position: absolute; top: 10px; right: 10px; z-index: 2;
+    display: flex; align-items: center; gap: 4px;
+    padding: 4px 10px; border-radius: 99px;
+    font-size: 0.68rem; font-weight: 800;
+    background: var(--gold); color: #1a1306;
+    box-shadow: 0 2px 8px rgba(201,168,76,0.35);
+  }
+  .content-card-featured-tag svg { width: 11px; height: 11px; fill: currentColor; }
 
   /* RESPONSIVE */
   @media (max-width: 900px) {
@@ -814,11 +847,6 @@
       <button class="modal-close" data-close="modal-points"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="modal-body">
-      <div class="not-impl">
-        هذه الميزة تحتاج إلى endpoints جديدة في الباك:
-        <br><code>PATCH /api/admin/users/:id/points</code> — لتعديل النقاط
-        <br><code>POST  /api/admin/users/:id/badges</code> — لإضافة إنجاز
-      </div>
       <input type="hidden" id="pts-user-id" />
       <div class="form-group">
         <label class="form-label">اسم العضو</label>
@@ -835,26 +863,16 @@
         </div>
       </div>
       <div style="border-top:1px solid var(--border-subtle);margin:16px 0;padding-top:16px;">
-        <div class="form-label" style="margin-bottom:10px;">اضافة انجاز جديد</div>
-        <div class="form-grid-2">
-          <div class="form-group">
-            <label class="form-label">اسم الانجاز</label>
-            <input type="text" id="badge-name" class="form-input" placeholder="مثال: البطل الاول" />
-          </div>
-          <div class="form-group">
-            <label class="form-label">لون الانجاز</label>
-            <select id="badge-color" class="form-select">
-              <option value="gold">ذهبي</option>
-              <option value="green">اخضر</option>
-              <option value="blue">ازرق</option>
-              <option value="purple">بنفسجي</option>
-            </select>
-          </div>
-        </div>
+        <div class="form-label" style="margin-bottom:10px;">منح إنجاز جديد</div>
         <div class="form-group">
-          <label class="form-label">وصف الانجاز</label>
-          <input type="text" id="badge-desc" class="form-input" placeholder="وصف مختصر" />
+          <label class="form-label">اختر إنجازاً من الكتالوج</label>
+          <select id="badge-catalog-select" class="form-select"></select>
         </div>
+        <div id="badge-preview" class="badge-chip" style="display:inline-flex;margin-top:6px;"></div>
+        <button type="button" class="btn-secondary" id="btn-add-badge" style="margin-top:10px;width:100%;justify-content:center;">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          منح هذا الإنجاز
+        </button>
       </div>
       <div id="current-badges-wrap">
         <div class="form-label" style="margin-bottom:8px;">الانجازات الحالية</div>
@@ -863,8 +881,8 @@
     </div>
     <div class="modal-footer">
       <button class="btn-secondary" data-close="modal-points">اغلاق</button>
-      <button class="btn-primary" id="btn-save-points" disabled title="يحتاج endpoint في الباك">
-        حفظ (يحتاج باك)
+      <button class="btn-primary" id="btn-save-points">
+        حفظ النقاط
       </button>
     </div>
   </div>
@@ -878,14 +896,11 @@
       <button class="modal-close" data-close="modal-post"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="modal-body">
-      <div class="not-impl">
-        هذه الميزة تحتاج endpoints جديدة:<br>
-        <code>POST   /api/posts</code> — اضافة مقال<br>
-        <code>PATCH  /api/posts/:id</code> — تعديل مقال<br>
-        <code>DELETE /api/posts/:id</code> — حذف مقال<br>
-        كل هذه الـ endpoints يجب ان تكون محمية بـ protect + adminOnly
-      </div>
       <input type="hidden" id="post-edit-id" />
+      <label class="form-checkbox-row">
+        <input type="checkbox" id="post-featured" />
+        <span>تعيين كمقال مميز (سيظهر في مكان المقال المميز بالمدونة)</span>
+      </label>
       <div class="form-group">
         <label class="form-label">عنوان المقال</label>
         <input type="text" id="post-title" class="form-input" placeholder="عنوان المقال" />
@@ -925,8 +940,8 @@
     </div>
     <div class="modal-footer">
       <button class="btn-secondary" data-close="modal-post">الغاء</button>
-      <button class="btn-primary" id="btn-save-post" disabled title="يحتاج endpoint في الباك">
-        حفظ (يحتاج باك)
+      <button class="btn-primary" id="btn-save-post">
+        حفظ المقال
       </button>
     </div>
   </div>
@@ -940,14 +955,11 @@
       <button class="modal-close" data-close="modal-project"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="modal-body">
-      <div class="not-impl">
-        هذه الميزة تحتاج endpoints جديدة:<br>
-        <code>POST   /api/projects</code> — اضافة مشروع<br>
-        <code>PATCH  /api/projects/:id</code> — تعديل مشروع<br>
-        <code>DELETE /api/projects/:id</code> — حذف مشروع<br>
-        كل هذه الـ endpoints يجب ان تكون محمية بـ protect + adminOnly
-      </div>
       <input type="hidden" id="proj-edit-id" />
+      <label class="form-checkbox-row">
+        <input type="checkbox" id="proj-featured" />
+        <span>تعيين كمشروع مميز (سيظهر في مكان المشروع المميز)</span>
+      </label>
       <div class="form-group">
         <label class="form-label">اسم المشروع</label>
         <input type="text" id="proj-title" class="form-input" placeholder="اسم المشروع" />
@@ -987,8 +999,8 @@
     </div>
     <div class="modal-footer">
       <button class="btn-secondary" data-close="modal-project">الغاء</button>
-      <button class="btn-primary" id="btn-save-project" disabled title="يحتاج endpoint في الباك">
-        حفظ (يحتاج باك)
+      <button class="btn-primary" id="btn-save-project">
+        حفظ المشروع
       </button>
     </div>
   </div>
@@ -1543,17 +1555,102 @@ document.getElementById('btn-save-user').addEventListener('click', async () => {
   } catch (err) { toast(err.message, 'error'); }
 });
 
-function openPointsModal(u) {
+/* ── BADGE CATALOG ─────────────────────────────────── */
+const BADGE_ICONS = {
+  project: '<path d="M2 9.5 12 4l10 5.5-10 5.5L2 9.5z"/><path d="M2 9.5V17l10 5.5L22 17V9.5"/>',
+  pen:     '<path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/>',
+  trophy:  '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M5 9H3a2 2 0 0 1-2-2V5h4M19 9h2a2 2 0 0 0 2-2V5h-4"/>',
+  star:    '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+  users:   '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  flag:    '<path d="M4 22V2"/><path d="M4 4h14l-2 4 2 4H4"/>'
+};
+
+let badgeCatalog = [];
+
+async function loadBadgeCatalog() {
+  if (badgeCatalog.length) return badgeCatalog;
+  try {
+    badgeCatalog = await api('GET', '/api/admin/badges/catalog');
+  } catch (err) {
+    badgeCatalog = [];
+  }
+  return badgeCatalog;
+}
+
+function badgeChipHtml(b, removable, userId) {
+  const icon = BADGE_ICONS[b.icon] || BADGE_ICONS.star;
+  const remove = removable
+    ? `<span class="badge-chip-remove" data-remove-badge="${esc(b._id)}" data-user-id="${esc(userId)}" title="إزالة">
+         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+       </span>`
+    : '';
+  return `<span class="badge-chip color-${esc(b.color||'gold')}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${icon}</svg>${esc(b.name)}${remove}</span>`;
+}
+
+function renderCurrentBadges(user) {
+  const badgeList = document.getElementById('current-badges');
+  badgeList.innerHTML = (user.badges || []).length
+    ? user.badges.map(b => badgeChipHtml(b, true, user._id)).join('')
+    : '<span style="font-size:.78rem;color:var(--text-muted);">لا توجد انجازات بعد</span>';
+
+  badgeList.querySelectorAll('[data-remove-badge]').forEach(el => {
+    el.addEventListener('click', async () => {
+      try {
+        const res = await api('DELETE', `/api/admin/users/${el.dataset.userId}/badges/${el.dataset.removeBadge}`);
+        renderCurrentBadges(res.user);
+        toast('تمت إزالة الإنجاز', 'success');
+      } catch (err) { toast(err.message, 'error'); }
+    });
+  });
+}
+
+function updateBadgePreview() {
+  const select = document.getElementById('badge-catalog-select');
+  const preview = document.getElementById('badge-preview');
+  const chosen = badgeCatalog.find(b => b.id === select.value);
+  if (!chosen) { preview.innerHTML = ''; return; }
+  preview.outerHTML = `<div class="badge-chip color-${esc(chosen.color)}" id="badge-preview" style="display:inline-flex;margin-top:6px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${BADGE_ICONS[chosen.icon]||BADGE_ICONS.star}</svg>${esc(chosen.name)} — ${esc(chosen.desc)}</div>`;
+}
+
+document.getElementById('badge-catalog-select').addEventListener('change', updateBadgePreview);
+
+document.getElementById('btn-add-badge').addEventListener('click', async () => {
+  const userId = document.getElementById('pts-user-id').value;
+  const badgeId = document.getElementById('badge-catalog-select').value;
+  if (!badgeId) return;
+  try {
+    const res = await api('POST', `/api/admin/users/${userId}/badges`, { badgeId });
+    renderCurrentBadges(res.user);
+    toast('تم منح الإنجاز بنجاح', 'success');
+  } catch (err) { toast(err.message, 'error'); }
+});
+
+document.getElementById('btn-save-points').addEventListener('click', async () => {
+  const userId   = document.getElementById('pts-user-id').value;
+  const current  = parseInt(document.getElementById('pts-current').value) || 0;
+  const addVal   = parseInt(document.getElementById('pts-add').value) || 0;
+  const newTotal = current + addVal;
+  try {
+    await api('PATCH', `/api/admin/users/${userId}/points`, { points: newTotal });
+    document.getElementById('pts-current').value = newTotal;
+    document.getElementById('pts-add').value = '';
+    toast('تم تحديث النقاط بنجاح', 'success');
+    renderMembers();
+  } catch (err) { toast(err.message, 'error'); }
+});
+
+async function openPointsModal(u) {
   document.getElementById('pts-user-id').value   = u._id;
   document.getElementById('pts-user-name').value = u.name;
   document.getElementById('pts-current').value   = u.points || 0;
   document.getElementById('pts-add').value       = '';
-  document.getElementById('badge-name').value    = '';
-  document.getElementById('badge-desc').value    = '';
-  const badgeList = document.getElementById('current-badges');
-  badgeList.innerHTML = (u.badges || []).length
-    ? u.badges.map(b => `<span class="badge-chip">${esc(b.name)}</span>`).join('')
-    : '<span style="font-size:.78rem;color:var(--text-muted);">لا توجد انجازات بعد</span>';
+
+  const catalog = await loadBadgeCatalog();
+  const select  = document.getElementById('badge-catalog-select');
+  select.innerHTML = catalog.map(b => `<option value="${esc(b.id)}">${esc(b.name)}</option>`).join('');
+  updateBadgePreview();
+
+  renderCurrentBadges(u);
   openModal('modal-points');
 }
 
@@ -1570,14 +1667,12 @@ async function renderPosts() {
           اضافة مقال
         </button>
       </div>
-      <div class="not-impl">
-        عرض المقالات متاح. اضافة/تعديل/حذف تحتاج endpoints جديدة في الباك (POST/PATCH/DELETE /api/posts محمية بـ adminOnly).
-      </div>
       <div class="cards-grid">
         ${posts.length === 0
           ? `<div class="empty-state" style="grid-column:1/-1"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg><p>لا توجد مقالات بعد</p></div>`
           : posts.map(p => `
             <div class="content-card">
+              ${p.featured ? `<div class="content-card-featured-tag"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>مميز</div>` : ''}
               <div class="content-card-img">
                 ${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy" />` :
                   `<div class="content-card-img-placeholder"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></div>`}
@@ -1608,6 +1703,7 @@ function openAddPost() {
   document.getElementById('post-image').value    = '';
   document.getElementById('post-readtime').value = '5';
   document.getElementById('post-tags').value     = '';
+  document.getElementById('post-featured').checked = false;
   openModal('modal-post');
 }
 
@@ -1622,12 +1718,49 @@ function openEditPost(p) {
   document.getElementById('post-image').value    = p.image    || '';
   document.getElementById('post-readtime').value = p.readTime || 5;
   document.getElementById('post-tags').value     = (p.tags||[]).join(', ');
+  document.getElementById('post-featured').checked = !!p.featured;
   openModal('modal-post');
 }
 
+document.getElementById('btn-save-post').addEventListener('click', async () => {
+  const id = document.getElementById('post-edit-id').value;
+  const payload = {
+    title:    document.getElementById('post-title').value.trim(),
+    author:   document.getElementById('post-author').value.trim(),
+    category: document.getElementById('post-category').value.trim(),
+    excerpt:  document.getElementById('post-excerpt').value.trim(),
+    content:  document.getElementById('post-content').value.trim(),
+    image:    document.getElementById('post-image').value.trim(),
+    readTime: parseInt(document.getElementById('post-readtime').value) || 5,
+    tags:     document.getElementById('post-tags').value.split(',').map(t => t.trim()).filter(Boolean),
+    featured: document.getElementById('post-featured').checked
+  };
+
+  if (!payload.title || !payload.excerpt || !payload.content || !payload.category || !payload.author) {
+    toast('يرجى تعبئة كل الحقول المطلوبة', 'error');
+    return;
+  }
+
+  try {
+    if (id) {
+      await api('PATCH', `/api/posts/${id}`, payload);
+      toast('تم تعديل المقال بنجاح', 'success');
+    } else {
+      await api('POST', '/api/posts', payload);
+      toast('تم اضافة المقال بنجاح', 'success');
+    }
+    closeModal('modal-post');
+    renderPosts();
+  } catch (err) { toast(err.message, 'error'); }
+});
+
 function deletePost(id, title) {
   confirm(title, 'سيتم حذف هذا المقال نهائياً.', async () => {
-    toast('حذف المقالات يحتاج endpoint في الباك: DELETE /api/posts/:id', 'info');
+    try {
+      await api('DELETE', `/api/posts/${id}`);
+      toast(`تم حذف "${title}"`, 'success');
+      renderPosts();
+    } catch (err) { toast(err.message, 'error'); }
   });
 }
 
@@ -1644,14 +1777,12 @@ async function renderProjects() {
           اضافة مشروع
         </button>
       </div>
-      <div class="not-impl">
-        عرض المشاريع متاح. اضافة/تعديل/حذف تحتاج endpoints جديدة في الباك (POST/PATCH/DELETE /api/projects محمية بـ adminOnly).
-      </div>
       <div class="cards-grid">
         ${projects.length === 0
           ? `<div class="empty-state" style="grid-column:1/-1"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/></svg><p>لا توجد مشاريع بعد</p></div>`
           : projects.map(p => `
             <div class="content-card">
+              ${p.featured ? `<div class="content-card-featured-tag"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>مميز</div>` : ''}
               <div class="content-card-img">
                 ${p.cover ? `<img src="${esc(p.cover)}" alt="${esc(p.title)}" loading="lazy" />` :
                   `<div class="content-card-img-placeholder"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg></div>`}
@@ -1680,6 +1811,7 @@ function openAddProject() {
     document.getElementById(id).value = '';
   });
   document.getElementById('proj-status').value = 'active';
+  document.getElementById('proj-featured').checked = false;
   openModal('modal-project');
 }
 
@@ -1693,12 +1825,48 @@ function openEditProject(p) {
   document.getElementById('proj-github').value  = p.github    || '';
   document.getElementById('proj-demo').value    = p.demo      || '';
   document.getElementById('proj-tech').value    = (p.tech||[]).join(', ');
+  document.getElementById('proj-featured').checked = !!p.featured;
   openModal('modal-project');
 }
 
+document.getElementById('btn-save-project').addEventListener('click', async () => {
+  const id = document.getElementById('proj-edit-id').value;
+  const payload = {
+    title:      document.getElementById('proj-title').value.trim(),
+    status:     document.getElementById('proj-status').value,
+    section:    document.getElementById('proj-section').value.trim(),
+    short_desc: document.getElementById('proj-desc').value.trim(),
+    github:     document.getElementById('proj-github').value.trim(),
+    demo:       document.getElementById('proj-demo').value.trim(),
+    tech:       document.getElementById('proj-tech').value.split(',').map(t => t.trim()).filter(Boolean),
+    featured:   document.getElementById('proj-featured').checked
+  };
+
+  if (!payload.title) {
+    toast('اسم المشروع مطلوب', 'error');
+    return;
+  }
+
+  try {
+    if (id) {
+      await api('PATCH', `/api/projects/${id}`, payload);
+      toast('تم تعديل المشروع بنجاح', 'success');
+    } else {
+      await api('POST', '/api/projects', payload);
+      toast('تم اضافة المشروع بنجاح', 'success');
+    }
+    closeModal('modal-project');
+    renderProjects();
+  } catch (err) { toast(err.message, 'error'); }
+});
+
 function deleteProject(id, title) {
   confirm(title, 'سيتم حذف هذا المشروع نهائياً.', async () => {
-    toast('حذف المشاريع يحتاج endpoint في الباك: DELETE /api/projects/:id', 'info');
+    try {
+      await api('DELETE', `/api/projects/${id}`);
+      toast(`تم حذف "${title}"`, 'success');
+      renderProjects();
+    } catch (err) { toast(err.message, 'error'); }
   });
 }
 
