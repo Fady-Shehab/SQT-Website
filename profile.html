@@ -695,7 +695,123 @@
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     .reveal { opacity:1 !important; transform:none !important; }
   }
-  </style>
+
+  /* ══════════════════════════════════════════════
+     MOBILE — ≤ 1023px
+  ══════════════════════════════════════════════ */
+  @media (max-width: 1023px) {
+    /* Sidebar cards appear in a 2-col compact grid ABOVE the tabs */
+    .body-grid { display: flex; flex-direction: column; gap: 20px; }
+    aside {
+      order: -1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    aside .side-card { margin-bottom: 0; }
+
+    #profile-body { padding: 28px 0 60px; }
+  }
+
+  /* ══════════════════════════════════════════════
+     MOBILE — ≤ 767px
+  ══════════════════════════════════════════════ */
+  @media (max-width: 767px) {
+    /* iOS input zoom fix — must be ≥ 16px */
+    .field-input, select.field-input { font-size: 16px; }
+
+    #profile-body { padding: 20px 0 56px; }
+
+    /* Stat cells: tighter padding and smaller numbers */
+    .stat-cell { padding: 18px 10px; }
+    .stat-num  { font-size: 1.55rem; }
+    .stat-lbl  { font-size: 0.7rem;  }
+
+    /* Edit button: full width for easy tap */
+    body.is-owner .edit-profile-btn {
+      width: 100%; justify-content: center; margin-top: 12px;
+    }
+
+    /* Points number: slightly smaller in compact sidebar */
+    .points-num { font-size: 2rem; }
+    .side-card  { padding: 16px 14px; }
+    .side-card-title { margin-bottom: 12px; }
+
+    /* Badge cards: 2 columns on small */
+    .badges-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .badge-card  { padding: 16px 10px; }
+    .badge-icon  { width: 44px; height: 44px; border-radius: 12px; }
+  }
+
+  /* ══════════════════════════════════════════════
+     MOBILE — ≤ 640px
+  ══════════════════════════════════════════════ */
+  @media (max-width: 640px) {
+    /* Tabs: horizontal scroll — hides scrollbar visually */
+    .tabs-bar {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 1px; /* prevent bottom border from clipping */
+      /* fade out right edge as scroll hint */
+      -webkit-mask-image: linear-gradient(to left, transparent 0%, black 10%);
+      mask-image:         linear-gradient(to left, transparent 0%, black 10%);
+    }
+    .tabs-bar::-webkit-scrollbar { display: none; }
+    .tab-btn { padding: 9px 16px; font-size: 0.81rem; }
+
+    /* Sidebar: stack vertically on small screens */
+    aside { grid-template-columns: 1fr; }
+
+    /* Modal: bottom sheet */
+    .modal-overlay { align-items: flex-end; padding: 0; }
+    .modal-box {
+      border-radius: 22px 22px 0 0;
+      padding: 22px 16px env(safe-area-inset-bottom, 24px);
+      max-width: 100%;
+      max-height: 88vh;
+      animation: modalSlideUp 0.35s cubic-bezier(0, 0, 0.2, 1);
+    }
+    @keyframes modalSlideUp {
+      from { transform: translateY(60px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    /* Gold top bar stays visible on bottom sheet */
+    .modal-box::before { border-radius: 22px 22px 0 0; }
+
+    /* Two-col grids: single column on small */
+    .two-col-grid { grid-template-columns: 1fr; }
+
+    /* Profile meta row: tighter */
+    .profile-meta-row { gap: 10px; }
+    .profile-meta-item { font-size: 0.75rem; }
+
+    /* Section badge compact */
+    .section-display { padding: 7px 10px; font-size: 0.78rem; }
+
+    /* Overview bio: less padding */
+    .overview-bio { padding: 16px; }
+    .proj-mini-body, .blog-mini-body { padding: 14px; }
+
+    /* Empty state: less padding */
+    .empty-state { padding: 32px 16px; }
+
+    /* Stat strip: 2×2 always */
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ══════════════════════════════════════════════
+     MOBILE — ≤ 400px  (very small)
+  ══════════════════════════════════════════════ */
+  @media (max-width: 400px) {
+    .profile-name    { font-size: 1.35rem; }
+    .profile-row     { padding: 18px 0 24px; }
+    .stat-num        { font-size: 1.35rem; }
+    .badge-card      { padding: 12px 8px; }
+    .badge-icon      { width: 38px; height: 38px; }
+    .badge-icon svg  { width: 20px; height: 20px; }
+    .badge-name      { font-size: 0.72rem; }
+  }</style>
 </head>
 <body>
 
