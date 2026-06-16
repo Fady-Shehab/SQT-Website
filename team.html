@@ -1003,18 +1003,18 @@
         </div>
 
         <div class="stat-cell reveal" role="listitem" style="transition-delay:.1s">
-          <div class="stat-number counter" data-stat="years" data-target="0">0</div>
-          <div class="stat-label">سنوات من الخبرة</div>
-        </div>
-
-        <div class="stat-cell reveal" role="listitem" style="transition-delay:.15s">
           <div class="stat-number counter" data-stat="projects" data-target="0">0</div>
           <div class="stat-label">مشروع مكتمل</div>
         </div>
 
+        <div class="stat-cell reveal" role="listitem" style="transition-delay:.15s">
+          <div class="stat-number counter" data-stat="posts" data-target="0">0</div>
+          <div class="stat-label">مقال منشور</div>
+        </div>
+
         <div class="stat-cell reveal" role="listitem" style="transition-delay:.2s">
-          <div class="stat-number counter" data-stat="hours" data-target="0">0</div>
-          <div class="stat-label">ساعة عمل متفاني</div>
+          <div class="stat-number counter" data-stat="sections" data-target="0">0</div>
+          <div class="stat-label">قسم متخصص</div>
         </div>
 
       </div>
@@ -1168,9 +1168,9 @@ function startStatsCounters(stats) {
 
   const map = {
     members:  stats.members,
-    years:    stats.yearsExperience,
     projects: stats.completedProjects,
-    hours:    stats.dedicatedHours
+    posts:    stats.totalPosts,
+    sections: stats.sections
   };
 
   statsEl.querySelectorAll('.counter').forEach(counter => {

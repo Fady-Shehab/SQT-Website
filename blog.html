@@ -1181,59 +1181,61 @@
             </svg>
           </div>
           <div class="topic-name">برمجة</div>
-          <div class="topic-count">١٢ مقال</div>
+          <div class="topic-count">٠ مقال</div>
         </button>
 
         <button class="topic-card reveal" role="listitem" style="transition-delay:.10s" data-filter="تصميم">
           <div class="topic-icon purple">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 20h5l9-9-5-5-9 9v5z" />
-              <path d="M13 7l4 4" />
+              <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+              <polyline points="2 17 12 22 22 17"/>
+              <polyline points="2 12 12 17 22 12"/>
             </svg>
           </div>
           <div class="topic-name">تصميم</div>
-          <div class="topic-count">٨ مقالات</div>
+          <div class="topic-count">٠ مقالات</div>
         </button>
 
         <button class="topic-card reveal" role="listitem" style="transition-delay:.15s" data-filter="ذكاء اصطناعي">
           <div class="topic-icon green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="3" />
-              <path d="M12 5V3" />
-              <path d="M12 21v-2" />
-              <path d="M5 12H3" />
-              <path d="M21 12h-2" />
-              <path d="M7.5 7.5l-1.5-1.5" />
-              <path d="M18.5 7.5l1.5-1.5" />
-              <path d="M7.5 16.5l-1.5 1.5" />
-              <path d="M18.5 16.5l1.5 1.5" />
+              <rect x="5" y="5" width="14" height="14" rx="2"/>
+              <rect x="9" y="9" width="6" height="6"/>
+              <line x1="9"  y1="2"  x2="9"  y2="5"/>
+              <line x1="15" y1="2"  x2="15" y2="5"/>
+              <line x1="9"  y1="19" x2="9"  y2="22"/>
+              <line x1="15" y1="19" x2="15" y2="22"/>
+              <line x1="2"  y1="9"  x2="5"  y2="9"/>
+              <line x1="2"  y1="15" x2="5"  y2="15"/>
+              <line x1="19" y1="9"  x2="22" y2="9"/>
+              <line x1="19" y1="15" x2="22" y2="15"/>
             </svg>
           </div>
           <div class="topic-name">ذكاء اصطناعي</div>
-          <div class="topic-count">٦ مقالات</div>
+          <div class="topic-count">٠ مقالات</div>
         </button>
 
         <button class="topic-card reveal" role="listitem" style="transition-delay:.20s" data-filter="أمن سيبراني">
           <div class="topic-icon gold">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 3l7 4v5c0 3.5-2.5 6.8-7 8-4.5-1.2-7-4.5-7-8V7l7-4z" />
-              <path d="M12 11v3" />
-              <path d="M10 14h4" />
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <polyline points="9 12 11 14 15 10"/>
             </svg>
           </div>
           <div class="topic-name">أمن سيبراني</div>
-          <div class="topic-count">٤ مقالات</div>
+          <div class="topic-count">٠ مقالات</div>
         </button>
 
         <button class="topic-card reveal" role="listitem" style="transition-delay:.25s" data-filter="تجارب">
           <div class="topic-icon blue">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="5" />
-              <path d="M12 8l3 2-2 3-3-2 2-3z" />
+              <path d="M9 21h6"/>
+              <path d="M9 17h6"/>
+              <path d="M12 3a6 6 0 0 1 4 10.47V17H8v-3.53A6 6 0 0 1 12 3z"/>
             </svg>
           </div>
           <div class="topic-name">تجارب</div>
-          <div class="topic-count">٩ مقالات</div>
+          <div class="topic-count">٠ مقالات</div>
         </button>
 
         <button class="topic-card reveal" role="listitem" style="transition-delay:.30s" data-filter="all">
@@ -1246,7 +1248,7 @@
             </svg>
           </div>
           <div class="topic-name">عرض الكل</div>
-          <div class="topic-count">٣٤ مقال</div>
+          <div class="topic-count">٠ مقال</div>
         </button>
 
       </div>
@@ -1722,6 +1724,8 @@ async function loadPosts() {
       categoryCount: categories.size,
       tagCount:      tags.size
     });
+
+    updateTopicCounts(posts);
   } catch (err) {
     console.error('[loadPosts]', err);
     if (status) status.textContent = 'تعذر تحميل المقالات حالياً. حاول مرة أخرى لاحقاً.';
@@ -1729,6 +1733,34 @@ async function loadPosts() {
     if (loadMoreWrap) loadMoreWrap.style.display = 'none';
     startBlogStatsCounters({ totalPosts: 0, authorCount: 0, categoryCount: 0, tagCount: 0 });
   }
+}
+
+/* ─── 13. UPDATE TOPIC CARD COUNTS ───────────── */
+// Replaces the hardcoded Arabic numbers in the topic cards with real
+// counts computed from the full posts array returned by /api/posts.
+function updateTopicCounts(posts) {
+  // Count posts per category
+  const catCounts = {};
+  posts.forEach(p => {
+    const cat = (p.category || '').trim();
+    if (cat) catCounts[cat] = (catCounts[cat] || 0) + 1;
+  });
+
+  document.querySelectorAll('.topic-card').forEach(tc => {
+    const filter   = tc.dataset.filter;
+    const countEl  = tc.querySelector('.topic-count');
+    if (!countEl) return;
+
+    let count;
+    if (filter === 'all') {
+      count = posts.length;
+    } else {
+      count = catCounts[filter] || 0;
+    }
+
+    // Arabic plural: 1 = مقال, 2+ = مقالات
+    countEl.textContent = toArabicNum(count) + (count === 1 ? ' مقال' : ' مقالات');
+  });
 }
 
 loadPosts();
