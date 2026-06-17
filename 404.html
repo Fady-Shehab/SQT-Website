@@ -5,18 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, follow" />
 <title>404 — الصفحة غير موجودة | شرق تك</title>
-
-<!--
-  ⚠️ ملاحظة هندسية مهمة:
-  هذا الملف "مستقل بالكامل" (كل الـ CSS والـ JS جواه، صورة الشعار مرسومة بـ CSS/نص بدل <img>)
-  لأن GitHub Pages بيستخدم 404.html ده تلقائياً لأي لينك مكسور — على أي عمق مسارات كان.
-  لو استخدمنا مسارات نسبية (relative) زي "img/logo.png" أو "index.html" هتتكسر
-  حسب عمق اللينك الأصلي. فبالتالي:
-    • مفيش ملفات خارجية (CSS/JS) — كل حاجة inline.
-    • روابط التنقل بمسار مطلق ثابت يبدأ بـ /SQT-Website/ (اسم الريبو الحالي على GitHub Pages).
-  لو غيّرت اسم الريبو لاحقاً، غيّر البريفكس ده فقط في هذا الملف.
--->
-
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
@@ -69,37 +57,6 @@ button{font-family:'Cairo',sans-serif;cursor:pointer;border:none;background:none
 .gem-3{width:4px;height:4px;top:28%;right:22%;animation-duration:7s;animation-delay:2s;opacity:.09}
 .gem-4{width:6px;height:6px;bottom:24%;left:13%;animation-duration:9s;animation-delay:.5s;opacity:.1}
 @keyframes gemFloat{from{transform:rotate(45deg) translateY(0)}to{transform:rotate(45deg) translateY(-14px)}}
-
-/* ── NAVBAR ── */
-#navbar{position:fixed;top:0;right:0;left:0;z-index:1000;height:72px;background:var(--nav-bg);backdrop-filter:blur(0);transition:background .4s,backdrop-filter .4s,box-shadow .4s}
-#navbar.scrolled{background:var(--nav-bg-scroll);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 1px 0 var(--border-subtle)}
-.nav-inner{height:72px;display:flex;align-items:center;justify-content:space-between;gap:32px}
-.nav-logo{display:flex;align-items:center;gap:11px;flex-shrink:0}
-/* Inline-drawn logo mark — no external image dependency */
-.nav-logo-mark{height:42px;width:52px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:900;color:#F8FAFC;letter-spacing:-.5px;flex-shrink:0}
-.nav-logo-text{font-size:.95rem;font-weight:800;color:var(--text-primary);display:none}
-@media(min-width:480px){.nav-logo-text{display:block}}
-
-.nav-links{display:flex;align-items:center;gap:2px;flex:1;justify-content:center}
-.nav-link{position:relative;padding:8px 18px;font-size:.9rem;font-weight:600;color:var(--text-secondary);border-radius:8px;transition:color .2s,background .2s;white-space:nowrap}
-.nav-link::after{content:'';position:absolute;bottom:3px;right:18px;left:18px;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:999px;transform:scaleX(0);transform-origin:right;transition:transform .25s}
-.nav-link:hover{color:var(--text-primary)}
-.nav-link:hover::after{transform:scaleX(1)}
-.nav-actions{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.theme-toggle{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border-mid);color:var(--text-secondary);transition:all .25s;background:transparent}
-.theme-toggle:hover{border-color:var(--gold-border);color:var(--gold)}
-.theme-toggle svg{width:17px;height:17px}
-.icon-sun{display:none}.icon-moon{display:block}
-[data-theme="light"] .icon-sun{display:block}[data-theme="light"] .icon-moon{display:none}
-.nav-auth{display:flex;align-items:center;gap:7px;padding:9px 20px;border-radius:9px;font-size:.87rem;font-weight:700;background:linear-gradient(135deg,var(--gold),var(--gold-bright));color:#0F1923;transition:all .25s;box-shadow:0 2px 12px var(--gold-glow)}
-.nav-auth:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(201,168,76,.3);filter:brightness(1.07)}
-.nav-auth svg{width:15px;height:15px}
-
-.mobile-nav{display:none;position:fixed;bottom:0;right:0;left:0;z-index:999;background:var(--nav-bg-scroll);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border-subtle);padding:10px 16px;justify-content:space-around;align-items:center}
-@media(max-width:1023px){.nav-links{display:none}.mobile-nav{display:flex}}
-.mob-link{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 10px;border-radius:10px;color:var(--text-muted);font-size:.6rem;font-weight:600;transition:color .2s;min-width:52px}
-.mob-link svg{width:20px;height:20px;margin-bottom:1px}
-.mob-link:hover{color:var(--gold)}
 
 /* ══════════════════════════════════════
    404 HERO
@@ -188,9 +145,6 @@ footer{background:var(--bg-surface);border-top:1px solid var(--border-subtle);pa
 .foot-row{display:flex;flex-direction:column;gap:8px;align-items:center;text-align:center}
 @media(min-width:768px){.foot-row{flex-direction:row;justify-content:space-between}}
 .foot-copy{font-size:.77rem;color:var(--text-muted)}
-.foot-links-mini{display:flex;gap:18px}
-.foot-link-mini{font-size:.78rem;color:var(--text-muted);transition:color .2s}
-.foot-link-mini:hover{color:var(--gold)}
 .footer-stripe{height:3px;background:linear-gradient(90deg,var(--green),var(--gold),var(--green))}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
@@ -200,45 +154,7 @@ footer{background:var(--bg-surface);border-top:1px solid var(--border-subtle);pa
 </head>
 <body>
 
-<!-- ══════════ NAVBAR ══════════ -->
-<header id="navbar" role="banner">
-  <div class="container">
-    <nav class="nav-inner" aria-label="التنقل الرئيسي">
-      <a href="/SQT-Website/index.html" class="nav-logo" aria-label="الصفحة الرئيسية">
-        <div class="nav-logo-mark" aria-hidden="true">شرق</div>
-        <span class="nav-logo-text">شرق تك</span>
-      </a>
 
-      <ul class="nav-links" role="list">
-        <li><a href="/SQT-Website/index.html"        class="nav-link">الرئيسية</a></li>
-        <li><a href="/SQT-Website/team.html"          class="nav-link">الفريق</a></li>
-        <li><a href="/SQT-Website/projects.html"      class="nav-link">المشاريع</a></li>
-        <li><a href="/SQT-Website/blog.html"          class="nav-link">المدونة</a></li>
-        <li><a href="/SQT-Website/hall-of-fame.html"  class="nav-link">قاعة المجد</a></li>
-      </ul>
-
-      <div class="nav-actions">
-        <button class="theme-toggle" id="themeToggle" aria-label="تبديل المظهر">
-          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </button>
-        <a href="/SQT-Website/auth.html" class="nav-auth" aria-label="تسجيل الدخول">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-          تسجيل الدخول
-        </a>
-      </div>
-    </nav>
-  </div>
-</header>
-
-<!-- Mobile Nav -->
-<nav class="mobile-nav" aria-label="قائمة التنقل">
-  <a href="/SQT-Website/index.html" class="mob-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>الرئيسية</a>
-  <a href="/SQT-Website/team.html" class="mob-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>الفريق</a>
-  <a href="/SQT-Website/projects.html" class="mob-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>المشاريع</a>
-  <a href="/SQT-Website/blog.html" class="mob-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>المدونة</a>
-  <a href="/SQT-Website/hall-of-fame.html" class="mob-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>المجد</a>
-</nav>
 
 <!-- ══════════ 404 HERO ══════════ -->
 <main id="err-hero" aria-labelledby="err-h1">
@@ -297,36 +213,14 @@ footer{background:var(--bg-surface);border-top:1px solid var(--border-subtle);pa
   <div class="container">
     <div class="foot-row">
       <p class="foot-copy">© 2026 شرق تك — جميع الحقوق محفوظة</p>
-      <div class="foot-links-mini">
-        <a href="/SQT-Website/index.html" class="foot-link-mini">الرئيسية</a>
-        <a href="/SQT-Website/auth.html"  class="foot-link-mini">تسجيل الدخول</a>
-      </div>
     </div>
   </div>
-  <div class="footer-stripe" aria-hidden="true"></div>
 </footer>
+  <div class="footer-stripe" aria-hidden="true"></div>
 
 <!-- ══════════ JS — fully inline, no external dependencies ══════════ -->
 <script>
 'use strict';
-
-/* Theme toggle */
-var html = document.documentElement;
-var THEME_KEY = 'sharq-theme';
-function applyTheme(t){ html.setAttribute('data-theme', t); try { localStorage.setItem(THEME_KEY, t); } catch(e){} }
-var saved = 'dark';
-try { saved = localStorage.getItem(THEME_KEY) || 'dark'; } catch(e){}
-applyTheme(saved);
-document.getElementById('themeToggle').addEventListener('click', function(){
-  applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-});
-
-/* Navbar scroll state */
-var navbar = document.getElementById('navbar');
-window.addEventListener('scroll', function(){
-  navbar.classList.toggle('scrolled', window.scrollY > 40);
-}, { passive: true });
-navbar.classList.toggle('scrolled', window.scrollY > 40);
 
 /* Back button */
 document.getElementById('backBtn').addEventListener('click', function(){
