@@ -221,7 +221,16 @@ footer{background:var(--bg-surface);border-top:1px solid var(--border-subtle);pa
 <!-- ══════════ JS — fully inline, no external dependencies ══════════ -->
 <script>
 'use strict';
-
+/* Theme toggle */
+var html = document.documentElement;
+var THEME_KEY = 'sharq-theme';
+function applyTheme(t){ html.setAttribute('data-theme', t); try { localStorage.setItem(THEME_KEY, t); } catch(e){} }
+var saved = 'dark';
+try { saved = localStorage.getItem(THEME_KEY) || 'dark'; } catch(e){}
+applyTheme(saved);
+document.getElementById('themeToggle').addEventListener('click', function(){
+  applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
 /* Back button */
 document.getElementById('backBtn').addEventListener('click', function(){
   if (window.history.length > 1) window.history.back();
