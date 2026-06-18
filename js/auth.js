@@ -2,7 +2,7 @@
 /* ═══════════════════════════════════════════════════════════════
    0. SECURITY UTILITIES
    ═══════════════════════════════════════════════════════════════ */
-
+ 
 /**
  * Sanitize a string for safe output — strips HTML characters.
  * Use this before any dynamic value touches the DOM via innerHTML.
