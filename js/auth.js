@@ -1,5 +1,3 @@
-<script>
-'use strict';
 
 /* ═══════════════════════════════════════════════════════════════
    0. SECURITY UTILITIES
@@ -525,4 +523,3 @@ document.getElementById('register-form').addEventListener('submit', async functi
     btn.classList.remove('loading');
   }
 });
-</script>
