@@ -1,5 +1,3 @@
-
-
 /* ═══════════════════════════════════════════════════════════════
    0. SECURITY UTILITIES
    Rule: ZERO API data passes through innerHTML in this file.
