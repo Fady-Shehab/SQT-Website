@@ -1,8 +1,3 @@
-<!-- ═══════════════════════════════════════
-     JAVASCRIPT
-═══════════════════════════════════════ -->
-<script>
-'use strict';
 
 /* ═══════════════════════════════════════════════════════════════
    0. SECURITY UTILITIES
@@ -582,4 +577,3 @@ function buildBlogCard(p, index) {
     console.error('[Index podium]', err);
   }
 })();
-</script>
