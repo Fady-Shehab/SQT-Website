@@ -49,7 +49,10 @@ function makeIcon(svgMarkup, viewBox = '0 0 24 24') {
 /* ═══════════════════════════════════════════════════════════════
    1. API CONFIG
    ═══════════════════════════════════════════════════════════════ */
-const API_BASE = 'https://sqt-website-backend-production.up.railway.app/api';
+const API_BASE   = 'https://sqt-website-backend-production.up.railway.app/api';
+// Origin without the trailing /api — needed to resolve relative avatar
+// paths returned by the backend (e.g. "/uploads/avatar.jpg").
+const API_ORIGIN = API_BASE.replace(/\/api\/?$/, '');
 
 /* ═══════════════════════════════════════════════════════════════
    2. THEME TOGGLE
@@ -498,6 +501,39 @@ function buildBlogCard(p, index) {
 /* ═══════════════════════════════════════════════════════════════
    16. FETCH HOF PODIUM PREVIEW
    ═══════════════════════════════════════════════════════════════ */
+
+/**
+ * Render a podium member's avatar — photo if available, initials
+ * fallback otherwise (mirrors the photo/initials pattern used on
+ * the profile page). Built entirely via DOM APIs, never innerHTML.
+ */
+function setPodiumAvatar(cell, avatarUrl, initials) {
+  if (!cell) return;
+  cell.replaceChildren(); // clear whatever was there before (e.g. old initial text)
+
+  if (avatarUrl) {
+    const img = document.createElement('img');
+    setAttr(img, 'src', avatarUrl);
+    setAttr(img, 'alt', initials || '');
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block';
+
+    const fallback = document.createElement('span');
+    fallback.style.display = 'none';
+    setText(fallback, initials);
+
+    // If the photo 404s/fails, fall back to initials instead of a broken image
+    img.addEventListener('error', () => {
+      img.style.display = 'none';
+      fallback.style.display = '';
+    });
+
+    cell.appendChild(img);
+    cell.appendChild(fallback);
+  } else {
+    setText(cell, initials);
+  }
+}
+
 (async function fetchIndexPodium() {
   try {
     const data = await safeFetchJson(`${API_BASE}/hof/season/1/top3`);
@@ -516,10 +552,19 @@ function buildBlogCard(p, index) {
       const role = typeof member.role === 'string' ? member.role.slice(0, 60) : '';
       const dept = typeof member.dept === 'string' ? member.dept.slice(0, 60) : '';
       const memberId = safeIdParam(member.member_id);
+      const initials = name.charAt(0).toUpperCase() || '?';
+
+      // Resolve avatar URL the same way profile.js / team.js do:
+      // absolute URLs pass through, relative ones get the API origin
+      // prepended, and safeUrl() rejects anything that isn't http/https.
+      const rawAvatar = typeof member.avatar === 'string' ? member.avatar : '';
+      const avatarUrl = rawAvatar
+        ? safeUrl(rawAvatar.startsWith('http') ? rawAvatar : `${API_ORIGIN}${rawAvatar}`)
+        : '';
 
       setText(card.querySelector('.pod-name'), name);
       setText(card.querySelector('.pod-role'), `${role} — ${dept}`);
-      setText(card.querySelector('.pod-avatar'), name.charAt(0).toUpperCase() || '?');
+      setPodiumAvatar(card.querySelector('.pod-avatar'), avatarUrl, initials);
 
       const ptsEl = card.querySelector('.pod-pts-n');
       const pts   = parseInt(member.points, 10);
