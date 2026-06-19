@@ -626,6 +626,19 @@ function renderUser(u) {
   observeReveals();
 }
 
+/* ─── 7b. FETCH HELPER ────────────────────── */
+// Pulled out so loadProfile() can call it twice (initial id + fallback id)
+// without duplicating the fetch/Promise.all logic.
+async function fetchProfileBundle(id) {
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+  const [userRes, projRes, blogRes] = await Promise.all([
+    fetch(`${API_BASE}/api/users/${id}`, { headers }),
+    fetch(`${API_BASE}/api/users/${id}/projects`, { headers }),
+    fetch(`${API_BASE}/api/users/${id}/blogs`,    { headers }),
+  ]);
+  return { userRes, projRes, blogRes };
+}
+
 // ── Get user ID from URL or from logged-in user ──
 const urlParams = new URLSearchParams(window.location.search);
 const profileId = urlParams.get('id') || (storedUser && storedUser.id);
@@ -639,13 +652,25 @@ if (!profileId) {
 
 async function loadProfile(id) {
   try {
-    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    let resolvedId = id;
+    let { userRes, projRes, blogRes } = await fetchProfileBundle(resolvedId);
 
-    const [userRes, projRes, blogRes] = await Promise.all([
-      fetch(`${API_BASE}/api/users/${id}`, { headers }),
-      fetch(`${API_BASE}/api/users/${id}/projects`, { headers }),
-      fetch(`${API_BASE}/api/users/${id}/blogs`,    { headers }),
-    ]);
+    // ── Self-heal against a bad/mangled id in the URL ──────────────
+    // The navbar link (nav-auth.js) builds "?id=" by running the user's
+    // real ID through parseInt(), which truncates non-numeric IDs
+    // (e.g. Mongo ObjectIds) down to their leading digits. That sends
+    // people here with the wrong id and a 404. If that happens and we
+    // know who's actually logged in, retry with their real, untouched
+    // id from sharq-user before giving up — and fix the address bar so
+    // refreshing / bookmarking / sharing keeps working afterwards.
+    if (!userRes.ok && storedUser && storedUser.id && String(storedUser.id) !== String(resolvedId)) {
+      resolvedId = storedUser.id;
+      ({ userRes, projRes, blogRes } = await fetchProfileBundle(resolvedId));
+      if (userRes.ok) {
+        const cleanUrl = `${window.location.pathname}?id=${resolvedId}`;
+        window.history.replaceState(null, '', cleanUrl);
+      }
+    }
 
     if (!userRes.ok) {
       document.getElementById('profileName').textContent = 'مستخدم غير موجود';

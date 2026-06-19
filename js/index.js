@@ -1,3 +1,4 @@
+
 /* ═══════════════════════════════════════════════════════════════
    0. SECURITY UTILITIES
    Rule: ZERO API data passes through innerHTML in this file.
@@ -49,10 +50,41 @@ function makeIcon(svgMarkup, viewBox = '0 0 24 24') {
 /* ═══════════════════════════════════════════════════════════════
    1. API CONFIG
    ═══════════════════════════════════════════════════════════════ */
-const API_BASE   = 'https://sqt-website-backend-production.up.railway.app/api';
-// Origin without the trailing /api — needed to resolve relative avatar
-// paths returned by the backend (e.g. "/uploads/avatar.jpg").
-const API_ORIGIN = API_BASE.replace(/\/api\/?$/, '');
+const API_BASE    = 'https://sqt-website-backend-production.up.railway.app/api';
+// Backend returns relative paths for images (e.g. "img/project-sqt.jpg").
+// These must resolve against the BACKEND origin, not the frontend's —
+// otherwise the browser requests them from the wrong host and 404s.
+const SERVER_BASE = API_BASE.replace(/\/api\/?$/, '');
+
+/**
+ * Resolve an image path returned by the API into a full, validated URL.
+ *
+ * Convention:
+ *   - "uploads/..."   → backend-hosted image (newly uploaded via admin) →
+ *                        resolve against the Railway backend origin.
+ *   - "img/..." or any other relative path → frontend repo asset
+ *                        (e.g. seed/demo content checked into git) →
+ *                        resolve against the frontend's own origin.
+ *   - "http(s)://..." → already absolute → used as-is (still validated).
+ */
+function resolveImageUrl(path) {
+  if (!path || typeof path !== 'string') return '';
+
+  if (path.startsWith('http')) {
+    return safeUrl(path);
+  }
+
+  const trimmed = path.replace(/^\/+/, ''); // strip any leading slashes
+
+  if (trimmed.startsWith('uploads/')) {
+    // Backend-hosted upload
+    return safeUrl(`${SERVER_BASE}/${trimmed}`);
+  }
+
+  // Frontend repo asset (e.g. "img/project-sqt.jpg") — resolve relative
+  // to the page itself, NOT the backend.
+  return safeUrl(new URL(trimmed, window.location.href).href);
+}
 
 /* ═══════════════════════════════════════════════════════════════
    2. THEME TOGGLE
@@ -231,7 +263,7 @@ function buildProjectCard(p, index) {
   const title    = typeof p.title === 'string' ? p.title.slice(0, 200) : '';
   const desc     = typeof p.short_desc === 'string' ? p.short_desc.slice(0, 400) : '';
   const tags     = Array.isArray(p.tech) ? p.tech.slice(0, 2) : [];
-  const cover    = safeUrl(p.cover);
+  const cover    = resolveImageUrl(p.cover);
   const id       = safeIdParam(p.id || p._id);
   const delay    = (index * 0.05).toFixed(2);
 
@@ -366,7 +398,7 @@ function buildBlogCard(p, index) {
   const title   = typeof p.title === 'string' ? p.title.slice(0, 200) : '';
   const excerpt = typeof p.excerpt === 'string' ? p.excerpt.slice(0, 400) : '';
   const category = typeof p.category === 'string' ? p.category.slice(0, 40) : 'مقال';
-  const cover   = safeUrl(p.image);
+  const cover   = resolveImageUrl(p.image);
   const id      = safeIdParam(p.id || p._id);
   const delay   = (index * 0.05).toFixed(2);
 
