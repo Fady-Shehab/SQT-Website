@@ -28,15 +28,18 @@ import "@/css/team.css";
 // Track loaded scripts to prevent duplicate execution
 const loadedScripts = new Set<string>();
 
+const BASE = import.meta.env.BASE_URL || "/";
+
 // Helper to dynamically load a script (only once per src)
 function loadScriptOnce(src: string): Promise<void> {
-  if (loadedScripts.has(src)) return Promise.resolve();
-  loadedScripts.add(src);
+  const fullSrc = src.startsWith("/") ? `${BASE}${src.slice(1)}` : src;
+  if (loadedScripts.has(fullSrc)) return Promise.resolve();
+  loadedScripts.add(fullSrc);
   return new Promise((resolve, reject) => {
     const script = document.createElement("script");
-    script.src = src;
+    script.src = fullSrc;
     script.onload = () => resolve();
-    script.onerror = () => { loadedScripts.delete(src); reject(new Error(`Failed to load script: ${src}`)); };
+    script.onerror = () => { loadedScripts.delete(fullSrc); reject(new Error(`Failed to load script: ${src}`)); };
     document.body.appendChild(script);
   });
 }
@@ -78,10 +81,11 @@ function App() {
 
       if (!scriptSrc) return;
 
-      const existing = document.querySelector(`script[src="${scriptSrc}"]`);
+      const fullSrc = scriptSrc.startsWith("/") ? `${BASE}${scriptSrc.slice(1)}` : scriptSrc;
+      const existing = document.querySelector(`script[src="${fullSrc}"]`);
       if (existing) existing.remove();
       const script = document.createElement("script");
-      script.src = scriptSrc;
+      script.src = fullSrc;
       document.body.appendChild(script);
     };
 
