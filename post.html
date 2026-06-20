@@ -212,26 +212,38 @@
       }
     }
 
+    /* Retry with exponential backoff for backend cold starts */
+    async function fetchWithRetry(url, maxRetries = 5) {
+      for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+          const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+          if (res.ok) return res;
+          if (res.status < 500) return res;
+          if (attempt < maxRetries) {
+            await new Promise(r => setTimeout(r, Math.min(2000 * Math.pow(2, attempt - 1), 10000)));
+          }
+        } catch {
+          if (attempt < maxRetries) {
+            await new Promise(r => setTimeout(r, Math.min(2000 * Math.pow(2, attempt - 1), 10000)));
+          }
+        }
+      }
+      throw new Error('تعذر الاتصال بالخادم بعد عدة محاولات');
+    }
+
     const postId = new URLSearchParams(window.location.search).get('id');
     if (!postId) {
       setError('لم يتم تحديد المقال. الرجاء فتح هذه الصفحة عبر رابط مقال صالح.');
     } else {
-      const endpoint = `${API_BASE}/posts/${encodeURIComponent(postId)}`;
-
-      fetch(endpoint, { headers: { 'Accept': 'application/json' } })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('لم يتم العثور على المقال');
-          }
-          return response.json();
-        })
-        .then(post => {
-          if (!post || !post.title) {
-            throw new Error('البيانات المرسلة من الخادم غير صحيحة.');
-          }
+      (async () => {
+        const endpoint = `${API_BASE}/posts/${encodeURIComponent(postId)}`;
+        try {
+          const response = await fetchWithRetry(endpoint);
+          if (!response.ok) throw new Error('لم يتم العثور على المقال');
+          const post = await response.json();
+          if (!post || !post.title) throw new Error('البيانات المرسلة من الخادم غير صحيحة.');
           setPost(post);
-        })
-        .catch(() => {
+        } catch {
           setError('تعذر تحميل المقال من الخادم. تأكد من أن واجهة الخلفية تعمل أو قم بتحديث الرابط.');
           const fallback = {
             title: 'مقال تجريبي',
@@ -250,7 +262,8 @@
             `
           };
           setPost(fallback);
-        });
+        }
+      })();
     }
   </script>
   <script src="js/nav-auth.js"></script>

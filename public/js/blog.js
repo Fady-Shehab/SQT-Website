@@ -51,45 +51,13 @@ function makeIcon(svgMarkup) {
   return svg;
 }
 
-/** Retry with exponential backoff for backend cold starts (~20s Railway spin-up). */
-async function fetchWithRetry(url, options = {}) {
-  const maxRetries = options.maxRetries ?? 5;
-  const baseDelay  = options.baseDelay ?? 2000;
-  const maxDelay   = options.maxDelay ?? 10000;
-  let lastError;
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      const res = await fetch(url);
-      if (res.ok) return res;
-      if (res.status >= 500 && res.status < 600) {
-        lastError = new Error(`HTTP ${res.status}`);
-        if (attempt < maxRetries) {
-          const delay = Math.min(baseDelay * Math.pow(2, attempt - 1), maxDelay);
-          await new Promise(r => setTimeout(r, delay));
-          continue;
-        }
-      }
-      return res;
-    } catch (err) {
-      lastError = err;
-      if (attempt < maxRetries) {
-        const delay = Math.min(baseDelay * Math.pow(2, attempt - 1), maxDelay);
-        await new Promise(r => setTimeout(r, delay));
-      }
-    }
-  }
-  throw lastError;
-}
-
 /** Validates Content-Type before parsing JSON. */
 async function safeFetchJson(url) {
-  try {
-    const res = await fetchWithRetry(url);
-    if (!res.ok) return null;
-    const contentType = res.headers.get('Content-Type') || '';
-    if (!contentType.includes('application/json')) return null;
-    try { return await res.json(); } catch { return null; }
-  } catch { return null; }
+  const res = await fetch(url);
+  if (!res.ok) return null;
+  const contentType = res.headers.get('Content-Type') || '';
+  if (!contentType.includes('application/json')) return null;
+  try { return await res.json(); } catch { return null; }
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -110,30 +78,36 @@ function badgeClassFor(category) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   2. THEME TOGGLE
+   2. THEME TOGGLE — only once
    ═══════════════════════════════════════════════════════════════ */
-const html        = document.documentElement;
-const themeToggle = document.getElementById('themeToggle');
-const THEME_KEY   = 'sharq-theme';
+if (!document.documentElement.hasAttribute('data-sqt-global')) {
+  document.documentElement.setAttribute('data-sqt-global', '');
+  const html        = document.documentElement;
+  const themeToggle = document.getElementById('themeToggle');
+  const THEME_KEY   = 'sharq-theme';
 
-function applyTheme(t) {
-  const safeTheme = t === 'light' ? 'light' : 'dark'; // whitelist
-  html.setAttribute('data-theme', safeTheme);
-  localStorage.setItem(THEME_KEY, safeTheme);
+  function applyTheme(t) {
+    const safeTheme = t === 'light' ? 'light' : 'dark'; // whitelist
+    html.setAttribute('data-theme', safeTheme);
+    localStorage.setItem(THEME_KEY, safeTheme);
+  }
+  applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
+  themeToggle.addEventListener('click', () => {
+    applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
 }
-applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
-themeToggle.addEventListener('click', () => {
-  applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-});
 
 /* ═══════════════════════════════════════════════════════════════
    3. NAVBAR SCROLL
    ═══════════════════════════════════════════════════════════════ */
 const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
+if (navbar && !navbar.hasAttribute('data-sqt-scroll')) {
+  navbar.setAttribute('data-sqt-scroll', '');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
   navbar.classList.toggle('scrolled', window.scrollY > 40);
-}, { passive: true });
-navbar.classList.toggle('scrolled', window.scrollY > 40);
+}
 
 /* ═══════════════════════════════════════════════════════════════
    4. SCROLL REVEAL
@@ -327,13 +301,6 @@ document.getElementById('nlSubmit').addEventListener('click', function () {
 });
 
 /* ═══════════════════════════════════════════════════════════════
-   12. PAGE FADE-IN
-   ═══════════════════════════════════════════════════════════════ */
-document.body.style.opacity    = '0';
-document.body.style.transition = 'opacity 0.38s ease';
-window.addEventListener('load', () => { document.body.style.opacity = '1'; });
-
-/* ═══════════════════════════════════════════════════════════════
    13. DATE FORMATTING
    ═══════════════════════════════════════════════════════════════ */
 function formatArabicDate(dateStr) {
@@ -475,7 +442,7 @@ function buildPostCard(post, delayIndex) {
   });
 
   const link = document.createElement('a');
-  setAttr(link, 'href', id ? `post.html?id=${id}` : 'post.html');
+  setAttr(link, 'href', id ? `/post/${id}` : '/blog');
   link.className = 'btn-text';
   setAttr(link, 'aria-label', 'اقرأ المقال');
   link.appendChild(document.createTextNode('اقرأ المقال'));
@@ -582,7 +549,7 @@ function renderFeatured(post) {
     tagsContainer.appendChild(span);
   });
 
-  setAttr(document.getElementById('featuredLink'), 'href', id ? `post.html?id=${id}` : 'post.html');
+  setAttr(document.getElementById('featuredLink'), 'href', id ? `/post/${id}` : '/blog');
 
   featured.addEventListener('keydown', e => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); document.getElementById('featuredLink').click(); }

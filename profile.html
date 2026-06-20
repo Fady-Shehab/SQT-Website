@@ -626,15 +626,32 @@ function renderUser(u) {
   observeReveals();
 }
 
-/* ─── 7b. FETCH HELPER ────────────────────── */
-// Pulled out so loadProfile() can call it twice (initial id + fallback id)
-// without duplicating the fetch/Promise.all logic.
+/* ─── 7b. RETRY FETCH ────────────────────────── */
+async function fetchWithRetry(url, options = {}, maxRetries = 5) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const res = await fetch(url, options);
+      if (res.ok) return res;
+      if (res.status < 500) return res;
+      if (attempt < maxRetries) {
+        await new Promise(r => setTimeout(r, Math.min(2000 * Math.pow(2, attempt - 1), 10000)));
+      }
+    } catch {
+      if (attempt < maxRetries) {
+        await new Promise(r => setTimeout(r, Math.min(2000 * Math.pow(2, attempt - 1), 10000)));
+      }
+    }
+  }
+  throw new Error('تعذر الاتصال بالخادم بعد عدة محاولات');
+}
+
+/* ─── 7c. FETCH HELPER ────────────────────── */
 async function fetchProfileBundle(id) {
   const headers = token ? { Authorization: `Bearer ${token}` } : {};
   const [userRes, projRes, blogRes] = await Promise.all([
-    fetch(`${API_BASE}/api/users/${id}`, { headers }),
-    fetch(`${API_BASE}/api/users/${id}/projects`, { headers }),
-    fetch(`${API_BASE}/api/users/${id}/blogs`,    { headers }),
+    fetchWithRetry(`${API_BASE}/api/users/${id}`, { headers }),
+    fetchWithRetry(`${API_BASE}/api/users/${id}/projects`, { headers }),
+    fetchWithRetry(`${API_BASE}/api/users/${id}/blogs`,    { headers }),
   ]);
   return { userRes, projRes, blogRes };
 }

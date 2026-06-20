@@ -646,6 +646,25 @@ function renderProject(p) {
   real.style.display = 'block';
 }
 
+/* ── Retry with exponential backoff for backend cold starts ── */
+async function fetchWithRetry(url, maxRetries = 5) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const res = await fetch(url);
+      if (res.ok) return res;
+      if (res.status < 500) return res;
+      if (attempt < maxRetries) {
+        await new Promise(r => setTimeout(r, Math.min(2000 * Math.pow(2, attempt - 1), 10000)));
+      }
+    } catch {
+      if (attempt < maxRetries) {
+        await new Promise(r => setTimeout(r, Math.min(2000 * Math.pow(2, attempt - 1), 10000)));
+      }
+    }
+  }
+  throw new Error('تعذر الاتصال بالخادم بعد عدة محاولات');
+}
+
 /* ── Get project ID from URL ── */
 const params    = new URLSearchParams(window.location.search);
 const projectId = params.get('id') || '1';
@@ -653,7 +672,7 @@ const projectId = params.get('id') || '1';
 /* ── Load project from the API ── */
 async function loadProject(id) {
   try {
-    const res = await fetch(`${API_BASE}/projects/${id}`);
+    const res = await fetchWithRetry(`${API_BASE}/projects/${id}`);
     if (!res.ok) throw new Error('not found');
 
     const project = await res.json();
@@ -661,7 +680,7 @@ async function loadProject(id) {
 
     // Load related projects (best-effort — don't block on failure)
     try {
-      const relatedRes = await fetch(`${API_BASE}/projects/${id}/related?limit=3`);
+      const relatedRes = await fetchWithRetry(`${API_BASE}/projects/${id}/related?limit=3`);
       const related = relatedRes.ok ? await relatedRes.json() : [];
       renderRelated(related);
     } catch (relErr) {

@@ -87,7 +87,7 @@ function resolveImageUrl(path) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   2. THEME TOGGLE
+   2. THEME TOGGLE — only once
    ═══════════════════════════════════════════════════════════════ */
 const html        = document.documentElement;
 const themeToggle = document.getElementById('themeToggle');
@@ -99,19 +99,25 @@ function applyTheme(t) {
   html.setAttribute('data-theme', safeTheme);
   localStorage.setItem(THEME_KEY, safeTheme);
 }
-applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
-themeToggle.addEventListener('click', () => {
-  applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-});
+if (!html.hasAttribute('data-sqt-global')) {
+  html.setAttribute('data-sqt-global', '');
+  applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
+  themeToggle.addEventListener('click', () => {
+    applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+}
 
 /* ═══════════════════════════════════════════════════════════════
    3. NAVBAR SCROLL
    ═══════════════════════════════════════════════════════════════ */
 const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
+if (navbar && !navbar.hasAttribute('data-sqt-scroll')) {
+  navbar.setAttribute('data-sqt-scroll', '');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
   navbar.classList.toggle('scrolled', window.scrollY > 40);
-}, { passive: true });
-navbar.classList.toggle('scrolled', window.scrollY > 40);
+}
 
 /* ═══════════════════════════════════════════════════════════════
    4. SCROLL REVEAL
@@ -183,13 +189,6 @@ document.querySelectorAll('.proj-card[tabindex], .blog-card[tabindex]').forEach(
 });
 
 /* ═══════════════════════════════════════════════════════════════
-   8. PAGE FADE-IN
-   ═══════════════════════════════════════════════════════════════ */
-document.body.style.opacity    = '0';
-document.body.style.transition = 'opacity 0.38s ease';
-window.addEventListener('load', () => { document.body.style.opacity = '1'; });
-
-/* ═══════════════════════════════════════════════════════════════
    9. STATUS HELPERS — static maps, no user data involved
    ═══════════════════════════════════════════════════════════════ */
 const STATUS_CLS = { active: 'badge-green', completed: 'badge-gold', 'in-progress': 'badge-silver' };
@@ -205,46 +204,16 @@ function statusLabel(status) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-    10. RETRY FETCH WRAPPER
-    Retries requests with exponential backoff to handle backend
-    cold starts (Railway free tier ~20s spin-up time).
-    ═══════════════════════════════════════════════════════════════ */
-async function fetchWithRetry(url, options = {}) {
-  const maxRetries = options.maxRetries ?? 5;
-  const baseDelay  = options.baseDelay ?? 2000;
-  const maxDelay   = options.maxDelay ?? 10000;
-  let lastError;
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      const res = await fetch(url);
-      if (res.ok) return res;
-      if (res.status >= 500 && res.status < 600) {
-        lastError = new Error(`HTTP ${res.status}`);
-        if (attempt < maxRetries) {
-          const delay = Math.min(baseDelay * Math.pow(2, attempt - 1), maxDelay);
-          await new Promise(r => setTimeout(r, delay));
-          continue;
-        }
-      }
-      return res;
-    } catch (err) {
-      lastError = err;
-      if (attempt < maxRetries) {
-        const delay = Math.min(baseDelay * Math.pow(2, attempt - 1), maxDelay);
-        await new Promise(r => setTimeout(r, delay));
-      }
-    }
-  }
-  throw lastError;
-}
-
-/** Safe fetch with retry — validates Content-Type before parsing JSON. */
+   10. SAFE FETCH WRAPPER
+   Validates Content-Type before parsing JSON, avoids throwing
+   on unexpected response shapes.
+   ═══════════════════════════════════════════════════════════════ */
 async function safeFetchJson(url) {
+  const res = await fetch(url);
+  if (!res.ok) return null;
+  const contentType = res.headers.get('Content-Type') || '';
+  if (!contentType.includes('application/json')) return null;
   try {
-    const res = await fetchWithRetry(url);
-    if (!res.ok) return null;
-    const contentType = res.headers.get('Content-Type') || '';
-    if (!contentType.includes('application/json')) return null;
     return await res.json();
   } catch {
     return null;
@@ -370,7 +339,7 @@ function buildProjectCard(p, index) {
 
   const link = document.createElement('a');
   // id is alphanumeric-validated; falls back to no query param if invalid
-  setAttr(link, 'href', id ? `project.html?id=${id}` : 'project.html');
+  setAttr(link, 'href', id ? `/project/${id}` : '/projects');
   link.className = 'btn-text';
   link.style.fontSize = '.82rem';
   const linkText = document.createTextNode('عرض ');
@@ -515,7 +484,7 @@ function buildBlogCard(p, index) {
   setText(pExcerpt, excerpt);
 
   const link = document.createElement('a');
-  setAttr(link, 'href', id ? `post.html?id=${id}` : 'post.html');
+  setAttr(link, 'href', id ? `/post/${id}` : '/blog');
   link.className = 'btn-text';
   link.style.fontSize = '.82rem';
   link.appendChild(document.createTextNode('اقرأ المقال '));
@@ -639,7 +608,7 @@ function setPodiumAvatar(cell, avatarUrl, initials) {
       // Only attach navigation if we have a valid, sanitized member ID
       if (memberId) {
         card.addEventListener('click', () => {
-          window.location.href = `profile.html?id=${memberId}`;
+          window.location.href = `/profile/${memberId}`;
         });
       }
 

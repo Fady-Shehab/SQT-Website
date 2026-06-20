@@ -46,45 +46,13 @@ function safePercent(n) {
   return Math.min(100, Math.max(0, v));
 }
 
-/** Retry with exponential backoff for backend cold starts (~20s Railway spin-up). */
-async function fetchWithRetry(url, options = {}) {
-  const maxRetries = options.maxRetries ?? 5;
-  const baseDelay  = options.baseDelay ?? 2000;
-  const maxDelay   = options.maxDelay ?? 10000;
-  let lastError;
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      const res = await fetch(url);
-      if (res.ok) return res;
-      if (res.status >= 500 && res.status < 600) {
-        lastError = new Error(`HTTP ${res.status}`);
-        if (attempt < maxRetries) {
-          const delay = Math.min(baseDelay * Math.pow(2, attempt - 1), maxDelay);
-          await new Promise(r => setTimeout(r, delay));
-          continue;
-        }
-      }
-      return res;
-    } catch (err) {
-      lastError = err;
-      if (attempt < maxRetries) {
-        const delay = Math.min(baseDelay * Math.pow(2, attempt - 1), maxDelay);
-        await new Promise(r => setTimeout(r, delay));
-      }
-    }
-  }
-  throw lastError;
-}
-
 /** Validate Content-Type before parsing JSON. */
 async function safeFetchJson(url) {
-  try {
-    const res = await fetchWithRetry(url);
-    if (!res.ok) return null;
-    const contentType = res.headers.get('Content-Type') || '';
-    if (!contentType.includes('application/json')) return null;
-    try { return await res.json(); } catch { return null; }
-  } catch { return null; }
+  const res = await fetch(url);
+  if (!res.ok) return null;
+  const contentType = res.headers.get('Content-Type') || '';
+  if (!contentType.includes('application/json')) return null;
+  try { return await res.json(); } catch { return null; }
 }
 
 /**
@@ -117,25 +85,31 @@ function buildAvatarEl(avatarUrl, name) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   1. THEME TOGGLE
+   1. THEME TOGGLE — only once
    ═══════════════════════════════════════════════════════════════ */
-const html        = document.documentElement;
-const themeToggle = document.getElementById('themeToggle');
-const THEME_KEY   = 'sharq-theme';
-function applyTheme(t) {
-  const safeTheme = t === 'light' ? 'light' : 'dark'; // whitelist
-  html.setAttribute('data-theme', safeTheme);
-  localStorage.setItem(THEME_KEY, safeTheme);
+if (!document.documentElement.hasAttribute('data-sqt-global')) {
+  document.documentElement.setAttribute('data-sqt-global', '');
+  const html        = document.documentElement;
+  const themeToggle = document.getElementById('themeToggle');
+  const THEME_KEY   = 'sharq-theme';
+  function applyTheme(t) {
+    const safeTheme = t === 'light' ? 'light' : 'dark'; // whitelist
+    html.setAttribute('data-theme', safeTheme);
+    localStorage.setItem(THEME_KEY, safeTheme);
+  }
+  applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
+  themeToggle.addEventListener('click', () => applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
 }
-applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
-themeToggle.addEventListener('click', () => applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
 
 /* ═══════════════════════════════════════════════════════════════
    2. NAVBAR SCROLL
    ═══════════════════════════════════════════════════════════════ */
 const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
-navbar.classList.toggle('scrolled', window.scrollY > 40);
+if (navbar && !navbar.hasAttribute('data-sqt-scroll')) {
+  navbar.setAttribute('data-sqt-scroll', '');
+  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+}
 
 /* ═══════════════════════════════════════════════════════════════
    3. SCROLL REVEAL
@@ -273,13 +247,6 @@ document.querySelectorAll('.pod-card[tabindex]').forEach(c => {
 });
 
 /* ═══════════════════════════════════════════════════════════════
-   11. PAGE FADE-IN
-   ═══════════════════════════════════════════════════════════════ */
-document.body.style.opacity    = '0';
-document.body.style.transition = 'opacity 0.38s ease';
-window.addEventListener('load', () => { document.body.style.opacity = '1'; });
-
-/* ═══════════════════════════════════════════════════════════════
    12. API CONFIG
    ═══════════════════════════════════════════════════════════════ */
 const API_BASE    = 'https://sqt-website-backend-production.up.railway.app/api';
@@ -402,7 +369,7 @@ async function fetchPodium(seasonNum) {
         fresh.dataset.memberId = memberId;
         fresh.style.cursor = 'pointer';
         fresh.addEventListener('click', () => {
-          window.location.href = `profile.html?id=${memberId}`;
+          window.location.href = `/profile/${memberId}`;
         });
       }
 
@@ -462,7 +429,7 @@ function buildLeaderboardRow(m) {
   if (memberId) {
     tr.dataset.memberId = memberId;
     tr.style.cursor = 'pointer';
-    tr.addEventListener('click', () => { window.location.href = `profile.html?id=${memberId}`; });
+    tr.addEventListener('click', () => { window.location.href = `/profile/${memberId}`; });
   }
   tr.dataset.name   = name;
   tr.dataset.dept   = dept;

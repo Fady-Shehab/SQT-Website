@@ -87,64 +87,42 @@ function resetRateLimit(key) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-    1.5 RETRY FETCH — handles Railway cold starts (~20s spin-up)
-    ═══════════════════════════════════════════════════════════════ */
-async function fetchWithRetry(url, options = {}, maxRetries = 5) {
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      const res = await fetch(url, options);
-      if (res.ok) return res;
-      if (res.status < 500) return res;
-      if (attempt < maxRetries) {
-        await new Promise(r => setTimeout(r, Math.min(2000 * Math.pow(2, attempt - 1), 10000)));
-      }
-    } catch {
-      if (attempt < maxRetries) {
-        await new Promise(r => setTimeout(r, Math.min(2000 * Math.pow(2, attempt - 1), 10000)));
-      }
-    }
-  }
-  throw new Error('تعذر الاتصال بالخادم بعد عدة محاولات');
-}
-
-/* ═══════════════════════════════════════════════════════════════
-    2. CONFIG
-    ═══════════════════════════════════════════════════════════════ */
+   2. CONFIG
+   ═══════════════════════════════════════════════════════════════ */
 const API_BASE = 'https://sqt-website-backend-production.up.railway.app';
 
 /* ═══════════════════════════════════════════════════════════════
-   3. THEME TOGGLE
+   3. THEME TOGGLE — only once
    ═══════════════════════════════════════════════════════════════ */
-const html        = document.documentElement;
-const themeToggle = document.getElementById('themeToggle');
-const THEME_KEY   = 'sharq-theme';
+if (!document.documentElement.hasAttribute('data-sqt-global')) {
+  document.documentElement.setAttribute('data-sqt-global', '');
+  const html        = document.documentElement;
+  const themeToggle = document.getElementById('themeToggle');
+  const THEME_KEY   = 'sharq-theme';
 
-function applyTheme(t) {
-  // Whitelist valid theme values — never write arbitrary strings into data-theme
-  const safeTheme = t === 'light' ? 'light' : 'dark';
-  html.setAttribute('data-theme', safeTheme);
-  localStorage.setItem(THEME_KEY, safeTheme);
+  function applyTheme(t) {
+    // Whitelist valid theme values — never write arbitrary strings into data-theme
+    const safeTheme = t === 'light' ? 'light' : 'dark';
+    html.setAttribute('data-theme', safeTheme);
+    localStorage.setItem(THEME_KEY, safeTheme);
+  }
+
+  applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
+  themeToggle.addEventListener('click', () => {
+    applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
 }
-
-applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
-themeToggle.addEventListener('click', () => {
-  applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-});
 
 /* ═══════════════════════════════════════════════════════════════
    4. NAVBAR SCROLL
    ═══════════════════════════════════════════════════════════════ */
 const navbar = document.getElementById('navbar');
-function checkScroll() { navbar.classList.toggle('scrolled', window.scrollY > 40); }
-window.addEventListener('scroll', checkScroll, { passive: true });
-checkScroll();
-
-/* ═══════════════════════════════════════════════════════════════
-   5. PAGE FADE-IN
-   ═══════════════════════════════════════════════════════════════ */
-document.body.style.opacity    = '0';
-document.body.style.transition = 'opacity 0.38s ease';
-window.addEventListener('load', () => { document.body.style.opacity = '1'; });
+if (navbar && !navbar.hasAttribute('data-sqt-scroll')) {
+  navbar.setAttribute('data-sqt-scroll', '');
+  function checkScroll() { navbar.classList.toggle('scrolled', window.scrollY > 40); }
+  window.addEventListener('scroll', checkScroll, { passive: true });
+  checkScroll();
+}
 
 /* ═══════════════════════════════════════════════════════════════
    6. TABS
@@ -379,7 +357,7 @@ document.getElementById('login-form').addEventListener('submit', async function 
   btn.classList.add('loading');
 
   try {
-    const res = await fetchWithRetry(`${API_BASE}/api/auth/login`, {
+    const res = await fetch(`${API_BASE}/api/auth/login`, {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       // credentials: 'include' — enable this when backend switches to HttpOnly cookies
@@ -402,7 +380,7 @@ document.getElementById('login-form').addEventListener('submit', async function 
       resetRateLimit('login');
       storeSession(data.token, data.user || {}, this.remember?.checked);
       // Safe redirect — hardcoded destination, no user-controlled input
-      window.location.href = 'index.html';
+      window.location.href = '/';
     } else {
       recordFailure('login', 5, 60_000);
       // Use a generic message — never reflect raw server errors to the user
@@ -498,7 +476,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
   btn.classList.add('loading');
 
   try {
-    const res = await fetchWithRetry(`${API_BASE}/api/auth/register`, {
+    const res = await fetch(`${API_BASE}/api/auth/register`, {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

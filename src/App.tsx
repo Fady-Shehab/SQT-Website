@@ -15,28 +15,28 @@ import {
 } from "@/pages";
 import { useEffect } from "react";
 // Import all CSS files
-import "../css/index.css";
-import "../css/auth.css";
-import "../css/blog.css";
-import "../css/hof.css";
-import "../css/post.css";
-import "../css/profile.css";
-import "../css/project.css";
-import "../css/projects.css";
-import "../css/team.css";
+import "@/css/index.css";
+import "@/css/auth.css";
+import "@/css/blog.css";
+import "@/css/hof.css";
+import "@/css/post.css";
+import "@/css/profile.css";
+import "@/css/project.css";
+import "@/css/projects.css";
+import "@/css/team.css";
 
-// Helper to dynamically load a script
-function loadScript(src: string): Promise<void> {
+// Track loaded scripts to prevent duplicate execution
+const loadedScripts = new Set<string>();
+
+// Helper to dynamically load a script (only once per src)
+function loadScriptOnce(src: string): Promise<void> {
+  if (loadedScripts.has(src)) return Promise.resolve();
+  loadedScripts.add(src);
   return new Promise((resolve, reject) => {
-    // Remove existing script if it exists to allow re-running
-    const existingScript = document.querySelector(`script[src="${src}"]`);
-    if (existingScript) {
-      existingScript.remove();
-    }
     const script = document.createElement("script");
     script.src = src;
     script.onload = () => resolve();
-    script.onerror = () => reject(new Error(`Failed to load script: ${src}`));
+    script.onerror = () => { loadedScripts.delete(src); reject(new Error(`Failed to load script: ${src}`)); };
     document.body.appendChild(script);
   });
 }
@@ -45,39 +45,47 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    // Load nav-auth.js first (always needed)
-    loadScript("/js/nav-auth.js").catch(console.error);
+    // Load nav-auth.js once on app mount (global auth UI)
+    loadScriptOnce("/js/nav-auth.js").catch(console.error);
+  }, []);
 
-    // Load page-specific scripts based on route
-    const loadPageScripts = async () => {
+  useEffect(() => {
+    // Load page-specific scripts on route change.
+    // remove + re-create to allow re-execution on re-visit.
+    const loadPageScript = () => {
+      let scriptSrc = "";
       if (location.pathname === "/") {
-        await loadScript("/js/index.js");
+        scriptSrc = "/js/index.js";
       } else if (location.pathname === "/team") {
-        await loadScript("/js/team.js");
+        scriptSrc = "/js/team.js";
       } else if (location.pathname === "/projects") {
-        await loadScript("/js/projects.js");
+        scriptSrc = "/js/projects.js";
       } else if (location.pathname.startsWith("/project/")) {
-        await loadScript("/js/project.js");
+        scriptSrc = "/js/project.js";
       } else if (location.pathname === "/blog") {
-        await loadScript("/js/blog.js");
+        scriptSrc = "/js/blog.js";
       } else if (location.pathname.startsWith("/post/")) {
-        await loadScript("/js/post.js");
+        scriptSrc = "/js/post.js";
       } else if (location.pathname === "/hall-of-fame") {
-        await loadScript("/js/hof.js");
+        scriptSrc = "/js/hof.js";
       } else if (location.pathname.startsWith("/profile")) {
-        await loadScript("/js/profile.js");
+        scriptSrc = "/js/profile.js";
       } else if (location.pathname === "/admin") {
-        await loadScript("/js/admin.js");
+        scriptSrc = "/js/admin.js";
       } else if (location.pathname === "/auth") {
-        await loadScript("/js/auth.js");
+        scriptSrc = "/js/auth.js";
       }
+
+      if (!scriptSrc) return;
+
+      const existing = document.querySelector(`script[src="${scriptSrc}"]`);
+      if (existing) existing.remove();
+      const script = document.createElement("script");
+      script.src = scriptSrc;
+      document.body.appendChild(script);
     };
 
-    // Wait a bit for React to render the DOM elements before running scripts
-    const timer = setTimeout(() => {
-      loadPageScripts();
-    }, 100);
-
+    const timer = setTimeout(loadPageScript, 100);
     return () => clearTimeout(timer);
   }, [location.pathname]);
 
