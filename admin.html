@@ -9,9 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-  /* ═══════════════════════════════════════
-     DESIGN TOKENS
-  ═══════════════════════════════════════ */
   :root, [data-theme="dark"] {
     --bg-base:       #080E1A;
     --bg-surface:    #0F172A;
@@ -97,9 +94,6 @@
   button { font-family: 'Cairo', sans-serif; cursor: pointer; border: none; background: none; }
   input, select, textarea { font-family: 'Cairo', sans-serif; }
 
-  /* ═══════════════════════════════════════
-     LOGIN SCREEN
-  ═══════════════════════════════════════ */
   #login-screen {
     position: fixed; inset: 0; z-index: 1000;
     background: var(--bg-base);
@@ -123,7 +117,7 @@
     display: flex; align-items: center; justify-content: center;
     margin-bottom: 32px;
   }
-  
+
   .login-logo img { width: 64px; height: 64px; object-fit: contain; }
   .login-logo-fallback {
     width: 64px; height: 64px; border-radius: 14px;
@@ -175,13 +169,9 @@
   }
   .login-alert.show { display: flex; }
 
-  /* ═══════════════════════════════════════
-     DASHBOARD LAYOUT
-  ═══════════════════════════════════════ */
   #dashboard { display: none; min-height: 100vh; position: relative; z-index: 1; }
   #dashboard.visible { display: flex; }
 
-  /* SIDEBAR */
   .sidebar {
     width: var(--sidebar-w); flex-shrink: 0;
     background: var(--bg-surface);
@@ -196,7 +186,7 @@
     border-bottom: 1px solid var(--border-subtle);
     display: flex; align-items: center; gap: 10px;
   }
-  .sidebar-logo img { width: 38px; height: 38px; object-fit: contain; flex-shrink: 0; } 
+  .sidebar-logo img { width: 38px; height: 38px; object-fit: contain; flex-shrink: 0; }
   .nav-logo-img   { height: 38px; width: 38px; }
   .nav-logo-dark  { display: block; }
   .nav-logo-light { display: none; }
@@ -271,14 +261,12 @@
   .btn-logout:hover { background: var(--error-dim); }
   .btn-logout svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
 
-  /* MAIN */
   .main {
     margin-right: var(--sidebar-w);
     flex: 1; display: flex; flex-direction: column;
     min-height: 100vh;
   }
 
-  /* TOP HEADER */
   .top-header {
     height: var(--header-h);
     background: var(--bg-surface);
@@ -311,7 +299,6 @@
   [data-theme="light"] .icon-sun  { display: block; }
   [data-theme="light"] .icon-moon { display: none; }
 
-  /* CONTENT AREA */
   .content-area { flex: 1; padding: 28px; }
 
   .section-header {
@@ -321,7 +308,6 @@
   .section-title { font-size: 1.3rem; font-weight: 800; color: var(--text-primary); }
   .section-sub   { font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; }
 
-  /* STATS GRID */
   .stats-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 16px; margin-bottom: 28px;
@@ -345,7 +331,6 @@
   .stat-value { font-size: 1.8rem; font-weight: 900; color: var(--text-primary); line-height: 1; }
   .stat-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
 
-  /* TABLE */
   .table-wrap {
     background: var(--bg-card); border: 1px solid var(--border-subtle);
     border-radius: 14px; overflow: hidden;
@@ -385,7 +370,6 @@
   tbody tr:last-child td { border-bottom: none; }
   tbody tr:hover { background: rgba(255,255,255,0.02); }
 
-  /* BADGES / CHIPS */
   .chip {
     display: inline-flex; align-items: center; gap: 4px;
     padding: 3px 10px; border-radius: 99px;
@@ -400,7 +384,6 @@
   .chip-completed  { background: var(--info-dim);    border: 1px solid rgba(96,165,250,0.25); color: var(--info); }
   .chip-in-progress{ background: var(--warning-dim); border: 1px solid rgba(251,191,36,0.3);  color: var(--warning); }
 
-  /* ACTION BUTTONS */
   .action-btns { display: flex; align-items: center; gap: 6px; }
   .btn-action {
     width: 30px; height: 30px; border-radius: 7px;
@@ -415,7 +398,6 @@
   .btn-action.points  { background: var(--info-dim);    border: 1px solid rgba(96,165,250,0.25); color: var(--info); }
   .btn-action:hover { transform: scale(1.1); filter: brightness(1.2); }
 
-  /* PRIMARY BUTTON */
   .btn-primary {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 9px 18px; border-radius: 9px;
@@ -436,7 +418,6 @@
   }
   .btn-secondary:hover { border-color: var(--gold-border); color: var(--gold); }
 
-  /* EMPTY STATE */
   .empty-state {
     text-align: center; padding: 56px 24px;
     color: var(--text-muted);
@@ -448,7 +429,6 @@
   }
   .empty-state p { font-size: 0.88rem; }
 
-  /* USER CARD (for overview) */
   .user-cell { display: flex; align-items: center; gap: 10px; }
   .user-avatar-sm {
     width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
@@ -461,7 +441,6 @@
   .user-name-cell  { font-size: 0.84rem; font-weight: 700; color: var(--text-primary); }
   .user-email-cell { font-size: 0.72rem; color: var(--text-muted); }
 
-  /* POST / PROJECT CARD GRID */
   .cards-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 16px;
@@ -487,7 +466,6 @@
   .content-card-meta  { font-size: 0.74rem; color: var(--text-muted); margin-bottom: 12px; }
   .content-card-actions { display: flex; gap: 8px; }
 
-  /* MODAL */
   .modal-overlay {
     position: fixed; inset: 0; z-index: 200;
     background: rgba(0,0,0,0.65); backdrop-filter: blur(4px);
@@ -524,7 +502,6 @@
   .modal-body   { padding: 20px 24px; }
   .modal-footer { padding: 16px 24px 20px; border-top: 1px solid var(--border-subtle); display: flex; gap: 10px; justify-content: flex-end; }
 
-  /* MODAL FORM */
   .modal .form-group { margin-bottom: 16px; }
   .modal .form-input, .modal .form-select, .modal .form-textarea {
     width: 100%; padding: 10px 14px;
@@ -539,7 +516,6 @@
   .modal .form-textarea { resize: vertical; min-height: 80px; }
   .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-  /* CONFIRM DIALOG */
   .confirm-icon {
     width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 16px;
     display: flex; align-items: center; justify-content: center;
@@ -551,13 +527,12 @@
   .confirm-msg  { text-align: center; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 4px; }
   .confirm-name { text-align: center; font-size: 1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 4px; }
 
-  /* TOAST */
   #toast-container {
     position: fixed; top: 50px; left: 50%; transform: translateX(-50%);
     z-index: 500; display: flex; flex-direction: column; gap: 8px;
     pointer-events: none; width: max-content; max-width: calc(100vw - 32px);
     background: var(--bg-card);border-radius: 10px;
-    
+
   }
   .toast {
     padding: 10px 18px; border-radius: 10px;
@@ -573,7 +548,6 @@
   .toast svg     { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; flex-shrink: 0; }
   @keyframes toastIn { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:translateY(0); } }
 
-  /* SPINNER */
   .spinner {
     width: 16px; height: 16px; border-radius: 50%;
     border: 2px solid var(--border-mid); border-top-color: var(--gold);
@@ -581,10 +555,8 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* LOADING OVERLAY */
   .loading-row td { text-align: center; padding: 32px; }
 
-  /* POINTS BADGE ROW */
   .badge-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
   .badge-chip {
     padding: 4px 10px; border-radius: 99px;
@@ -604,7 +576,6 @@
   .badge-chip-remove:hover { opacity: 1; background: rgba(255,255,255,0.12); }
   .badge-chip-remove svg { width: 10px; height: 10px; }
 
-  /* FORM CHECKBOX ROW */
   .form-checkbox-row {
     display: flex; align-items: center; gap: 10px;
     padding: 10px 14px; margin-bottom: 16px;
@@ -613,7 +584,46 @@
   }
   .form-checkbox-row input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--gold); cursor: pointer; flex-shrink: 0; }
 
-  /* FEATURED RIBBON ON CONTENT CARDS */
+  /* IMAGE UPLOAD WIDGET (post cover / project cover / member avatar) */
+  .img-upload-wrap { display: flex; align-items: center; gap: 14px; }
+  .img-upload-preview-box {
+    width: 84px; height: 84px; border-radius: 10px; flex-shrink: 0;
+    background: var(--bg-subtle); border: 1px solid var(--border-mid);
+    overflow: hidden; display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .img-upload-preview-box.round { border-radius: 50%; }
+  .img-upload-preview { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .img-upload-placeholder {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    color: var(--text-muted); font-size: 0.6rem; text-align: center; padding: 4px;
+  }
+  .img-upload-status { font-size: 0.72rem; margin-top: 6px; min-height: 1em; }
+
+  /* SKILLS PICKER (member edit modal) */
+  .skills-picker {
+    max-height: 230px; overflow-y: auto;
+    border: 1px solid var(--border-mid); border-radius: 8px;
+    padding: 12px; background: var(--bg-subtle);
+  }
+  .skills-picker-group { margin-bottom: 12px; }
+  .skills-picker-group:last-child { margin-bottom: 0; }
+  .skills-picker-group-title {
+    font-size: 0.66rem; font-weight: 800; color: var(--gold);
+    text-transform: uppercase; letter-spacing: .04em; margin-bottom: 7px;
+  }
+  .skills-picker-options { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill-option {
+    font-size: 0.72rem; padding: 4px 11px; border-radius: 99px;
+    border: 1px solid var(--border-mid); background: var(--bg-card);
+    color: var(--text-secondary); cursor: pointer; user-select: none;
+    transition: all .15s;
+  }
+  .pill-option:hover { border-color: var(--gold-border); color: var(--gold); }
+  .pill-option.selected {
+    background: var(--gold-dim); border-color: var(--gold-border); color: var(--gold); font-weight: 700;
+  }
+
   .content-card { position: relative; }
   .content-card-featured-tag {
     position: absolute; top: 10px; right: 10px; z-index: 2;
@@ -625,7 +635,6 @@
   }
   .content-card-featured-tag svg { width: 11px; height: 11px; fill: currentColor; }
 
-  /* MOBILE BOTTOM NAV */
   .mobile-nav {
     display: none;
     position: fixed; bottom: 0; left: 0; right: 0; z-index: 250;
@@ -658,7 +667,6 @@
     min-width: 16px; text-align: center; line-height: 1.5;
   }
 
-  /* SIDEBAR CLOSE BUTTON (mobile only) */
   .sidebar-close-btn {
     display: none;
     position: absolute; top: 12px; left: 12px;
@@ -670,7 +678,6 @@
   .sidebar-close-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
   .sidebar-close-btn:hover { color: var(--error); border-color: rgba(248,113,113,0.3); }
 
-  /* RESPONSIVE ─── 900px */
   @media (max-width: 900px) {
     .sidebar {
       transform: translateX(calc(var(--sidebar-w) + 20px));
@@ -691,32 +698,26 @@
     .mobile-nav { display: block; }
     .content-area { padding-bottom: 88px; }
   }
-  /* small phones: sidebar full-width */
   @media (max-width: 480px) {
     .sidebar { width: 100vw; transform: translateX(110vw); }
     .sidebar.open { transform: translateX(0); }
   }
 
-  /* RESPONSIVE ─── 600px */
   @media (max-width: 600px) {
     :root { --header-h: 56px; }
     .content-area { padding: 12px 10px 88px; }
     .top-header   { padding: 0 10px; gap: 8px; }
 
-    /* Stats: 2 equal columns */
     .stats-grid { grid-template-columns: 1fr; gap: 8px; margin-bottom: 16px; }
     .stat-card  { padding: 14px 12px; }
     .stat-value { font-size: 1.5rem; }
 
-    /* Section header stacks */
     .section-header { flex-direction: column; align-items: flex-start; gap: 10px; }
     .section-header .btn-primary { width: 100%; justify-content: center; }
 
-    /* Toast */
     #toast-container { left: 10px; right: 10px; transform: none; width: auto; }
     .toast { min-width: unset; width: 100%; }
 
-    /* Modal: full-width bottom sheet */
     .modal-overlay { padding: 0; align-items: flex-end; z-index: 400; }
     .modal {
       border-radius: 22px 22px 0 0;
@@ -729,33 +730,27 @@
     .modal-footer .btn-primary,
     .modal-footer .btn-secondary { width: 100%; justify-content: center; }
 
-    /* Table */
     .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     table { min-width: 460px; }
     .table-toolbar { flex-direction: column; align-items: stretch; gap: 8px; }
     .search-input  { min-width: unset; width: 100%; }
     .filter-select { width: 100%; }
 
-    /* Cards */
     .cards-grid { grid-template-columns: 1fr; gap: 10px; }
     .content-card-img { height: 150px; }
 
-    /* Bigger touch targets */
     .btn-action { width: 38px; height: 38px; }
     .btn-action svg { width: 16px; height: 16px; }
 
-    /* iOS input zoom prevention */
     .form-input, .modal .form-input,
     .modal .form-select, .modal .form-textarea,
     .search-input, .filter-select, .form-select { font-size: 16px; }
 
-    /* Header cleanup */
     .top-header .btn-secondary span { display: none; }
     .top-header .btn-secondary { padding: 7px 10px; }
     .breadcrumb { max-width: calc(100vw - 120px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   }
 
-  /* Extra small (< 380px): single column stats */
   @media (max-width: 380px) {
     .stats-grid { grid-template-columns: 1fr; }
     .content-area { padding: 10px 8px 88px; }
@@ -766,15 +761,15 @@
     to   { opacity:1; transform:translateY(0); }
   }
 
-  /* OVERLAY for mobile sidebar close */
+  /* FIXED: inset:0 added — this was previously 0x0 and never dimmed the
+     screen or caught taps to close the mobile sidebar. */
   .sidebar-overlay {
-    display: none; position: fixed; z-index: 299;
+    display: none; position: fixed; inset: 0; z-index: 299;
     background: rgba(0,0,0,0.55);
     backdrop-filter: blur(2px);
   }
   .sidebar-overlay.show { display: block; }
 
-  /* NOT IMPLEMENTED NOTE */
   .not-impl {
     background: var(--warning-dim); border: 1px solid rgba(251,191,36,0.25);
     border-radius: 10px; padding: 12px 16px; margin-bottom: 16px;
@@ -784,11 +779,9 @@
 </head>
 <body>
 
-<!-- ══════════════════ TOAST CONTAINER ══════════════════ -->
 <div id="toast-container"></div>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-<!-- ══════════════════ LOGIN SCREEN ══════════════════ -->
 <div id="login-screen">
   <div class="login-card">
     <div class="login-logo">
@@ -829,10 +822,8 @@
   </div>
 </div>
 
-<!-- ══════════════════ DASHBOARD ══════════════════ -->
 <div id="dashboard">
 
-  <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
       <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="إغلاق القائمة">
@@ -893,9 +884,7 @@
     </div>
   </aside>
 
-  <!-- MAIN -->
   <div class="main">
-    <!-- TOP HEADER -->
     <header class="top-header">
       <button class="menu-toggle" id="menuToggle">
         <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -912,22 +901,43 @@
       </div>
     </header>
 
-    <!-- CONTENT -->
     <div class="content-area" id="content-area">
-      <!-- Sections rendered by JS -->
     </div>
   </div>
 </div>
 
 <!-- ══════════════════ MODAL: EDIT USER ══════════════════ -->
 <div class="modal-overlay" id="modal-edit-user">
-  <div class="modal">
+  <div class="modal" style="max-width:620px;">
     <div class="modal-header">
       <div class="modal-title">تعديل بيانات العضو</div>
       <button class="modal-close" data-close="modal-edit-user"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="modal-body">
       <input type="hidden" id="eu-id" />
+
+      <div class="form-group">
+        <label class="form-label">الصورة الشخصية</label>
+        <div class="img-upload-wrap">
+          <div class="img-upload-preview-box round">
+            <img id="eu-avatar-preview" class="img-upload-preview" style="display:none;" alt="" />
+            <div class="img-upload-placeholder" id="eu-avatar-placeholder">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+              <span>لا توجد صورة</span>
+            </div>
+          </div>
+          <div>
+            <button type="button" class="btn-secondary" id="eu-avatar-btn" style="font-size:.78rem;">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              رفع صورة
+            </button>
+            <div class="img-upload-status" id="eu-avatar-status"></div>
+            <input type="file" id="eu-avatar-file" accept="image/jpeg,image/png,image/webp" style="display:none;" />
+            <input type="hidden" id="eu-avatar" />
+          </div>
+        </div>
+      </div>
+
       <div class="form-grid-2">
         <div class="form-group">
           <label class="form-label">الاسم</label>
@@ -959,6 +969,55 @@
       <div class="form-group">
         <label class="form-label">التسمية المختصرة (role tag)</label>
         <input type="text" id="eu-role-tag" class="form-input" placeholder="مثال: Founder & Lead" maxlength="60" />
+      </div>
+
+      <div style="border-top:1px solid var(--border-subtle);margin:16px 0;padding-top:16px;">
+        <div class="form-label" style="margin-bottom:10px;">تغيير كلمة المرور (اختياري)</div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">كلمة مرور جديدة</label>
+            <input type="password" id="eu-password" class="form-input" placeholder="اتركه فارغاً اذا لا تريد التغيير" autocomplete="new-password" minlength="8" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">تأكيد كلمة المرور</label>
+            <input type="password" id="eu-password-confirm" class="form-input" autocomplete="new-password" minlength="8" />
+          </div>
+        </div>
+        <div class="img-upload-status" id="eu-password-status"></div>
+      </div>
+
+      <div style="border-top:1px solid var(--border-subtle);margin:16px 0;padding-top:16px;">
+        <div class="form-label" style="margin-bottom:10px;">روابط التواصل</div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">LinkedIn</label>
+            <input type="text" id="eu-social-linkedin" class="form-input" placeholder="linkedin.com/in/..." />
+          </div>
+          <div class="form-group">
+            <label class="form-label">GitHub</label>
+            <input type="text" id="eu-social-github" class="form-input" placeholder="github.com/..." />
+          </div>
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Twitter</label>
+            <input type="text" id="eu-social-twitter" class="form-input" placeholder="twitter.com/..." />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Dribbble</label>
+            <input type="text" id="eu-social-dribbble" class="form-input" placeholder="dribbble.com/..." />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Portfolio</label>
+          <input type="text" id="eu-social-portfolio" class="form-input" placeholder="https://..." />
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--border-subtle);margin:16px 0;padding-top:16px;">
+        <div class="form-label" style="margin-bottom:10px;">المهارات</div>
+        <div class="badge-list" id="eu-skills-chips" style="margin-bottom:10px;"></div>
+        <div class="skills-picker" id="eu-skills-picker"></div>
       </div>
     </div>
     <div class="modal-footer">
@@ -995,15 +1054,11 @@
         </div>
       </div>
       <div style="border-top:1px solid var(--border-subtle);margin:16px 0;padding-top:16px;">
-        <div class="form-label" style="margin-bottom:10px;">منح إنجاز جديد</div>
-        <div class="form-group">
-          <label class="form-label">اختر إنجازاً من الكتالوج</label>
-          <select id="badge-catalog-select" class="form-select"></select>
-        </div>
-        <div id="badge-preview" class="badge-chip" style="display:inline-flex;margin-top:6px;"></div>
+        <div class="form-label" style="margin-bottom:10px;">منح انجازات جديدة (يمكن اختيار اكثر من واحد)</div>
+        <div class="badge-list" id="badge-catalog-picker"></div>
         <button type="button" class="btn-secondary" id="btn-add-badge" style="margin-top:10px;width:100%;justify-content:center;">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          منح هذا الإنجاز
+          منح الانجازات المختارة
         </button>
       </div>
       <div id="current-badges-wrap">
@@ -1033,6 +1088,29 @@
         <input type="checkbox" id="post-featured" />
         <span>تعيين كمقال مميز (سيظهر في مكان المقال المميز بالمدونة)</span>
       </label>
+
+      <div class="form-group">
+        <label class="form-label">صورة المقال</label>
+        <div class="img-upload-wrap">
+          <div class="img-upload-preview-box">
+            <img id="post-image-preview" class="img-upload-preview" style="display:none;" alt="" />
+            <div class="img-upload-placeholder" id="post-image-placeholder">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span>لا توجد صورة</span>
+            </div>
+          </div>
+          <div>
+            <button type="button" class="btn-secondary" id="post-image-btn" style="font-size:.78rem;">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              رفع صورة
+            </button>
+            <div class="img-upload-status" id="post-image-status"></div>
+            <input type="file" id="post-image-file" accept="image/jpeg,image/png,image/webp" style="display:none;" />
+            <input type="hidden" id="post-image" />
+          </div>
+        </div>
+      </div>
+
       <div class="form-group">
         <label class="form-label">عنوان المقال</label>
         <input type="text" id="post-title" class="form-input" placeholder="عنوان المقال" />
@@ -1040,11 +1118,18 @@
       <div class="form-grid-2">
         <div class="form-group">
           <label class="form-label">الكاتب</label>
-          <input type="text" id="post-author" class="form-input" placeholder="اسم الكاتب" />
+          <select id="post-author" class="form-select"></select>
         </div>
         <div class="form-group">
           <label class="form-label">التصنيف</label>
-          <input type="text" id="post-category" class="form-input" placeholder="مثال: برمجة" />
+          <select id="post-category" class="form-select">
+            <option value="">اختر تصنيف</option>
+            <option value="برمجة">برمجة</option>
+            <option value="تصميم">تصميم</option>
+            <option value="ذكاء اصطناعي">ذكاء اصطناعي</option>
+            <option value="أمن سيبراني">أمن سيبراني</option>
+            <option value="تجارب">تجارب</option>
+          </select>
         </div>
       </div>
       <div class="form-group">
@@ -1057,17 +1142,13 @@
       </div>
       <div class="form-grid-2">
         <div class="form-group">
-          <label class="form-label">رابط الصورة</label>
-          <input type="text" id="post-image" class="form-input" placeholder="https://..." />
-        </div>
-        <div class="form-group">
           <label class="form-label">وقت القراءة (دقيقة)</label>
           <input type="number" id="post-readtime" class="form-input" value="5" min="1" />
         </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Tags (مفصولة بفاصلة)</label>
-        <input type="text" id="post-tags" class="form-input" placeholder="Python, AI, Web" />
+        <div class="form-group">
+          <label class="form-label">Tags (مفصولة بفاصلة)</label>
+          <input type="text" id="post-tags" class="form-input" placeholder="Python, AI, Web" />
+        </div>
       </div>
     </div>
     <div class="modal-footer">
@@ -1092,6 +1173,29 @@
         <input type="checkbox" id="proj-featured" />
         <span>تعيين كمشروع مميز (سيظهر في مكان المشروع المميز)</span>
       </label>
+
+      <div class="form-group">
+        <label class="form-label">صورة المشروع</label>
+        <div class="img-upload-wrap">
+          <div class="img-upload-preview-box">
+            <img id="proj-image-preview" class="img-upload-preview" style="display:none;" alt="" />
+            <div class="img-upload-placeholder" id="proj-image-placeholder">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span>لا توجد صورة</span>
+            </div>
+          </div>
+          <div>
+            <button type="button" class="btn-secondary" id="proj-image-btn" style="font-size:.78rem;">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              رفع صورة
+            </button>
+            <div class="img-upload-status" id="proj-image-status"></div>
+            <input type="file" id="proj-image-file" accept="image/jpeg,image/png,image/webp" style="display:none;" />
+            <input type="hidden" id="proj-cover" />
+          </div>
+        </div>
+      </div>
+
       <div class="form-group">
         <label class="form-label">اسم المشروع</label>
         <input type="text" id="proj-title" class="form-input" placeholder="اسم المشروع" />
@@ -1127,6 +1231,19 @@
       <div class="form-group">
         <label class="form-label">التقنيات (مفصولة بفاصلة)</label>
         <input type="text" id="proj-tech" class="form-input" placeholder="React, Node.js, MongoDB" />
+      </div>
+
+      <div style="border-top:1px solid var(--border-subtle);margin:16px 0;padding-top:16px;">
+        <div class="form-label" style="margin-bottom:10px;">اعضاء المشروع</div>
+        <div class="form-group">
+          <label class="form-label">اضافة عضو الى المشروع</label>
+          <select id="proj-member-select" class="form-select"></select>
+        </div>
+        <button type="button" class="btn-secondary" id="btn-add-project-member" style="margin-top:2px;width:100%;justify-content:center;">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          اضافة عضو
+        </button>
+        <div class="badge-list" id="proj-members-list" style="margin-top:10px;"></div>
       </div>
     </div>
     <div class="modal-footer">
@@ -1167,10 +1284,44 @@ const THEME_KEY  = 'sharq-theme';
 const TOKEN_KEY  = 'sharq-token';
 const USER_KEY   = 'sharq-user';
 
+// Fixed category list — product decision, hardcoded (not fetched).
+const POST_CATEGORIES = ['برمجة', 'تصميم', 'ذكاء اصطناعي', 'أمن سيبراني', 'تجارب'];
+
+const IMG_ALLOWED_TYPES  = ['image/jpeg', 'image/png', 'image/webp'];
+const IMG_MAX_SIZE_MB    = 5;
+const IMG_MAX_SIZE_BYTES = IMG_MAX_SIZE_MB * 1024 * 1024;
+
+// Big categorized skills catalog for the member skills picker.
+const SKILL_CATALOG = {
+  'البرمجة': ['JavaScript','TypeScript','Python','Java','C++','C#','Go','Rust','PHP','Ruby','Swift','Kotlin','SQL','Node.js','React','Vue.js','Angular','Next.js','Django','Flask','Express.js','GraphQL','REST APIs','Git','Docker','Kubernetes','CI/CD'],
+  'التصميم': ['UI Design','UX Design','Graphic Design','Figma','Adobe XD','Photoshop','Illustrator','After Effects','Motion Graphics','Branding','Typography','Wireframing','Prototyping','Design Systems','3D Modeling','Blender','Web Design','Logo Design','User Research'],
+  'الذكاء الاصطناعي': ['Machine Learning','Deep Learning','Natural Language Processing','Computer Vision','Neural Networks','TensorFlow','PyTorch','Scikit-learn','Data Science','Data Analysis','Reinforcement Learning','Generative AI','Prompt Engineering','OpenCV','Pandas','NumPy','MLOps','Big Data'],
+  'الروبوتات': ['Arduino','Raspberry Pi','ROS','Embedded Systems','PCB Design','Microcontrollers','Sensors & Actuators','3D Printing','CAD Design','SolidWorks','Control Systems','Mechatronics','IoT','Autonomous Systems','Robotic Arms','Drones','Motor Control','Circuit Design'],
+  'الأمن السيبراني': ['Penetration Testing','Ethical Hacking','Network Security','Web Application Security','OWASP Top 10','Cryptography','Malware Analysis','Digital Forensics','Vulnerability Assessment','Security Auditing','Bug Bounty Hunting','Burp Suite','Wireshark','Metasploit','Incident Response','SOC Operations','Threat Intelligence','CTF','Linux Security']
+};
+
 /* ─── STATE ──────────────────────────────────────────── */
 let currentSection = 'overview';
 let confirmCallback = null;
 let pendingCount    = 0;
+
+// In-memory caches so action buttons can look records up by id instead
+// of round-tripping full objects through HTML attributes.
+let membersCache  = [];
+let postsCache    = [];
+let projectsCache = [];
+
+// Member directory used to populate the author / project-member selects.
+let memberDirectory = [];
+
+// Members currently attached to the project being added/edited.
+let projectMembersSelected = [];
+
+// Skills currently selected in the member edit modal.
+let euSkillsSelected = [];
+
+// Badge ids currently selected to grant in the points modal.
+let badgeSelectedToGrant = [];
 
 /* ─── SANITIZE (XSS prevention) ─────────────────────── */
 function esc(str) {
@@ -1179,12 +1330,50 @@ function esc(str) {
             .replace(/"/g,'&quot;').replace(/'/g,'&#x27;');
 }
 
+/** Validate a URL before using it as an <img src> — only allow http/https. */
+function safeImgUrl(url) {
+  if (!url || typeof url !== 'string') return '';
+  try {
+    const u = new URL(url, window.location.origin);
+    return (u.protocol === 'https:' || u.protocol === 'http:') ? u.href : '';
+  } catch {
+    return '';
+  }
+}
+
+/**
+ * Validate/normalize a general URL (social links, demo/github links).
+ * Auto-prepends https:// if the person typed a bare domain like
+ * "linkedin.com/in/x" so they don't have to type the scheme.
+ */
+function safeUrl(url) {
+  if (!url || typeof url !== 'string') return '';
+  const withScheme = /^https?:\/\//i.test(url) ? url : `https://${url}`;
+  try {
+    const u = new URL(withScheme);
+    return (u.protocol === 'https:' || u.protocol === 'http:') ? u.href : '';
+  } catch {
+    return '';
+  }
+}
+
+/* ── Whitelisted chip-class maps ───────────────────────
+   u.status / u.role / p.status come from the API. Using them directly as
+   a CSS class suffix lets a malformed/malicious value break out of the
+   class attribute, so these maps always resolve to a known-safe literal. */
+const STATUS_CHIP_CLASS  = { pending: 'pending', approved: 'approved', rejected: 'rejected' };
+const ROLE_CHIP_CLASS    = { admin: 'admin', member: 'member' };
+const PROJECT_CHIP_CLASS = { active: 'active', completed: 'completed', 'in-progress': 'in-progress' };
+
+function statusChipClass(s)  { return STATUS_CHIP_CLASS[s]  || 'member'; }
+function roleChipClass(r)    { return ROLE_CHIP_CLASS[r]    || 'member'; }
+function projectChipClass(s) { return PROJECT_CHIP_CLASS[s] || 'active'; }
+
 /* ─── THEME ──────────────────────────────────────────── */
 const html = document.documentElement;
 function applyTheme(t) {
   html.setAttribute('data-theme', t);
   localStorage.setItem(THEME_KEY, t);
-  // sync login logos
   document.querySelectorAll('.nav-logo-dark').forEach(el => el.style.display = t === 'dark' ? 'block' : 'none');
   document.querySelectorAll('.nav-logo-light').forEach(el => el.style.display = t === 'light' ? 'block' : 'none');
 }
@@ -1237,7 +1426,6 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
 });
 
 /* ─── CONFIRM DIALOG ─────────────────────────────────── */
-// type: 'danger' (delete/reject - red trash icon) | 'success' (approve - green check icon)
 function confirm(name, msg, cb, type = 'danger') {
   document.getElementById('confirm-name').textContent = name;
   document.getElementById('confirm-msg').textContent  = msg || 'هل انت متاكد؟ لا يمكن التراجع.';
@@ -1273,7 +1461,6 @@ document.getElementById('btn-confirm-delete').addEventListener('click', () => {
 });
 
 /* ─── AUTH ───────────────────────────────────────────── */
-// Check if already logged in
 async function checkAuth() {
   const token = localStorage.getItem(TOKEN_KEY);
   const user  = JSON.parse(localStorage.getItem(USER_KEY) || 'null');
@@ -1286,15 +1473,22 @@ async function checkAuth() {
 function showLogin() {
   document.getElementById('login-screen').classList.remove('hidden');
   document.getElementById('dashboard').classList.remove('visible');
+  // FIX: bottom mobile nav was visible even on the login screen since it
+  // only checked viewport width, not auth state.
+  const mobNav = document.getElementById('mobileNav');
+  if (mobNav) mobNav.style.display = 'none';
 }
 
 function showDashboard(user) {
   document.getElementById('login-screen').classList.add('hidden');
   document.getElementById('dashboard').classList.add('visible');
+  const mobNav = document.getElementById('mobileNav');
+  if (mobNav) mobNav.style.removeProperty('display');
   const initials = (user.name || 'A').charAt(0).toUpperCase();
   const avatarEl = document.getElementById('admin-avatar-sb');
-  if (user.avatar) {
-    avatarEl.innerHTML = `<img src="${esc(user.avatar)}" alt="${esc(user.name)}" />`;
+  const avatarUrl = safeImgUrl(user.avatar);
+  if (avatarUrl) {
+    avatarEl.innerHTML = `<img src="${esc(avatarUrl)}" alt="${esc(user.name)}" />`;
   } else {
     avatarEl.textContent = initials;
   }
@@ -1347,7 +1541,6 @@ document.getElementById('btn-logout').addEventListener('click', () => {
 document.querySelectorAll('.nav-item').forEach(item => {
   item.addEventListener('click', () => {
     loadSection(item.dataset.section);
-    // close mobile sidebar
     document.getElementById('sidebar').classList.remove('open');
     document.getElementById('sidebarOverlay').classList.remove('show');
   });
@@ -1360,14 +1553,6 @@ document.getElementById('menuToggle').addEventListener('click', () => {
 document.getElementById('sidebarOverlay').addEventListener('click', () => {
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('sidebarOverlay').classList.remove('show');
-});
-
-// Close sidebar on any nav-item click (in case delegation didn't catch sidebar close)
-document.querySelectorAll('.nav-item').forEach(item => {
-  item.addEventListener('click', () => {
-    document.getElementById('sidebar').classList.remove('open');
-    document.getElementById('sidebarOverlay').classList.remove('show');
-  });
 });
 document.getElementById('sidebarCloseBtn').addEventListener('click', () => {
   document.getElementById('sidebar').classList.remove('open');
@@ -1383,9 +1568,7 @@ document.addEventListener('click', function(e) {
 });
 
 function setActiveNav(section) {
-  // Sidebar nav items
   document.querySelectorAll('.nav-item').forEach(i => i.classList.toggle('active', i.dataset.section === section));
-  // Mobile bottom nav items
   document.querySelectorAll('.mnav-item').forEach(i => i.classList.toggle('active', i.dataset.section === section));
 
   const labels = {
@@ -1395,9 +1578,6 @@ function setActiveNav(section) {
   document.getElementById('breadcrumb-label').textContent = labels[section] || section;
 }
 
-/* ═══════════════════════════════════════════════════════
-   SECTION RENDERERS
-═══════════════════════════════════════════════════════ */
 function loadSection(section) {
   currentSection = section;
   setActiveNav(section);
@@ -1417,14 +1597,18 @@ async function renderOverview() {
     ]);
 
     const pending  = (usersData.users || []).filter(u => u.status === 'pending').length;
-    const total    = usersData.total || 0;
+    // FIX: coerce with Number() before ever dropping these into a
+    // template string, so a malformed API response can't smuggle markup
+    // through an "always a number" field.
+    const total    = Number(usersData.total) || 0;
     const posts    = Array.isArray(postsData) ? postsData.length : 0;
-    const projects = projectsData.total || 0;
+    const projects = Number(projectsData.total) || 0;
 
     pendingCount = pending;
     updatePendingBadge(pending);
 
     const recentUsers = (usersData.users || []).slice(0, 5);
+    membersCache = recentUsers;
 
     document.getElementById('content-area').innerHTML = `
       <div class="section-header">
@@ -1438,7 +1622,7 @@ async function renderOverview() {
           <div class="stat-value">${total}</div>
           <div class="stat-label">اجمالي الاعضاء</div>
         </div>
-        <div class="stat-card" style="cursor:pointer;" onclick="loadSection('pending')">
+        <div class="stat-card" id="stat-pending-card" style="cursor:pointer;">
           <div class="stat-top">
             <div class="stat-icon red"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
           </div>
@@ -1464,7 +1648,7 @@ async function renderOverview() {
       <div class="table-wrap">
         <div class="table-toolbar" style="justify-content:space-between;">
           <div style="font-size:.85rem;font-weight:700;color:var(--text-primary);">اخر الاعضاء المسجلين</div>
-          <button class="btn-secondary" onclick="loadSection('members')" style="font-size:.78rem;padding:6px 12px;">عرض الكل</button>
+          <button class="btn-secondary" id="btn-view-all-members" style="font-size:.78rem;padding:6px 12px;">عرض الكل</button>
         </div>
         <table>
           <thead><tr>
@@ -1472,22 +1656,27 @@ async function renderOverview() {
           </tr></thead>
           <tbody>
             ${recentUsers.length === 0 ? `<tr><td colspan="5" class="empty-state"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><p>لا يوجد اعضاء بعد</p></td></tr>` :
-              recentUsers.map(u => `
+              recentUsers.map(u => {
+                const avatarUrl = safeImgUrl(u.avatar);
+                return `
                 <tr>
                   <td><div class="user-cell">
-                    <div class="user-avatar-sm">${u.avatar ? `<img src="${esc(u.avatar)}" alt="${esc(u.name)}" />` : esc((u.name||'?').charAt(0).toUpperCase())}</div>
+                    <div class="user-avatar-sm">${avatarUrl ? `<img src="${esc(avatarUrl)}" alt="${esc(u.name)}" />` : esc((u.name||'?').charAt(0).toUpperCase())}</div>
                     <div><div class="user-name-cell">${esc(u.name)}</div><div class="user-email-cell">${esc(u.email)}</div></div>
                   </div></td>
                   <td>${esc(u.department||'-')}</td>
-                  <td><span class="chip chip-${u.status}">${statusLabel(u.status)}</span></td>
-                  <td><span class="chip chip-${u.role}">${u.role === 'admin' ? 'Admin' : 'Member'}</span></td>
+                  <td><span class="chip chip-${statusChipClass(u.status)}">${statusLabel(u.status)}</span></td>
+                  <td><span class="chip chip-${roleChipClass(u.role)}">${u.role === 'admin' ? 'Admin' : 'Member'}</span></td>
                   <td>${formatDate(u.createdAt)}</td>
                 </tr>
-              `).join('')}
+              `;}).join('')}
           </tbody>
         </table>
       </div>
     `;
+
+    document.getElementById('stat-pending-card')?.addEventListener('click', () => loadSection('pending'));
+    document.getElementById('btn-view-all-members')?.addEventListener('click', () => loadSection('members'));
   } catch (err) {
     showError(err.message);
   }
@@ -1523,10 +1712,11 @@ async function renderPending() {
 }
 
 function pendingRow(u) {
+  const avatarUrl = safeImgUrl(u.avatar);
   return `
     <tr id="prow-${esc(u._id)}">
       <td><div class="user-cell">
-        <div class="user-avatar-sm">${u.avatar ? `<img src="${esc(u.avatar)}" alt="${esc(u.name)}" />` : esc((u.name||'?').charAt(0).toUpperCase())}</div>
+        <div class="user-avatar-sm">${avatarUrl ? `<img src="${esc(avatarUrl)}" alt="${esc(u.name)}" />` : esc((u.name||'?').charAt(0).toUpperCase())}</div>
         <div><div class="user-name-cell">${esc(u.name)}</div><div class="user-email-cell">${esc(u.email)}</div></div>
       </div></td>
       <td>${esc(u.department||'-')}</td>
@@ -1564,7 +1754,6 @@ async function updateUserStatus(id, name, status) {
       pendingCount = Math.max(0, pendingCount - 1);
       updatePendingBadge(pendingCount);
       toast(`تم ${label} طلب ${name}`, status === 'approved' ? 'success' : 'info');
-      // update overview sub text
       const sub = document.querySelector('.section-sub');
       if (sub) sub.textContent = `${pendingCount} طلب بانتظار المراجعة`;
     } catch (err) { toast(err.message, 'error'); }
@@ -1576,6 +1765,7 @@ async function renderMembers() {
   try {
     const data  = await api('GET', '/api/admin/users?status=all&limit=100');
     const users = (data.users || []).filter(u => u.status !== 'pending');
+    membersCache = users;
 
     document.getElementById('content-area').innerHTML = `
       <div class="section-header">
@@ -1610,17 +1800,16 @@ async function renderMembers() {
       </div>
     `;
 
-    // Search + filter
-    const allRows = users;
     function filterMembers() {
       const q    = document.getElementById('member-search').value.trim().toLowerCase();
       const dept = document.getElementById('member-dept-filter').value;
       const role = document.getElementById('member-role-filter').value;
-      const filtered = allRows.filter(u =>
+      const filtered = users.filter(u =>
         (!q    || u.name?.toLowerCase().includes(q) || u.email?.toLowerCase().includes(q)) &&
         (!dept || u.department === dept) &&
         (!role || u.role === role)
       );
+      membersCache = filtered;
       document.getElementById('members-tbody').innerHTML =
         filtered.length ? filtered.map(u => memberRow(u)).join('') :
         `<tr><td colspan="6"><div class="empty-state"><svg viewBox="0 0 24 24"><line x1="21" y1="21" x2="16.65" y2="16.65"/><circle cx="11" cy="11" r="8"/></svg><p>لا توجد نتائج</p></div></td></tr>`;
@@ -1635,19 +1824,23 @@ async function renderMembers() {
 }
 
 function memberRow(u) {
+  const avatarUrl = safeImgUrl(u.avatar);
   return `
     <tr id="mrow-${esc(u._id)}">
       <td><div class="user-cell">
-        <div class="user-avatar-sm">${u.avatar ? `<img src="${esc(u.avatar)}" alt="${esc(u.name)}" />` : esc((u.name||'?').charAt(0).toUpperCase())}</div>
+        <div class="user-avatar-sm">${avatarUrl ? `<img src="${esc(avatarUrl)}" alt="${esc(u.name)}" />` : esc((u.name||'?').charAt(0).toUpperCase())}</div>
         <div><div class="user-name-cell">${esc(u.name)}</div><div class="user-email-cell">${esc(u.email)}</div></div>
       </div></td>
       <td>${esc(u.department||'-')}</td>
-      <td><span class="chip chip-${u.role}">${u.role==='admin'?'Admin':'Member'}</span></td>
-      <td>${u.points||0}</td>
-      <td><span class="chip chip-${u.status}">${statusLabel(u.status)}</span></td>
+      <td><span class="chip chip-${roleChipClass(u.role)}">${u.role==='admin'?'Admin':'Member'}</span></td>
+      <td>${Number(u.points) || 0}</td>
+      <td><span class="chip chip-${statusChipClass(u.status)}">${statusLabel(u.status)}</span></td>
       <td><div class="action-btns">
-        <button class="btn-action edit"   data-user='${JSON.stringify(u).replace(/'/g,"&#39;")}' title="تعديل"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-        <button class="btn-action points" data-user='${JSON.stringify(u).replace(/'/g,"&#39;")}' title="نقاط وانجازات"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+        <!-- FIX: was data-user='SERIALIZED_JSON' — exploitable via HTML-entity
+             smuggling even with escaping applied. Now we just store the id
+             and look the full record up from membersCache. -->
+        <button class="btn-action edit"   data-id="${esc(u._id)}" title="تعديل"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+        <button class="btn-action points" data-id="${esc(u._id)}" title="نقاط وانجازات"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
         <button class="btn-action delete" data-id="${esc(u._id)}" data-name="${esc(u.name)}" title="حذف"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
       </div></td>
     </tr>
@@ -1657,14 +1850,14 @@ function memberRow(u) {
 function bindMemberActions() {
   document.querySelectorAll('.btn-action.edit').forEach(btn => {
     btn.addEventListener('click', () => {
-      const u = JSON.parse(btn.dataset.user);
-      openEditUser(u);
+      const u = membersCache.find(x => x._id === btn.dataset.id);
+      if (u) openEditUser(u);
     });
   });
   document.querySelectorAll('.btn-action.points').forEach(btn => {
     btn.addEventListener('click', () => {
-      const u = JSON.parse(btn.dataset.user);
-      openPointsModal(u);
+      const u = membersCache.find(x => x._id === btn.dataset.id);
+      if (u) openPointsModal(u);
     });
   });
   document.querySelectorAll('.btn-action.delete').forEach(btn => {
@@ -1680,6 +1873,217 @@ function bindMemberActions() {
   });
 }
 
+/* ── MEMBER DIRECTORY (for author / project-member selects) ───────── */
+async function loadMemberDirectory() {
+  if (memberDirectory.length) return memberDirectory;
+  try {
+    const data = await api('GET', '/api/admin/users?status=all&limit=200');
+    // Per product decision: all members including admins, excluding
+    // still-pending applicants (they aren't real members yet).
+    memberDirectory = (data.users || []).filter(u => u.status !== 'pending');
+  } catch (err) {
+    memberDirectory = [];
+  }
+  return memberDirectory;
+}
+
+/** Populate a <select> with the member directory. value = member _id. */
+function populateMemberSelect(selectEl, { placeholder } = {}) {
+  if (!selectEl) return;
+  const opts = memberDirectory
+    .map(m => `<option value="${esc(m._id)}">${esc(m.name)}${m.role === 'admin' ? ' (Admin)' : ''}</option>`)
+    .join('');
+  selectEl.innerHTML = (placeholder ? `<option value="">${esc(placeholder)}</option>` : '') + opts;
+}
+
+/* ── IMAGE UPLOAD WIDGET (reused by post / project / member-avatar) ── */
+/**
+ * Wires a "photo upload" widget: a button that opens a hidden file
+ * input, a preview <img>, and a hidden text input that holds the
+ * resulting URL once the upload completes. Uploads immediately on
+ * file selection (same UX as the existing profile avatar uploader).
+ */
+function initImageUpload({ btnId, fileInputId, previewId, placeholderId, hiddenUrlId, statusId }) {
+  const btn         = document.getElementById(btnId);
+  const fileInput   = document.getElementById(fileInputId);
+  const preview     = document.getElementById(previewId);
+  const placeholder = document.getElementById(placeholderId);
+  const hiddenUrl    = document.getElementById(hiddenUrlId);
+  const status       = document.getElementById(statusId);
+
+  btn.addEventListener('click', () => fileInput.click());
+
+  fileInput.addEventListener('change', async () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+
+    if (!IMG_ALLOWED_TYPES.includes(file.type)) {
+      toast('الصور المسموحة فقط: JPG, PNG, WebP', 'error');
+      fileInput.value = '';
+      return;
+    }
+    if (file.size > IMG_MAX_SIZE_BYTES) {
+      toast(`يجب ان يكون حجم الصورة اقل من ${IMG_MAX_SIZE_MB}MB`, 'error');
+      fileInput.value = '';
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = e => {
+      preview.src = e.target.result;
+      preview.style.display = 'block';
+      if (placeholder) placeholder.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+
+    if (status) { status.textContent = 'جارِ رفع الصورة...'; status.style.color = 'var(--text-muted)'; }
+
+    try {
+      const fd = new FormData();
+      fd.append('image', file);
+      const token = localStorage.getItem(TOKEN_KEY);
+      const res = await fetch(`${API_BASE}/api/admin/uploads/image`, {
+        method:  'POST',
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        body:    fd
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.url) throw new Error(data.message || 'فشل رفع الصورة');
+
+      hiddenUrl.value = data.url;
+      if (status) { status.textContent = 'تم رفع الصورة بنجاح'; status.style.color = 'var(--success)'; }
+    } catch (err) {
+      if (status) { status.textContent = err.message || 'فشل رفع الصورة'; status.style.color = 'var(--error)'; }
+      toast(err.message || 'فشل رفع الصورة', 'error');
+    } finally {
+      fileInput.value = '';
+    }
+  });
+}
+
+/** Reset/populate an image-upload widget when a modal opens. */
+function resetImageUpload({ previewId, placeholderId, hiddenUrlId, statusId }, existingUrl) {
+  const preview     = document.getElementById(previewId);
+  const placeholder = document.getElementById(placeholderId);
+  const hiddenUrl    = document.getElementById(hiddenUrlId);
+  const status       = document.getElementById(statusId);
+
+  const safe = safeImgUrl(existingUrl);
+  hiddenUrl.value = safe || '';
+  if (status) status.textContent = '';
+
+  if (safe) {
+    preview.src = safe;
+    preview.style.display = 'block';
+    if (placeholder) placeholder.style.display = 'none';
+  } else {
+    preview.removeAttribute('src');
+    preview.style.display = 'none';
+    if (placeholder) placeholder.style.display = 'flex';
+  }
+}
+
+// Wire all three image widgets once — the form elements are static, only
+// their values get reset/repopulated each time a modal opens.
+initImageUpload({
+  btnId: 'post-image-btn', fileInputId: 'post-image-file',
+  previewId: 'post-image-preview', placeholderId: 'post-image-placeholder',
+  hiddenUrlId: 'post-image', statusId: 'post-image-status'
+});
+initImageUpload({
+  btnId: 'proj-image-btn', fileInputId: 'proj-image-file',
+  previewId: 'proj-image-preview', placeholderId: 'proj-image-placeholder',
+  hiddenUrlId: 'proj-cover', statusId: 'proj-image-status'
+});
+initImageUpload({
+  btnId: 'eu-avatar-btn', fileInputId: 'eu-avatar-file',
+  previewId: 'eu-avatar-preview', placeholderId: 'eu-avatar-placeholder',
+  hiddenUrlId: 'eu-avatar', statusId: 'eu-avatar-status'
+});
+
+/* ── PROJECT MEMBERS PICKER ────────────────────────────────────────── */
+function renderProjectMembersChips() {
+  const wrap = document.getElementById('proj-members-list');
+  wrap.innerHTML = projectMembersSelected.length
+    ? projectMembersSelected.map(m => `
+        <span class="badge-chip color-blue">
+          ${esc(m.name)}
+          <span class="badge-chip-remove" data-remove-project-member="${esc(m._id)}" title="إزالة">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </span>
+        </span>`).join('')
+    : '<span style="font-size:.78rem;color:var(--text-muted);">لم يتم اضافة اعضاء بعد</span>';
+
+  wrap.querySelectorAll('[data-remove-project-member]').forEach(el => {
+    el.addEventListener('click', () => {
+      const id = el.dataset.removeProjectMember;
+      projectMembersSelected = projectMembersSelected.filter(m => m._id !== id);
+      renderProjectMembersChips();
+    });
+  });
+}
+
+document.getElementById('btn-add-project-member').addEventListener('click', () => {
+  const select = document.getElementById('proj-member-select');
+  const id = select.value;
+  if (!id) return;
+  if (projectMembersSelected.some(m => m._id === id)) { toast('هذا العضو مضاف بالفعل', 'info'); return; }
+  const member = memberDirectory.find(m => m._id === id);
+  if (!member) return;
+  projectMembersSelected.push({ _id: member._id, name: member.name });
+  renderProjectMembersChips();
+});
+
+/* ── SKILLS PICKER (member edit modal) ─────────────────────────────── */
+function renderSkillsPicker() {
+  const picker = document.getElementById('eu-skills-picker');
+  picker.innerHTML = Object.keys(SKILL_CATALOG).map(group => `
+    <div class="skills-picker-group">
+      <div class="skills-picker-group-title">${esc(group)}</div>
+      <div class="skills-picker-options">
+        ${SKILL_CATALOG[group].map(skill => `
+          <span class="pill-option ${euSkillsSelected.includes(skill) ? 'selected' : ''}" data-skill="${esc(skill)}">${esc(skill)}</span>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+
+  picker.querySelectorAll('[data-skill]').forEach(el => {
+    el.addEventListener('click', () => {
+      const skill = el.dataset.skill;
+      if (euSkillsSelected.includes(skill)) {
+        euSkillsSelected = euSkillsSelected.filter(s => s !== skill);
+      } else {
+        euSkillsSelected.push(skill);
+      }
+      renderSkillsPicker();
+      renderSkillsChips();
+    });
+  });
+}
+
+function renderSkillsChips() {
+  const wrap = document.getElementById('eu-skills-chips');
+  wrap.innerHTML = euSkillsSelected.length
+    ? euSkillsSelected.map(s => `
+      <span class="badge-chip color-blue">${esc(s)}
+        <span class="badge-chip-remove" data-remove-skill="${esc(s)}" title="إزالة">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </span>
+      </span>`).join('')
+    : '<span style="font-size:.78rem;color:var(--text-muted);">لم يتم اختيار مهارات بعد</span>';
+
+  wrap.querySelectorAll('[data-remove-skill]').forEach(el => {
+    el.addEventListener('click', () => {
+      const skill = el.dataset.removeSkill;
+      euSkillsSelected = euSkillsSelected.filter(s => s !== skill);
+      renderSkillsPicker();
+      renderSkillsChips();
+    });
+  });
+}
+
+/* ── EDIT USER MODAL ───────────────────────────────────────────────── */
 function openEditUser(u) {
   document.getElementById('eu-id').value        = u._id;
   document.getElementById('eu-name').value      = u.name || '';
@@ -1687,6 +2091,28 @@ function openEditUser(u) {
   document.getElementById('eu-role').value      = u.role || 'member';
   document.getElementById('eu-order').value     = u.displayOrder || 999;
   document.getElementById('eu-role-tag').value  = u.roleTag || '';
+
+  document.getElementById('eu-password').value = '';
+  document.getElementById('eu-password-confirm').value = '';
+  const pwStatus = document.getElementById('eu-password-status');
+  pwStatus.textContent = '';
+
+  const socials = u.socials || {};
+  document.getElementById('eu-social-linkedin').value  = socials.linkedin  || '';
+  document.getElementById('eu-social-twitter').value   = socials.twitter   || '';
+  document.getElementById('eu-social-github').value    = socials.github    || '';
+  document.getElementById('eu-social-dribbble').value  = socials.dribbble  || '';
+  document.getElementById('eu-social-portfolio').value = socials.portfolio || '';
+
+  resetImageUpload({
+    previewId: 'eu-avatar-preview', placeholderId: 'eu-avatar-placeholder',
+    hiddenUrlId: 'eu-avatar', statusId: 'eu-avatar-status'
+  }, u.avatar || '');
+
+  euSkillsSelected = Array.isArray(u.skills) ? u.skills.filter(s => typeof s === 'string') : [];
+  renderSkillsPicker();
+  renderSkillsChips();
+
   openModal('modal-edit-user');
 }
 
@@ -1696,21 +2122,56 @@ document.getElementById('btn-save-user').addEventListener('click', async () => {
   const role     = document.getElementById('eu-role').value;
   const order    = parseInt(document.getElementById('eu-order').value) || 999;
   const roleTag  = document.getElementById('eu-role-tag').value.trim().slice(0, 60);
+  const avatar   = document.getElementById('eu-avatar').value.trim();
+
+  const socials = {
+    linkedin:  safeUrl(document.getElementById('eu-social-linkedin').value.trim()),
+    twitter:   safeUrl(document.getElementById('eu-social-twitter').value.trim()),
+    github:    safeUrl(document.getElementById('eu-social-github').value.trim()),
+    dribbble:  safeUrl(document.getElementById('eu-social-dribbble').value.trim()),
+    portfolio: safeUrl(document.getElementById('eu-social-portfolio').value.trim())
+  };
+
+  const newPassword     = document.getElementById('eu-password').value;
+  const confirmPassword = document.getElementById('eu-password-confirm').value;
+  const pwStatus = document.getElementById('eu-password-status');
+  pwStatus.textContent = '';
+
+  if (newPassword || confirmPassword) {
+    if (newPassword.length < 8) {
+      pwStatus.textContent = 'كلمة المرور يجب ان تكون 8 احرف على الاقل';
+      pwStatus.style.color = 'var(--error)';
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      pwStatus.textContent = 'كلمتا المرور غير متطابقتين';
+      pwStatus.style.color = 'var(--error)';
+      return;
+    }
+  }
+
   try {
-    // Team profile update
-    await api('PATCH', `/api/admin/users/${id}/team-profile`, { teamRole, roleTag, displayOrder: order });
-    // Role update (separate endpoint)
+    await api('PATCH', `/api/admin/users/${id}/team-profile`, {
+      teamRole, roleTag, displayOrder: order,
+      avatar, socials, skills: euSkillsSelected
+    });
+
     const storedUser = JSON.parse(localStorage.getItem(USER_KEY) || '{}');
     if (id !== storedUser.id) {
       await api('PATCH', `/api/admin/users/${id}/role`, { role });
     }
+
+    if (newPassword) {
+      await api('PATCH', `/api/admin/users/${id}/password`, { newPassword });
+    }
+
     closeModal('modal-edit-user');
     toast('تم حفظ التغييرات', 'success');
     renderMembers();
   } catch (err) { toast(err.message, 'error'); }
 });
 
-/* ── BADGE CATALOG ─────────────────────────────────── */
+/* ── BADGE CATALOG (multi-select grant) ─────────────────────────────── */
 const BADGE_ICONS = {
   project: '<path d="M2 9.5 12 4l10 5.5-10 5.5L2 9.5z"/><path d="M2 9.5V17l10 5.5L22 17V9.5"/>',
   pen:     '<path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/>',
@@ -1732,6 +2193,9 @@ async function loadBadgeCatalog() {
   return badgeCatalog;
 }
 
+const BADGE_COLOR_CLASS = { green: 'color-green', blue: 'color-blue', purple: 'color-purple', gold: 'color-gold' };
+function badgeColorClass(c) { return BADGE_COLOR_CLASS[c] || 'color-gold'; }
+
 function badgeChipHtml(b, removable, userId) {
   const icon = BADGE_ICONS[b.icon] || BADGE_ICONS.star;
   const remove = removable
@@ -1739,7 +2203,7 @@ function badgeChipHtml(b, removable, userId) {
          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
        </span>`
     : '';
-  return `<span class="badge-chip color-${esc(b.color||'gold')}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${icon}</svg>${esc(b.name)}${remove}</span>`;
+  return `<span class="badge-chip ${badgeColorClass(b.color)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${icon}</svg>${esc(b.name)}${remove}</span>`;
 }
 
 function renderCurrentBadges(user) {
@@ -1759,24 +2223,47 @@ function renderCurrentBadges(user) {
   });
 }
 
-function updateBadgePreview() {
-  const select = document.getElementById('badge-catalog-select');
-  const preview = document.getElementById('badge-preview');
-  const chosen = badgeCatalog.find(b => b.id === select.value);
-  if (!chosen) { preview.innerHTML = ''; return; }
-  preview.outerHTML = `<div class="badge-chip color-${esc(chosen.color)}" id="badge-preview" style="display:inline-flex;margin-top:6px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${BADGE_ICONS[chosen.icon]||BADGE_ICONS.star}</svg>${esc(chosen.name)} — ${esc(chosen.desc)}</div>`;
-}
+// FIX/FEATURE: was a single <select> + one "grant" call per badge.
+// Now a toggle-pill picker lets the admin select several badges and
+// grant them all in one click.
+function renderBadgeCatalogPicker() {
+  const wrap = document.getElementById('badge-catalog-picker');
+  wrap.innerHTML = badgeCatalog.length
+    ? badgeCatalog.map(b => `
+      <span class="pill-option ${badgeSelectedToGrant.includes(b.id) ? 'selected' : ''}" data-badge-id="${esc(b.id)}" title="${esc(b.desc||'')}">
+        ${esc(b.name)}
+      </span>`).join('')
+    : '<span style="font-size:.78rem;color:var(--text-muted);">لا توجد انجازات في الكتالوج</span>';
 
-document.getElementById('badge-catalog-select').addEventListener('change', updateBadgePreview);
+  wrap.querySelectorAll('[data-badge-id]').forEach(el => {
+    el.addEventListener('click', () => {
+      const id = el.dataset.badgeId;
+      if (badgeSelectedToGrant.includes(id)) {
+        badgeSelectedToGrant = badgeSelectedToGrant.filter(x => x !== id);
+      } else {
+        badgeSelectedToGrant.push(id);
+      }
+      renderBadgeCatalogPicker();
+    });
+  });
+}
 
 document.getElementById('btn-add-badge').addEventListener('click', async () => {
   const userId = document.getElementById('pts-user-id').value;
-  const badgeId = document.getElementById('badge-catalog-select').value;
-  if (!badgeId) return;
+  if (!badgeSelectedToGrant.length) { toast('اختر انجازاً واحداً على الاقل', 'info'); return; }
   try {
-    const res = await api('POST', `/api/admin/users/${userId}/badges`, { badgeId });
-    renderCurrentBadges(res.user);
-    toast('تم منح الإنجاز بنجاح', 'success');
+    // Granted one-by-one against the existing single-badge endpoint so no
+    // backend change is required for this to work today. See the closing
+    // notes for an optional bulk endpoint if you'd rather do this as one
+    // atomic request instead.
+    let lastRes = null;
+    for (const badgeId of badgeSelectedToGrant) {
+      lastRes = await api('POST', `/api/admin/users/${userId}/badges`, { badgeId });
+    }
+    if (lastRes) renderCurrentBadges(lastRes.user);
+    badgeSelectedToGrant = [];
+    renderBadgeCatalogPicker();
+    toast('تم منح الانجازات بنجاح', 'success');
   } catch (err) { toast(err.message, 'error'); }
 });
 
@@ -1800,10 +2287,9 @@ async function openPointsModal(u) {
   document.getElementById('pts-current').value   = u.points || 0;
   document.getElementById('pts-add').value       = '';
 
-  const catalog = await loadBadgeCatalog();
-  const select  = document.getElementById('badge-catalog-select');
-  select.innerHTML = catalog.map(b => `<option value="${esc(b.id)}">${esc(b.name)}</option>`).join('');
-  updateBadgePreview();
+  await loadBadgeCatalog();
+  badgeSelectedToGrant = [];
+  renderBadgeCatalogPicker();
 
   renderCurrentBadges(u);
   openModal('modal-points');
@@ -1814,10 +2300,12 @@ async function renderPosts() {
   try {
     const data  = await api('GET', '/api/posts');
     const posts = Array.isArray(data) ? data : [];
+    postsCache = posts;
+
     document.getElementById('content-area').innerHTML = `
       <div class="section-header">
         <div><div class="section-title">المقالات</div><div class="section-sub">${posts.length} مقال</div></div>
-        <button class="btn-primary" onclick="openAddPost()">
+        <button class="btn-primary" id="btn-add-post">
           <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           اضافة مقال
         </button>
@@ -1825,64 +2313,116 @@ async function renderPosts() {
       <div class="cards-grid">
         ${posts.length === 0
           ? `<div class="empty-state" style="grid-column:1/-1"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg><p>لا توجد مقالات بعد</p></div>`
-          : posts.map(p => `
+          : posts.map(p => {
+              const imgUrl = safeImgUrl(p.image);
+              return `
             <div class="content-card">
               ${p.featured ? `<div class="content-card-featured-tag"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>مميز</div>` : ''}
               <div class="content-card-img">
-                ${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy" />` :
+                ${imgUrl ? `<img src="${esc(imgUrl)}" alt="${esc(p.title)}" loading="lazy" />` :
                   `<div class="content-card-img-placeholder"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></div>`}
               </div>
               <div class="content-card-body">
                 <div class="content-card-title">${esc(p.title)}</div>
                 <div class="content-card-meta">${esc(p.author)} &middot; ${esc(p.category)} &middot; ${formatDate(p.date)}</div>
                 <div class="content-card-actions">
-                  <button class="btn-secondary" style="font-size:.75rem;padding:5px 10px;" onclick="openEditPost(${JSON.stringify(p).replace(/"/g,'&quot;')})">تعديل</button>
-                  <button class="btn-action delete" onclick="deletePost('${esc(p.id)}','${esc(p.title)}')" title="حذف"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
+                  <button class="btn-secondary" style="font-size:.75rem;padding:5px 10px;" data-action="edit-post" data-id="${esc(p.id||p._id)}">تعديل</button>
+                  <button class="btn-action delete" data-action="delete-post" data-id="${esc(p.id||p._id)}" data-name="${esc(p.title)}" title="حذف"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
                 </div>
               </div>
             </div>
-          `).join('')}
+          `;}).join('')}
       </div>
     `;
+
+    document.getElementById('btn-add-post')?.addEventListener('click', openAddPost);
+    bindPostCardActions();
   } catch (err) { showError(err.message); }
 }
 
-function openAddPost() {
+// FIX: previously rendered as onclick="openEditPost(${JSON.stringify(p).replace(/"/g,'&quot;')})"
+// and onclick="deletePost('${esc(p.id)}','${esc(p.title)}')" — both are exploitable via HTML-entity
+// smuggling, because the browser HTML-decodes the attribute *before* treating it as JS, so a title
+// containing the literal text "&quot;" (or an esc()'d "&#x27;") decodes back into a real quote
+// character that breaks out of the inline handler's JS string/object literal. data-id +
+// addEventListener + an in-memory cache avoids ever serializing untrusted data into executable code.
+function bindPostCardActions() {
+  document.querySelectorAll('[data-action="edit-post"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const p = postsCache.find(x => String(x.id || x._id) === btn.dataset.id);
+      if (p) openEditPost(p);
+    });
+  });
+  document.querySelectorAll('[data-action="delete-post"]').forEach(btn => {
+    btn.addEventListener('click', () => deletePost(btn.dataset.id, btn.dataset.name));
+  });
+}
+
+async function openAddPost() {
   document.getElementById('modal-post-title').textContent = 'اضافة مقال';
   document.getElementById('post-edit-id').value  = '';
   document.getElementById('post-title').value    = '';
-  document.getElementById('post-author').value   = '';
-  document.getElementById('post-category').value = '';
   document.getElementById('post-excerpt').value  = '';
   document.getElementById('post-content').value  = '';
-  document.getElementById('post-image').value    = '';
   document.getElementById('post-readtime').value = '5';
   document.getElementById('post-tags').value     = '';
   document.getElementById('post-featured').checked = false;
+  document.getElementById('post-category').value = '';
+
+  await loadMemberDirectory();
+  populateMemberSelect(document.getElementById('post-author'), { placeholder: 'اختر الكاتب' });
+
+  resetImageUpload({
+    previewId: 'post-image-preview', placeholderId: 'post-image-placeholder',
+    hiddenUrlId: 'post-image', statusId: 'post-image-status'
+  }, '');
+
   openModal('modal-post');
 }
 
-function openEditPost(p) {
+async function openEditPost(p) {
   document.getElementById('modal-post-title').textContent = 'تعديل مقال';
   document.getElementById('post-edit-id').value  = p.id || p._id || '';
   document.getElementById('post-title').value    = p.title    || '';
-  document.getElementById('post-author').value   = p.author   || '';
-  document.getElementById('post-category').value = p.category || '';
   document.getElementById('post-excerpt').value  = p.excerpt  || '';
   document.getElementById('post-content').value  = p.content  || '';
-  document.getElementById('post-image').value    = p.image    || '';
   document.getElementById('post-readtime').value = p.readTime || 5;
   document.getElementById('post-tags').value     = (p.tags||[]).join(', ');
   document.getElementById('post-featured').checked = !!p.featured;
+  document.getElementById('post-category').value = POST_CATEGORIES.includes(p.category) ? p.category : '';
+
+  await loadMemberDirectory();
+  const authorSelect = document.getElementById('post-author');
+  populateMemberSelect(authorSelect, { placeholder: 'اختر الكاتب' });
+  if (p.authorId) {
+    authorSelect.value = p.authorId;
+  } else if (p.author) {
+    const match = memberDirectory.find(m => m.name === p.author);
+    authorSelect.value = match ? match._id : '';
+  } else {
+    authorSelect.value = '';
+  }
+
+  resetImageUpload({
+    previewId: 'post-image-preview', placeholderId: 'post-image-placeholder',
+    hiddenUrlId: 'post-image', statusId: 'post-image-status'
+  }, p.image || '');
+
   openModal('modal-post');
 }
 
 document.getElementById('btn-save-post').addEventListener('click', async () => {
   const id = document.getElementById('post-edit-id').value;
+  const authorSelect = document.getElementById('post-author');
+  const authorId   = authorSelect.value;
+  const authorOpt  = authorSelect.selectedOptions[0];
+  const authorName = authorOpt ? authorOpt.textContent.replace(/\s*\(Admin\)$/, '') : '';
+
   const payload = {
     title:    document.getElementById('post-title').value.trim(),
-    author:   document.getElementById('post-author').value.trim(),
-    category: document.getElementById('post-category').value.trim(),
+    authorId: authorId,
+    author:   authorName,
+    category: document.getElementById('post-category').value,
     excerpt:  document.getElementById('post-excerpt').value.trim(),
     content:  document.getElementById('post-content').value.trim(),
     image:    document.getElementById('post-image').value.trim(),
@@ -1891,8 +2431,8 @@ document.getElementById('btn-save-post').addEventListener('click', async () => {
     featured: document.getElementById('post-featured').checked
   };
 
-  if (!payload.title || !payload.excerpt || !payload.content || !payload.category || !payload.author) {
-    toast('يرجى تعبئة كل الحقول المطلوبة', 'error');
+  if (!payload.title || !payload.excerpt || !payload.content || !payload.category || !authorId) {
+    toast('يرجى تعبئة كل الحقول المطلوبة (بما فيها الكاتب والتصنيف)', 'error');
     return;
   }
 
@@ -1924,10 +2464,12 @@ async function renderProjects() {
   try {
     const data     = await api('GET', '/api/projects?limit=100');
     const projects = data.data || [];
+    projectsCache = projects;
+
     document.getElementById('content-area').innerHTML = `
       <div class="section-header">
         <div><div class="section-title">المشاريع</div><div class="section-sub">${projects.length} مشروع</div></div>
-        <button class="btn-primary" onclick="openAddProject()">
+        <button class="btn-primary" id="btn-add-project">
           <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           اضافة مشروع
         </button>
@@ -1935,42 +2477,76 @@ async function renderProjects() {
       <div class="cards-grid">
         ${projects.length === 0
           ? `<div class="empty-state" style="grid-column:1/-1"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/></svg><p>لا توجد مشاريع بعد</p></div>`
-          : projects.map(p => `
+          : projects.map(p => {
+              const imgUrl = safeImgUrl(p.cover);
+              // Stays empty until the backend returns p.members — no
+              // frontend change needed once that field is populated.
+              const memberNames = Array.isArray(p.members) ? p.members.map(m => m.name).filter(Boolean) : [];
+              return `
             <div class="content-card">
               ${p.featured ? `<div class="content-card-featured-tag"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>مميز</div>` : ''}
               <div class="content-card-img">
-                ${p.cover ? `<img src="${esc(p.cover)}" alt="${esc(p.title)}" loading="lazy" />` :
+                ${imgUrl ? `<img src="${esc(imgUrl)}" alt="${esc(p.title)}" loading="lazy" />` :
                   `<div class="content-card-img-placeholder"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg></div>`}
               </div>
               <div class="content-card-body">
                 <div class="content-card-title">${esc(p.title)}</div>
                 <div class="content-card-meta">
-                  <span class="chip chip-${p.status}" style="margin-left:6px;">${esc(p.status_label||p.status)}</span>
+                  <span class="chip chip-${projectChipClass(p.status)}" style="margin-left:6px;">${esc(p.status_label||p.status)}</span>
                   ${esc(p.section||'')}
+                  ${memberNames.length ? ` &middot; ${esc(memberNames.join('، '))}` : ''}
                 </div>
                 <div class="content-card-actions">
-                  <button class="btn-secondary" style="font-size:.75rem;padding:5px 10px;" onclick="openEditProject(${JSON.stringify(p).replace(/"/g,'&quot;')})">تعديل</button>
-                  <button class="btn-action delete" onclick="deleteProject('${esc(p.id)}','${esc(p.title)}')" title="حذف"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
+                  <button class="btn-secondary" style="font-size:.75rem;padding:5px 10px;" data-action="edit-project" data-id="${esc(p.id||p._id)}">تعديل</button>
+                  <button class="btn-action delete" data-action="delete-project" data-id="${esc(p.id||p._id)}" data-name="${esc(p.title)}" title="حذف"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
                 </div>
               </div>
             </div>
-          `).join('')}
+          `;}).join('')}
       </div>
     `;
+
+    document.getElementById('btn-add-project')?.addEventListener('click', openAddProject);
+    bindProjectCardActions();
   } catch (err) { showError(err.message); }
 }
 
-function openAddProject() {
+// Same fix as bindPostCardActions(): data-id + cache lookup instead of
+// serializing the full record into an onclick attribute.
+function bindProjectCardActions() {
+  document.querySelectorAll('[data-action="edit-project"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const p = projectsCache.find(x => String(x.id || x._id) === btn.dataset.id);
+      if (p) openEditProject(p);
+    });
+  });
+  document.querySelectorAll('[data-action="delete-project"]').forEach(btn => {
+    btn.addEventListener('click', () => deleteProject(btn.dataset.id, btn.dataset.name));
+  });
+}
+
+async function openAddProject() {
   document.getElementById('modal-project-title').textContent = 'اضافة مشروع';
   ['proj-edit-id','proj-title','proj-section','proj-desc','proj-github','proj-demo','proj-tech'].forEach(id => {
     document.getElementById(id).value = '';
   });
   document.getElementById('proj-status').value = 'active';
   document.getElementById('proj-featured').checked = false;
+
+  await loadMemberDirectory();
+  populateMemberSelect(document.getElementById('proj-member-select'), { placeholder: 'اختر عضو' });
+  projectMembersSelected = [];
+  renderProjectMembersChips();
+
+  resetImageUpload({
+    previewId: 'proj-image-preview', placeholderId: 'proj-image-placeholder',
+    hiddenUrlId: 'proj-cover', statusId: 'proj-image-status'
+  }, '');
+
   openModal('modal-project');
 }
 
-function openEditProject(p) {
+async function openEditProject(p) {
   document.getElementById('modal-project-title').textContent = 'تعديل مشروع';
   document.getElementById('proj-edit-id').value = p.id || p._id || '';
   document.getElementById('proj-title').value   = p.title     || '';
@@ -1981,6 +2557,23 @@ function openEditProject(p) {
   document.getElementById('proj-demo').value    = p.demo      || '';
   document.getElementById('proj-tech').value    = (p.tech||[]).join(', ');
   document.getElementById('proj-featured').checked = !!p.featured;
+
+  await loadMemberDirectory();
+  populateMemberSelect(document.getElementById('proj-member-select'), { placeholder: 'اختر عضو' });
+
+  const rawExisting = Array.isArray(p.memberIds) ? p.memberIds
+    : (Array.isArray(p.members) ? p.members.map(m => (m && m._id) || m) : []);
+  projectMembersSelected = rawExisting
+    .map(id => memberDirectory.find(m => m._id === id))
+    .filter(Boolean)
+    .map(m => ({ _id: m._id, name: m.name }));
+  renderProjectMembersChips();
+
+  resetImageUpload({
+    previewId: 'proj-image-preview', placeholderId: 'proj-image-placeholder',
+    hiddenUrlId: 'proj-cover', statusId: 'proj-image-status'
+  }, p.cover || '');
+
   openModal('modal-project');
 }
 
@@ -1994,7 +2587,9 @@ document.getElementById('btn-save-project').addEventListener('click', async () =
     github:     document.getElementById('proj-github').value.trim(),
     demo:       document.getElementById('proj-demo').value.trim(),
     tech:       document.getElementById('proj-tech').value.split(',').map(t => t.trim()).filter(Boolean),
-    featured:   document.getElementById('proj-featured').checked
+    featured:   document.getElementById('proj-featured').checked,
+    cover:      document.getElementById('proj-cover').value.trim(),
+    memberIds:  projectMembersSelected.map(m => m._id)
   };
 
   if (!payload.title) {
@@ -2036,10 +2631,8 @@ function formatDate(d) {
 }
 
 function updatePendingBadge(n) {
-  // Sidebar badge
   const badge = document.getElementById('pending-badge');
   if (badge) { badge.textContent = n; badge.style.display = n > 0 ? 'inline-block' : 'none'; }
-  // Mobile bottom nav badge
   const mob = document.getElementById('mnav-badge');
   if (mob) { mob.textContent = n; mob.style.display = n > 0 ? '' : 'none'; }
 }
@@ -2049,7 +2642,7 @@ function showError(msg) {
     <div class="empty-state" style="padding:80px 24px;">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       <p style="color:var(--error);margin-top:8px;">${esc(msg)}</p>
-      <p style="font-size:.78rem;margin-top:6px;">تاكد ان السيرفر شغال على ${API_BASE}</p>
+      <p style="font-size:.78rem;margin-top:6px;">تاكد ان السيرفر شغال على ${esc(API_BASE)}</p>
     </div>`;
 }
 
