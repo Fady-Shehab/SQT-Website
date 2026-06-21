@@ -1,0 +1,11 @@
+export { HomePage } from "./Home";
+export { AuthPage } from "./Auth";
+export { TeamPage } from "./Team";
+export { ProjectsPage } from "./Projects";
+export { ProjectPage } from "./Project";
+export { BlogPage } from "./Blog";
+export { PostPage } from "./Post";
+export { HallOfFamePage } from "./HallOfFame";
+export { ProfilePage } from "./Profile";
+export { AdminPage } from "./Admin";
+export { NotFoundPage } from "./NotFound";
