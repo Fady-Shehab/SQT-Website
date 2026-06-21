@@ -265,6 +265,14 @@
     margin-right: var(--sidebar-w);
     flex: 1; display: flex; flex-direction: column;
     min-height: 100vh;
+    /* FIX: flex items default to min-width:auto, which stops a flex item
+       from ever shrinking narrower than its content's intrinsic width.
+       .main is the only in-flow flex child of #dashboard (.sidebar is
+       position:fixed, so it doesn't occupy flex space) — without this,
+       the table's min-width:460px (or anything else wide inside it)
+       pushes .main, and the whole page, wider than the viewport instead
+       of scrolling inside .table-wrap as intended. */
+    min-width: 0;
   }
 
   .top-header {
@@ -299,7 +307,7 @@
   [data-theme="light"] .icon-sun  { display: block; }
   [data-theme="light"] .icon-moon { display: none; }
 
-  .content-area { flex: 1; padding: 28px; }
+  .content-area { flex: 1; padding: 28px; min-width: 0; }
 
   .section-header {
     display: flex; align-items: center; justify-content: space-between;
@@ -1333,8 +1341,18 @@ function esc(str) {
 /** Validate a URL before using it as an <img src> — only allow http/https. */
 function safeImgUrl(url) {
   if (!url || typeof url !== 'string') return '';
+  // FIX: relative paths returned by the backend (e.g. "/uploads/images/x.jpg")
+  // must resolve against the API's own origin, not window.location.origin —
+  // admin.html is hosted on a different domain than the Railway API, so
+  // resolving against the page's own origin silently builds a URL on the
+  // WRONG domain (one that was never going to have the file), regardless
+  // of whether the upload actually succeeded server-side. This is what
+  // was causing every avatar/post/project image to 404.
+  const absolute = (url.startsWith('http://') || url.startsWith('https://'))
+    ? url
+    : `${API_BASE}${url.startsWith('/') ? '' : '/'}${url}`;
   try {
-    const u = new URL(url, window.location.origin);
+    const u = new URL(absolute);
     return (u.protocol === 'https:' || u.protocol === 'http:') ? u.href : '';
   } catch {
     return '';
