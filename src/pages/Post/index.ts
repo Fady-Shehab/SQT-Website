@@ -1,1 +1,1 @@
-export { default as PostPage } from './page';
+export { default as PostPage } from './Post';

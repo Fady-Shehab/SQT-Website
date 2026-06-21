@@ -1,1 +1,1 @@
-export { default as HallOfFamePage } from './page';
+export { default as HallOfFamePage } from './HallOfFame';

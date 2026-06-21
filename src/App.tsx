@@ -14,16 +14,16 @@ import {
   NotFoundPage,
 } from "@/pages";
 import { useEffect } from "react";
-// Import all CSS files
-import "@/css/index.css";
-import "@/css/auth.css";
-import "@/css/blog.css";
-import "@/css/hof.css";
-import "@/css/post.css";
-import "@/css/profile.css";
-import "@/css/project.css";
-import "@/css/projects.css";
-import "@/css/team.css";
+// Styles
+import "@/styles/global.css";
+import "@/pages/Auth/Auth.css";
+import "@/pages/Blog/Blog.css";
+import "@/pages/HallOfFame/HallOfFame.css";
+import "@/pages/Post/Post.css";
+import "@/pages/Profile/Profile.css";
+import "@/pages/Project/Project.css";
+import "@/pages/Projects/Projects.css";
+import "@/pages/Team/Team.css";
 
 // Track loaded scripts to prevent duplicate execution
 const loadedScripts = new Set<string>();

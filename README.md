@@ -31,8 +31,10 @@ Your app will be available at `http://localhost:5173` by default.
 | `yarn build` | Build for production |
 | `yarn preview` | Preview production build locally |
 | `yarn lint` | Run ESLint |
-| `yarn create:component <Name` | Create a new component |
+| `yarn create:component <Name>` | Create a new component |
 | `yarn create:page <Name>` | Create a new page |
+
+> Full command reference: [docs/commands.md](./docs/commands.md)
 
 ## Generating Components & Pages
 
@@ -68,12 +70,25 @@ src/
 ├── components/      # Reusable UI components
 │   ├── index.ts    # Barrel file (exports all components)
 │   ├── Navigation/
-│   └── Footer/
+│   ├── Footer/
+│   ├── Button/
+│   ├── Badge/
+│   ├── StatsCard/
+│   ├── SectionHeader/
+│   ├── ProjectCard/
+│   ├── ValueCard/
+│   ├── Avatar/
+│   ├── Breadcrumb/
+│   └── Reveal/
 ├── pages/          # Page components
 │   ├── index.ts    # Barrel file (exports all pages)
 │   ├── Home/
 │   ├── Auth/
 │   └── ...
+├── utils/          # Utility modules
+│   ├── api/        # HTTP client with retry logic
+│   ├── services/   # Business logic (auth, etc.)
+│   └── hooks/      # Custom React hooks
 ├── App.tsx        # Main app component with routing
 └── main.tsx       # Entry point with React
 public/
@@ -89,3 +104,6 @@ css/              # Global stylesheets (imported in App.tsx)
 - **Vite**: Fast bundler and dev server
 - **React Router DOM**: Client-side routing
 - **CSS**: All existing styles preserved
+
+## Documentation
+- [Commands Reference](./docs/commands.md) — full list of available scripts and scaffolding guide
