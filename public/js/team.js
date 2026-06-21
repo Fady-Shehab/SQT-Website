@@ -5,43 +5,11 @@ const API_BASE   = 'https://sqt-website-backend-production.up.railway.app/api';
 const API_ORIGIN = API_BASE.replace(/\/api\/?$/, '');
 
 /* ═══════════════════════════════════════════════════════════════
-    0.3 RETRY FETCH — handles Railway cold starts (~20s spin-up)
-    ═══════════════════════════════════════════════════════════════ */
-async function fetchWithRetry(url, options = {}) {
-  const maxRetries = options.maxRetries ?? 5;
-  const baseDelay  = options.baseDelay ?? 2000;
-  const maxDelay   = options.maxDelay ?? 10000;
-  let lastError;
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      const res = await fetch(url);
-      if (res.ok) return res;
-      if (res.status >= 500 && res.status < 600) {
-        lastError = new Error(`HTTP ${res.status}`);
-        if (attempt < maxRetries) {
-          const delay = Math.min(baseDelay * Math.pow(2, attempt - 1), maxDelay);
-          await new Promise(r => setTimeout(r, delay));
-          continue;
-        }
-      }
-      return res;
-    } catch (err) {
-      lastError = err;
-      if (attempt < maxRetries) {
-        const delay = Math.min(baseDelay * Math.pow(2, attempt - 1), maxDelay);
-        await new Promise(r => setTimeout(r, delay));
-      }
-    }
-  }
-  throw lastError;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-    0.5 SECURITY UTILITIES
-    Rule: ZERO API data passes through innerHTML in this file.
-    Every dynamic value is set via textContent / setAttribute /
-    createElement so the browser can never interpret it as markup.
-    ═══════════════════════════════════════════════════════════════ */
+   0.5 SECURITY UTILITIES
+   Rule: ZERO API data passes through innerHTML in this file.
+   Every dynamic value is set via textContent / setAttribute /
+   createElement so the browser can never interpret it as markup.
+   ═══════════════════════════════════════════════════════════════ */
 
 /** Set text content safely — XSS-safe by construction. */
 function setText(el, value) {
@@ -68,30 +36,36 @@ function safeUrl(url) {
 }
 
 /* ─── 1. THEME TOGGLE ─────────────────────── */
-const themeToggle = document.getElementById('themeToggle');
-const html = document.documentElement;
+if (!document.documentElement.hasAttribute('data-sqt-global')) {
+  document.documentElement.setAttribute('data-sqt-global', '');
+  const themeToggle = document.getElementById('themeToggle');
+  const html = document.documentElement;
 
-function applyTheme(t) {
-  html.setAttribute('data-theme', t);
-  localStorage.setItem('sharq-theme', t);
+  function applyTheme(t) {
+    html.setAttribute('data-theme', t);
+    localStorage.setItem('sharq-theme', t);
+  }
+
+  themeToggle.addEventListener('click', () => {
+    const ct = html.getAttribute('data-theme') || 'dark';
+    applyTheme(ct === 'dark' ? 'light' : 'dark');
+  });
+
+  (function() {
+    const st = localStorage.getItem('sharq-theme') || 'dark';
+    applyTheme(st);
+  })();
 }
-
-themeToggle.addEventListener('click', () => {
-  const ct = html.getAttribute('data-theme') || 'dark';
-  applyTheme(ct === 'dark' ? 'light' : 'dark');
-});
-
-(function() {
-  const st = localStorage.getItem('sharq-theme') || 'dark';
-  applyTheme(st);
-})();
 
 /* ─── 2. NAVBAR SCROLL ────────────────────── */
 const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
+if (navbar && !navbar.hasAttribute('data-sqt-scroll')) {
+  navbar.setAttribute('data-sqt-scroll', '');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
   navbar.classList.toggle('scrolled', window.scrollY > 40);
-}, { passive: true });
-navbar.classList.toggle('scrolled', window.scrollY > 40);
+}
 
 /* ─── 3. SCROLL REVEAL ────────────────────── */
 const revealObs = new IntersectionObserver(
@@ -368,7 +342,7 @@ async function loadTeam() {
   const status = document.getElementById('members-status');
 
   try {
-    const res = await fetchWithRetry(`${API_BASE}/team`);
+    const res = await fetch(`${API_BASE}/team`);
     if (!res.ok) throw new Error('Request failed');
 
     const data = await res.json();
@@ -424,8 +398,5 @@ function updateMobileNav() {
 }
 updateMobileNav();
 
-/* ─── 7. PAGE FADE-IN ────────────────────── */
-document.body.style.opacity = '0';
-document.body.style.transition = 'opacity 0.38s ease';
-window.addEventListener('load', () => { document.body.style.opacity = '1'; });
+
 
