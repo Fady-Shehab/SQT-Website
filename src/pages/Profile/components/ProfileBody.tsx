@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Icon } from "@/components";
+import { t } from "@/utils/strings";
 
 export default function ProfileBody() {
   return (
@@ -8,37 +9,37 @@ export default function ProfileBody() {
         <div className="profile-grid">
           <aside className="profile-side">
             <div className="profile-card">
-              <h3>الشارات التي كسبتها</h3>
+              <h3>{t('profileBadgesTitle')}</h3>
               <div className="profile-badges">
-                <div className="mini-badge" title="نجم الشهر">
+                <div className="mini-badge" title={t('profileBadgeStarTitle')}>
                   <div className="mini-badge-icon"><Icon name="star" /></div>
-                  <div className="mini-badge-label">نجم الشهر</div>
+                  <div className="mini-badge-label">{t('profileBadgeStarLabel')}</div>
                 </div>
-                <div className="mini-badge" title="سريع الخطى">
+                <div className="mini-badge" title={t('profileBadgeFastTitle')}>
                   <div className="mini-badge-icon" style={{ background:'linear-gradient(135deg,#dbeafe,#bfdbfe)' }}><Icon name="code-brackets" /></div>
-                  <div className="mini-badge-label">سريع الخطى</div>
+                  <div className="mini-badge-label">{t('profileBadgeFastLabel')}</div>
                 </div>
-                <div className="mini-badge" title="رفيق الفريق">
+                <div className="mini-badge" title={t('profileBadgeTeamTitle')}>
                   <div className="mini-badge-icon" style={{ background:'linear-gradient(135deg,#dcfce7,#86efac)' }}><Icon name="users" /></div>
-                  <div className="mini-badge-label">رفيق الفريق</div>
+                  <div className="mini-badge-label">{t('profileBadgeTeamLabel')}</div>
                 </div>
               </div>
             </div>
 
             <div className="profile-card">
-              <h3>نقاطك حسب النشاط</h3>
+              <h3>{t('profileChartTitle')}</h3>
               <div className="profile-chart">
                 <div className="chart-bar">
                   <div className="chart-bar-inner" style={{ width:'70%' }}></div>
-                  <div className="chart-label">مهام مكتملة</div>
+                  <div className="chart-label">{t('profileChartTasks')}</div>
                 </div>
                 <div className="chart-bar">
                   <div className="chart-bar-inner" style={{ width:'60%', background:'linear-gradient(90deg,var(--emerald),var(--emerald-soft))' }}></div>
-                  <div className="chart-label">مبادرات</div>
+                  <div className="chart-label">{t('profileChartInitiatives')}</div>
                 </div>
                 <div className="chart-bar">
                   <div className="chart-bar-inner" style={{ width:'40%', background:'linear-gradient(90deg,#60a5fa,#dbeafe)' }}></div>
-                  <div className="chart-label">مساعدة</div>
+                  <div className="chart-label">{t('profileChartHelp')}</div>
                 </div>
               </div>
             </div>
@@ -47,7 +48,7 @@ export default function ProfileBody() {
           <div className="profile-main">
             <div className="profile-card">
               <div className="card-header">
-                <h3>آخر النشاط</h3>
+                <h3>{t('profileActivityTitle')}</h3>
               </div>
               <div className="activity-list">
                 <div className="activity-row">
@@ -55,8 +56,8 @@ export default function ProfileBody() {
                     <Icon name="check" />
                   </div>
                   <div className="activity-text">
-                    <strong>أكملت مهمة "تطوير واجهة نقاط"</strong>
-                    <div>قبل ٣ أيام · +120 نقطة</div>
+                    <strong>{t('profileActivity1Text')}</strong>
+                    <div>{t('profileActivity1Meta')}</div>
                   </div>
                 </div>
                 <div className="activity-row">
@@ -64,8 +65,8 @@ export default function ProfileBody() {
                     <Icon name="star" />
                   </div>
                   <div className="activity-text">
-                    <strong>حصلت على شارة "نجم الشهر"</strong>
-                    <div>قبل أسبوع</div>
+                    <strong>{t('profileActivity2Text')}</strong>
+                    <div>{t('profileActivity2Meta')}</div>
                   </div>
                 </div>
                 <div className="activity-row">
@@ -73,8 +74,8 @@ export default function ProfileBody() {
                     <Icon name="users" />
                   </div>
                   <div className="activity-text">
-                    <strong>ساعدت سارة في مشروع الـ AI</strong>
-                    <div>قبل أسبوعين · +50 نقطة</div>
+                    <strong>{t('profileActivity3Text')}</strong>
+                    <div>{t('profileActivity3Meta')}</div>
                   </div>
                 </div>
               </div>
@@ -82,7 +83,7 @@ export default function ProfileBody() {
 
             <div className="profile-card">
               <div className="card-header">
-                <h3>المشاريع التي شاركت فيها</h3>
+                <h3>{t('profileProjectsTitle')}</h3>
               </div>
               <div className="mini-projects">
                 <Link to="/project/1" className="mini-proj">
@@ -90,8 +91,8 @@ export default function ProfileBody() {
                     <Icon name="monitor" />
                   </div>
                   <div className="mini-proj-info">
-                    <div className="mini-proj-title">منصة إدارة شرق</div>
-                    <div className="mini-proj-role">Lead Dev</div>
+                    <div className="mini-proj-title">{t('profileProject1Title')}</div>
+                    <div className="mini-proj-role">{t('profileProject1Role')}</div>
                   </div>
                 </Link>
                 <Link to="/project/3" className="mini-proj">
@@ -99,8 +100,8 @@ export default function ProfileBody() {
                     <Icon name="file" />
                   </div>
                   <div className="mini-proj-info">
-                    <div className="mini-proj-title">تطبيق نقاط الفريق</div>
-                    <div className="mini-proj-role">Dev</div>
+                    <div className="mini-proj-title">{t('profileProject2Title')}</div>
+                    <div className="mini-proj-role">{t('profileProject2Role')}</div>
                   </div>
                 </Link>
               </div>

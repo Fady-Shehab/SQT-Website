@@ -78,6 +78,7 @@ const Button: React.FC<ButtonProps> = (props) => {
     endIcon,
     className = "",
     children,
+    as,
     ...rest
   } = props;
 
@@ -91,18 +92,18 @@ const Button: React.FC<ButtonProps> = (props) => {
     </>
   );
 
-  if (props.as === "a") {
-    const { as: _, startIcon: __, endIcon: ___, variant: ____, size: _____, ...anchorRest } = rest as ButtonAsLink & Record<string, unknown>;
+  if (as === "a") {
     return (
-      <a className={classes} {...anchorRest}>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      <a className={classes} {...(rest as any)}>
         {content}
       </a>
     );
   }
 
-  const { as: _, startIcon: __, endIcon: ___, variant: ____, size: _____, ...buttonRest } = rest as ButtonAsButton & Record<string, unknown>;
   return (
-    <button className={classes} {...buttonRest}>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    <button className={classes} {...(rest as any)}>
       {content}
     </button>
   );

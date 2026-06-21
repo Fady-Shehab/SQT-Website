@@ -1,4 +1,5 @@
 import { Icon } from "@/components";
+import { t } from "@/utils/strings";
 
 export default function BlogGrid() {
   return (
@@ -6,26 +7,26 @@ export default function BlogGrid() {
       <div className="container">
         <div className="blog-section-head">
           <h2 id="grid-h2" className="blog-section-title">
-            جميع المقالات
+            {t('blogGridAllTitle')}
           </h2>
-          <span className="post-count" id="postCount" aria-live="polite">٩ مقالات</span>
+          <span className="post-count" id="postCount" aria-live="polite">{t('blogGridPostCount')}</span>
         </div>
 
         <div className="posts-grid" id="postsGrid" role="list">
           <p id="postsStatus" style={{ gridColumn: '1 / -1', textAlign: 'center', color: 'var(--text-secondary)', padding: '40px 0' }}>
-            جارِ تحميل المقالات...
+            {t('blogGridLoading')}
           </p>
         </div>
 
         <div className="no-results" id="noResults" role="status" aria-live="polite" style={{ display: 'none' }}>
           <div className="no-results-icon"></div>
-          <p className="no-results-text">لا توجد مقالات تطابق بحثك أو التصنيف المختار.</p>
+          <p className="no-results-text">{t('blogGridNoResults')}</p>
         </div>
 
         <div className="load-more-wrap reveal">
-          <button className="btn-load-more" id="loadMore" aria-label="تحميل المزيد من المقالات">
-            <Icon name="chevron-down" />
-            تحميل المزيد
+            <button className="btn-load-more" id="loadMore" aria-label={t('blogGridLoadMoreAria')}>
+              <Icon name="chevron-down" />
+              {t('blogGridLoadMoreText')}
           </button>
         </div>
       </div>

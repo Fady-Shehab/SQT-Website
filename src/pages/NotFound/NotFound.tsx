@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { t } from "@/utils/strings";
 
 export default function NotFoundPage() {
   return (
@@ -12,9 +13,9 @@ export default function NotFoundPage() {
 
         <div className="not-found-wrap">
           <div className="not-found-code">404</div>
-          <h1>الصفحة غير موجودة</h1>
-          <p>ربما أُزيلت الصفحة، أو أن الرابط غير صحيح.</p>
-          <Link to="/" className="btn btn-gold" style={{ marginTop:'1.5rem' }}>العودة للرئيسية</Link>
+          <h1>{t('notFoundTitle')}</h1>
+          <p>{t('notFoundDesc')}</p>
+          <Link to="/" className="btn btn-gold" style={{ marginTop:'1.5rem' }}>{t('notFoundBackBtn')}</Link>
         </div>
       </section>
     </main>

@@ -1,3 +1,4 @@
+import { t } from "@/utils/strings";
 import { Icon } from "@/components";
 
 export default function ProjectHero() {
@@ -12,8 +13,8 @@ export default function ProjectHero() {
 
           <div className="reveal" id="phText">
             <div className="ph-status-row" id="statusRow">
-              <span className="badge badge-green skeleton" style={{ width:'60px', height:'22px', color:'transparent' }}>نشط</span>
-              <span className="badge badge-silver skeleton" style={{ width:'90px', height:'22px', color:'transparent' }}>القسم</span>
+              <span className="badge badge-green skeleton" style={{ width:'60px', height:'22px', color:'transparent' }}>{t('projectHeroStatusActive')}</span>
+              <span className="badge badge-silver skeleton" style={{ width:'90px', height:'22px', color:'transparent' }}>{t('projectHeroSection')}</span>
             </div>
 
             <h1 id="proj-title" className="ph-title">
@@ -25,7 +26,7 @@ export default function ProjectHero() {
               <span className="skeleton" style={{ display:'block', width:'90%', height:'1.2em', borderRadius:'6px' }}>‌</span>
             </p>
 
-            <div className="ph-tags" id="phTags" aria-label="التقنيات المستخدمة"></div>
+            <div className="ph-tags" id="phTags" aria-label={t('projectHeroTechAria')}></div>
 
             <div className="ph-actions" id="phActions"></div>
           </div>
@@ -37,7 +38,7 @@ export default function ProjectHero() {
                 onError={(e) => { e.currentTarget.style.display = 'none'; (e.currentTarget.nextElementSibling as HTMLElement).style.display = 'flex'; }} />
               <div className="ph-cover-ph" id="coverPh">
                 <Icon name="monitor" />
-                <span id="coverPhText">project-cover.jpg</span>
+                <span id="coverPhText">{t('projectHeroCoverPh')}</span>
               </div>
             </div>
 
@@ -45,21 +46,21 @@ export default function ProjectHero() {
               <div className="meta-row">
                 <div className="meta-label">
                   <Icon name="clock" />
-                  تاريخ البدء
+                  {t('projectHeroStartDate')}
                 </div>
                 <div className="meta-value" id="metaDate">–</div>
               </div>
               <div className="meta-row">
                 <div className="meta-label">
                   <Icon name="activity" />
-                  مدة التطوير
+                  {t('projectHeroDuration')}
                 </div>
                 <div className="meta-value" id="metaDuration">–</div>
               </div>
               <div className="meta-row">
                 <div className="meta-label">
                   <Icon name="tag" />
-                  القسم المسؤول
+                  {t('projectHeroResponsibleSection')}
                 </div>
                 <div className="meta-value" id="metaSection">–</div>
               </div>

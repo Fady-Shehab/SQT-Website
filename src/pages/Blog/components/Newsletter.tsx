@@ -1,4 +1,5 @@
 import { Icon } from "@/components";
+import { t } from "@/utils/strings";
 
 export default function Newsletter() {
   return (
@@ -9,26 +10,25 @@ export default function Newsletter() {
             <Icon name="mail" />
           </div>
           <h2 id="nl-h2" className="nl-title">
-            لا تفوّت أي <em>مقال جديد</em>
+            {t('newsletterTitle')} <em>{t('newsletterTitleEm')}</em>
           </h2>
           <p className="nl-sub">
-            اشترك في نشرتنا البريدية وصلك أحدث مقالات شرق تك التقنية مباشرة إلى بريدك —
-            بدون رسائل مزعجة، فقط محتوى قيّم.
+            {t('newsletterSub')}
           </p>
-          <div className="nl-form" role="form" aria-label="نموذج الاشتراك في النشرة البريدية">
+          <div className="nl-form" role="form" aria-label={t('newsletterFormAria')}>
             <input
               type="email" id="nlEmail"
               className="nl-input"
-              placeholder="بريدك الإلكتروني"
-              aria-label="أدخل بريدك الإلكتروني"
+              placeholder={t('newsletterPlaceholder')}
+              aria-label={t('newsletterEmailAria')}
               autoComplete="email"
             />
-            <button className="btn btn-gold" id="nlSubmit" aria-label="اشتراك في النشرة البريدية" style={{ justifyContent: 'center' }}>
-              اشتراك
+            <button className="btn btn-gold" id="nlSubmit" aria-label={t('newsletterSubmitAria')} style={{ justifyContent: 'center' }}>
+              {t('newsletterSubmitText')}
             </button>
           </div>
           <p className="nl-note" aria-live="polite" id="nlFeedback">
-            يمكنك إلغاء الاشتراك في أي وقت.
+            {t('newsletterNote')}
           </p>
         </div>
       </div>

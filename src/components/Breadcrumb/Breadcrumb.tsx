@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Icon } from "@/components";
+import { t } from "@/utils/strings";
 
 /** A single breadcrumb item */
 export interface BreadcrumbItem {
@@ -40,7 +41,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
   separator = DefaultSeparator,
 }) => {
   return (
-    <nav className={`breadcrumb ${className}`.trim()} aria-label="مسار التنقل">
+    <nav className={`breadcrumb ${className}`.trim()} aria-label={t('breadcrumbNav')}>
       {items.map((item, index) => {
         const isLast = index === items.length - 1;
         return (

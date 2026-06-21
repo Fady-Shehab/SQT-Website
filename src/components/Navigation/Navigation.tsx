@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Icon } from "@/components";
+import { t } from "@/utils/strings";
 
 export default function Navigation() {
   const location = useLocation();
@@ -9,26 +10,26 @@ export default function Navigation() {
       {/* Header */}
       <header id="navbar" role="banner">
         <div className="container">
-          <nav className="nav-inner" aria-label="التنقل الرئيسية">
+          <nav className="nav-inner" aria-label={t('navMainNav')}>
             {/* Logo */}
-            <Link to="/" className="nav-logo" aria-label="الصفحة الرئيسية">
+            <Link to="/" className="nav-logo" aria-label={t('navHomePage')}>
               <img
                 src="/img/logo-dark.png"
-                alt="شعار شرق تك"
+                alt={t('navLogoAlt')}
                 className="nav-logo-img nav-logo-dark"
               />
               <img
                 src="/img/logo-light.png"
-                alt="شعار شرق تك"
+                alt={t('navLogoAlt')}
                 className="nav-logo-img nav-logo-light"
               />
-              <div
-                className="nav-logo-fallback"
-                style={{ display: "none" }}
-                aria-hidden="true"
-              >
-                شرق
-              </div>
+                <div
+                  className="nav-logo-fallback"
+                  style={{ display: "none" }}
+                  aria-hidden="true"
+                >
+                  {t('navLogoFallback')}
+                </div>
             </Link>
 
             {/* Desktop Links */}
@@ -39,7 +40,7 @@ export default function Navigation() {
                   className={`nav-link ${location.pathname === "/" ? "active" : ""}`}
                   aria-current={location.pathname === "/" ? "page" : undefined}
                 >
-                  الرئيسية
+                  {t('navHome')}
                 </Link>
               </li>
               <li>
@@ -50,7 +51,7 @@ export default function Navigation() {
                     location.pathname === "/team" ? "page" : undefined
                   }
                 >
-                  الفريق
+                  {t('navTeam')}
                 </Link>
               </li>
               <li>
@@ -61,7 +62,7 @@ export default function Navigation() {
                     location.pathname === "/projects" ? "page" : undefined
                   }
                 >
-                  المشاريع
+                  {t('navProjects')}
                 </Link>
               </li>
               <li>
@@ -72,7 +73,7 @@ export default function Navigation() {
                     location.pathname === "/blog" ? "page" : undefined
                   }
                 >
-                  المدونة
+                  {t('navBlog')}
                 </Link>
               </li>
               <li>
@@ -83,7 +84,7 @@ export default function Navigation() {
                     location.pathname === "/hall-of-fame" ? "page" : undefined
                   }
                 >
-                  قاعة المجد
+                  {t('navHallOfFame')}
                 </Link>
               </li>
             </ul>
@@ -94,7 +95,7 @@ export default function Navigation() {
               <button
                 className="theme-toggle"
                 id="themeToggle"
-                aria-label="تبديل المظهر"
+                aria-label={t('navToggleTheme')}
               >
                 {/* Sun icon (shown in light mode) */}
                 <Icon name="sun" className="icon-sun" />
@@ -102,9 +103,9 @@ export default function Navigation() {
               </button>
 
               {/* Auth Button */}
-              <Link to="/auth" className="nav-auth" aria-label="تسجيل الدخول">
+              <Link to="/auth" className="nav-auth" aria-label={t('navLogin')}>
                 <Icon name="log-in" />
-                تسجيل الدخول
+                {t('navLogin')}
               </Link>
             </div>
           </nav>
@@ -112,42 +113,42 @@ export default function Navigation() {
       </header>
 
       {/* Mobile Nav */}
-      <nav className="mobile-nav" id="mobileNav" aria-label="قائمة التنقل">
+      <nav className="mobile-nav" id="mobileNav" aria-label={t('navMobileNav')}>
         <Link
           to="/"
           className={`mob-link ${location.pathname === "/" ? "active" : ""}`}
           aria-current={location.pathname === "/" ? "page" : undefined}
-          aria-label="الرئيسية"
+          aria-label={t('navHome')}
         >
           <Icon name="home" />
-          الرئيسية
+          {t('navHome')}
         </Link>
         <Link
           to="/team"
           className={`mob-link ${location.pathname === "/team" ? "active" : ""}`}
           aria-current={location.pathname === "/team" ? "page" : undefined}
-          aria-label="الفريق"
+          aria-label={t('navTeam')}
         >
           <Icon name="users" />
-          الفريق
+          {t('navTeam')}
         </Link>
         <Link
           to="/projects"
           className={`mob-link ${location.pathname === "/projects" ? "active" : ""}`}
           aria-current={location.pathname === "/projects" ? "page" : undefined}
-          aria-label="المشاريع"
+          aria-label={t('navProjects')}
         >
           <Icon name="monitor" />
-          المشاريع
+          {t('navProjects')}
         </Link>
         <Link
           to="/blog"
           className={`mob-link ${location.pathname === "/blog" ? "active" : ""}`}
           aria-current={location.pathname === "/blog" ? "page" : undefined}
-          aria-label="المدونة"
+          aria-label={t('navBlog')}
         >
           <Icon name="file-text" />
-          المدونة
+          {t('navBlog')}
         </Link>
         <Link
           to="/hall-of-fame"
@@ -155,10 +156,10 @@ export default function Navigation() {
           aria-current={
             location.pathname === "/hall-of-fame" ? "page" : undefined
           }
-          aria-label="قاعة المجد"
+          aria-label={t('navHallOfFame')}
         >
           <Icon name="award" />
-          المجد
+          {t('navHallOfFameShort')}
         </Link>
       </nav>
     </>

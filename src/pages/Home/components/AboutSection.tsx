@@ -1,3 +1,4 @@
+import { t } from "@/utils/strings";
 import { SectionHeader, Button, Reveal, Icon } from "@/components";
 
 export default function AboutSection() {
@@ -8,85 +9,81 @@ export default function AboutSection() {
         <div className="about-grid">
           <div className="about-text reveal">
             <SectionHeader
-              eye="من نحن"
-              title={<>فريق يصنع <em>الفارق</em></>}
+              eye={t('aboutEye')}
+              title={<>{t('aboutTitleBefore')} <em>{t('aboutTitleEm')}</em></>}
             />
 
             <p className="about-p">
-              فريق التكنولوجيا لإدارة شرق منظومة من المطورين والمبتكرين الذين
-              يؤمنون بأن الكود الجيد يغيّر الواقع. نعمل معاً لبناء حلول تقنية
-              تُحدث أثراً حقيقياً في البيئة المحيطة بنا.
+              {t('aboutP1')}
             </p>
 
             <p className="about-p">
-              انطلقنا من مدينة الإسكندرية — مدينة المكتبة والحضارة والبحر —
-              حاملين روح المكان وطموح الجيل الجديد، نثبت يوماً بعد يوم أن
-              الإبداع التقني لا يحتاج إلا لعقول متقدة وإرادة حقيقية.
+              {t('aboutP2')}
             </p>
 
-            <ul className="about-list" aria-label="مميزات الفريق">
+            <ul className="about-list" aria-label={t('aboutFeaturesAria')}>
               <li className="about-item">
                 <div className="about-item-icon" aria-hidden="true">
                   <Icon name="users" />
                 </div>
-                أعضاء متخصصون في أقسام متنوعة
+                {t('aboutFeature1')}
               </li>
               <li className="about-item">
                 <div className="about-item-icon" aria-hidden="true">
                   <Icon name="activity" />
                 </div>
-                مشاريع حقيقية بتأثير ملموس وقابل للقياس
+                {t('aboutFeature2')}
               </li>
               <li className="about-item">
                 <div className="about-item-icon" aria-hidden="true">
                   <Icon name="award" />
                 </div>
-                نظام نقاط وشارات لتكريم التميز والإنجاز
+                {t('aboutFeature3')}
               </li>
               <li className="about-item">
                 <div className="about-item-icon" aria-hidden="true">
                   <Icon name="star" />
                 </div>
-                ثقافة التعلم المستمر والتطوير المشترك
+                {t('aboutFeature4')}
               </li>
             </ul>
 
             <Button as="a" href="/team" variant="text" endIcon={
               <Icon name="arrow-left" size={16} />
             }>
-              تعرف على الفريق
+              {t('heroCtaTeam')}
             </Button>
           </div>
 
-          <Reveal delay={0.15} className="about-visual" as="div" aria-label="إحصائيات الفريق">
+          <Reveal delay={0.15} className="about-visual" as="div" aria-label={t('aboutStatsAria')}>
             <div className="about-cards-grid">
               <div className="about-stat-card c-gold">
                 <div className="asc-icon gold" aria-hidden="true">
                   <Icon name="users" />
                 </div>
                 <div className="asc-num">26</div>
-                <div className="asc-lbl">عضو نشط</div>
+                <div className="asc-lbl">{t('aboutStatActive')}</div>
               </div>
               <div className="about-stat-card c-green">
                 <div className="asc-icon green" aria-hidden="true">
                   <Icon name="monitor" />
                 </div>
                 <div className="asc-num">15+</div>
-                <div className="asc-lbl">مشروع مُنجز</div>
+                <div className="asc-lbl">{t('aboutStatProject')}</div>
               </div>
               <div className="about-stat-card c-gold">
                 <div className="asc-icon gold" aria-hidden="true">
                   <Icon name="star" />
                 </div>
                 <div className="asc-num">30+</div>
-                <div className="asc-lbl">إنجاز مُحقق</div>
+                <div className="asc-lbl">{t('aboutStatAchievement')}</div>
               </div>
               <div className="about-stat-card c-green">
                 <div className="asc-icon green" aria-hidden="true">
                   <Icon name="award" />
                 </div>
                 <div className="asc-num">3</div>
-                <div className="asc-lbl">مواسم مجد</div>
+                <div className="asc-lbl">{t('aboutStatSeasons')}</div>
               </div>
             </div>
             <div className="about-wide-card">
@@ -94,8 +91,8 @@ export default function AboutSection() {
                 <Icon name="map-pin" />
               </div>
               <div className="awc-text">
-                <div className="awc-title">الإسكندرية، مصر</div>
-                <div className="awc-sub">نعمل من قلب المدينة الساحلية العريقة</div>
+                <div className="awc-title">{t('aboutLocation')}</div>
+                <div className="awc-sub">{t('aboutLocationSub')}</div>
               </div>
             </div>
           </Reveal>

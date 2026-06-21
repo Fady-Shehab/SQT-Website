@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Icon } from "@/components";
+import { t } from "@/utils/strings";
 
 export default function Footer() {
   return (
@@ -9,56 +10,55 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <p className="footer-brand-tagline">
-              فريق التكنولوجيا لإدارة شرق — نبني حلولاً تقنية من قلب الإسكندرية،
-              بعقول مصرية تُؤمن بأن الإبداع لا حدود له.
+              {t('footerTagline')}
             </p>
-            <div className="social-row" aria-label="وسائل التواصل الاجتماعي">
+            <div className="social-row" aria-label={t('footerSocialLabel')}>
               {/* X / Twitter */}
-              <a href="#" className="social-a" aria-label="تويتر X">
+              <a href="#" className="social-a" aria-label={t('footerTwitter')}>
                 <Icon name="twitter" />
               </a>
 
               {/* Telegram */}
-              <a href="#" className="social-a" aria-label="تيليغرام">
+              <a href="#" className="social-a" aria-label={t('footerTelegram')}>
                 <Icon name="telegram" />
               </a>
 
               {/* YouTube */}
-              <a href="#" className="social-a" aria-label="يوتيوب">
+              <a href="#" className="social-a" aria-label={t('footerYoutube')}>
                 <Icon name="youtube" />
               </a>
 
               {/* GitHub */}
-              <a href="#" className="social-a" aria-label="جيت هاب">
+              <a href="#" className="social-a" aria-label={t('footerGithub')}>
                 <Icon name="github" />
               </a>
             </div>
           </div>
 
           {/* Quick Links */}
-          <nav aria-label="روابط سريعة">
-            <div className="foot-col-h">روابط سريعة</div>
+          <nav aria-label={t('footerQuickLinks')}>
+            <div className="foot-col-h">{t('footerQuickLinks')}</div>
             <ul className="foot-links">
-              <li><Link to="/" className="foot-link">الرئيسية</Link></li>
-              <li><Link to="/team" className="foot-link">الفريق</Link></li>
-              <li><Link to="/projects" className="foot-link">المشاريع</Link></li>
-              <li><Link to="/blog" className="foot-link">المدونة</Link></li>
-              <li><Link to="/hall-of-fame" className="foot-link">قاعة المجد</Link></li>
+              <li><Link to="/" className="foot-link">{t('navHome')}</Link></li>
+              <li><Link to="/team" className="foot-link">{t('navTeam')}</Link></li>
+              <li><Link to="/projects" className="foot-link">{t('navProjects')}</Link></li>
+              <li><Link to="/blog" className="foot-link">{t('navBlog')}</Link></li>
+              <li><Link to="/hall-of-fame" className="foot-link">{t('navHallOfFame')}</Link></li>
             </ul>
           </nav>
 
           {/* Other */}
-          <nav aria-label="روابط أخرى">
-            <div className="foot-col-h">أخرى</div>
+          <nav aria-label={t('footerOtherLinks')}>
+            <div className="foot-col-h">{t('footerOther')}</div>
             <ul className="foot-links">
-              <li><Link to="/auth" className="foot-link">تسجيل الدخول</Link></li>
-              <li><a href="#" className="foot-link">تواصل معنا</a></li>
+              <li><Link to="/auth" className="foot-link">{t('navLogin')}</Link></li>
+              <li><a href="#" className="foot-link">{t('footerContactUs')}</a></li>
             </ul>
           </nav>
         </div>
 
         <div className="footer-bottom">
-          <p className="foot-copy">© 2026 شرق تك — جميع الحقوق محفوظة</p>
+          <p className="foot-copy">{t('footerCopyRight')}</p>
         </div>
       </div>
       <div className="footer-stripe" aria-hidden="true"></div>

@@ -1,46 +1,47 @@
 import { Icon } from "@/components";
+import { t } from "@/utils/strings";
 
 export default function Sidebar() {
   return (
-    <aside className="admin-sidebar" aria-label="التنقل الرئيسي">
-      <a href="/" className="sidebar-brand" aria-label="العودة إلى الموقع">
+    <aside className="admin-sidebar" aria-label={t('sidebarNavAria')}>
+      <a href="/" className="sidebar-brand" aria-label={t('sidebarBrandAria')}>
         <div className="logo-gem" aria-hidden="true"></div>
-        <span className="brand-text">شرق تك</span>
+        <span className="brand-text">{t('sidebarBrandText')}</span>
       </a>
       <nav className="sidebar-nav">
         <button className="nav-item active" data-section="dashboard" aria-current="page">
           <Icon name="grid" size={20} />
-          لوحة التحكم
+          {t('sidebarDashboard')}
         </button>
         <button className="nav-item" data-section="users">
           <Icon name="users" size={20} />
-          إدارة الأعضاء
+          {t('sidebarUsers')}
         </button>
         <button className="nav-item" data-section="projects">
           <Icon name="folder" size={20} />
-          المشاريع
+          {t('sidebarProjects')}
         </button>
         <button className="nav-item" data-section="posts">
           <Icon name="file-text" size={20} />
-          المقالات
+          {t('sidebarPosts')}
         </button>
         <button className="nav-item" data-section="hof">
           <Icon name="star" size={20} />
-          قاعة المجد
+          {t('sidebarHof')}
         </button>
         <button className="nav-item" data-section="settings">
           <Icon name="settings" size={20} />
-          الإعدادات
+          {t('sidebarSettings')}
         </button>
       </nav>
       <div className="sidebar-footer">
         <a href="/" className="sidebar-link">
           <Icon name="log-out" size={16} />
-          عرض الموقع
+          {t('sidebarViewSite')}
         </a>
         <button className="sidebar-link" id="logoutBtn">
           <Icon name="log-out" size={16} />
-          تسجيل الخروج
+          {t('sidebarLogout')}
         </button>
       </div>
     </aside>

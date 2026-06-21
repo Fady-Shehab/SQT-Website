@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Badge from "../Badge";
 import { Icon } from "@/components";
+import { t } from "@/utils/strings";
 
 /**
  * Status mapping for project cards.
@@ -116,7 +117,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         <p className="proj-desc">{description}</p>
         {action || (
           <a href={href} className="btn-text" style={{ fontSize: "0.82rem" }}>
-            عرض
+            {t('projectCardView')}
             <Icon name="arrow-left" size={14} />
           </a>
         )}

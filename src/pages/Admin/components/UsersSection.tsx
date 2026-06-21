@@ -1,4 +1,5 @@
 import { Icon } from "@/components";
+import { t } from "@/utils/strings";
 
 export default function UsersSection() {
   return (
@@ -7,33 +8,33 @@ export default function UsersSection() {
         <div className="toolbar-left">
           <div className="search-wrapper">
             <Icon name="search" size={18} />
-            <input type="text" id="userSearch" className="search-input" placeholder="البحث عن عضو..." />
+            <input type="text" id="userSearch" className="search-input" placeholder={t('usersSearchPlaceholder')} />
           </div>
           <select id="userFilter" className="select-input">
-            <option value="all">الحالة: الكل</option>
-            <option value="active">نشط</option>
-            <option value="inactive">غير نشط</option>
-            <option value="admin">مدير</option>
+            <option value="all">{t('usersFilterAll')}</option>
+            <option value="active">{t('usersFilterActive')}</option>
+            <option value="inactive">{t('usersFilterInactive')}</option>
+            <option value="admin">{t('usersFilterAdmin')}</option>
           </select>
         </div>
         <button className="btn btn-gold" id="addUserBtn">
           <Icon name="plus" size={16} />
-          إضافة عضو
+          {t('usersAddMember')}
         </button>
       </div>
       <div className="table-container">
         <table className="data-table">
           <thead>
             <tr>
-              <th>العضو</th>
-              <th>البريد</th>
-              <th>التحصيل</th>
-              <th>الحالة</th>
-              <th>الإجراءات</th>
+              <th>{t('usersTableMember')}</th>
+              <th>{t('usersTableEmail')}</th>
+              <th>{t('usersTablePoints')}</th>
+              <th>{t('usersTableStatus')}</th>
+              <th>{t('usersTableActions')}</th>
             </tr>
           </thead>
           <tbody id="usersTableBody">
-            <tr><td colSpan={5} style={{ textAlign: 'center', padding: '40px' }}>جارِ التحميل...</td></tr>
+            <tr><td colSpan={5} style={{ textAlign: 'center', padding: '40px' }}>{t('usersLoading')}</td></tr>
           </tbody>
         </table>
       </div>

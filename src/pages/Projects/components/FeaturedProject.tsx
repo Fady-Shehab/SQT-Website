@@ -1,3 +1,4 @@
+import { t } from "@/utils/strings";
 import { Icon } from "@/components";
 
 export default function FeaturedProject() {
@@ -8,20 +9,20 @@ export default function FeaturedProject() {
           <div className="featured-img-wrap reveal">
             <img
               id="featured-img"
-              alt="صورة المشروع المميز"
+              alt={t('featuredImgAlt')}
               width="700"
               height="394"
               loading="eager"
             />
             <div className="featured-img-ph" style={{ display: "none" }} aria-hidden="true">
 <Icon name="monitor" />
-              <span>project-featured.jpg</span>
+              <span>{t('featuredImgPhText')}</span>
             </div>
           </div>
           <div className="reveal" style={{ transitionDelay: ".12s" }}>
             <div className="featured-label">
 <Icon name="star" />
-              المشروع المميز
+              {t('featuredLabel')}
             </div>
 
             <h2 id="featured-title" className="featured-title"></h2>
@@ -48,7 +49,7 @@ export default function FeaturedProject() {
 <Icon name="users" />
               </div>
               <div className="featured-meta-item">
-                قيد التطوير
+                {t('featuredStatus')}
 <Icon name="activity" />
               </div>
             </div>
@@ -56,11 +57,11 @@ export default function FeaturedProject() {
             <div className="featured-actions">
               <a id="featured-link" href="/project/featured" className="btn btn-gold">
 <Icon name="eye-on" size={16} />
-                عرض المشروع
+                {t('featuredViewProject')}
               </a>
               <a href="#projects-list" className="btn btn-outline">
 <Icon name="grid" size={16} />
-                كل المشاريع
+                {t('featuredAllProjects')}
               </a>
             </div>
           </div>

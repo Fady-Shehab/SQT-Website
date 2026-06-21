@@ -1,4 +1,5 @@
 import { Icon } from "@/components";
+import { t } from "@/utils/strings";
 
 export default function ProfileHeader() {
   return (
@@ -15,14 +16,14 @@ export default function ProfileHeader() {
           </div>
 
           <div className="profile-info">
-            <h1 id="profile-h">محمد أحمد</h1>
-            <div className="profile-role">Programming</div>
-            <div className="profile-tagline">بناء أشياء مفيدة بخط أنظف</div>
+            <h1 id="profile-h">{t('profileHeaderName')}</h1>
+            <div className="profile-role">{t('profileHeaderRole')}</div>
+            <div className="profile-tagline">{t('profileHeaderTagline')}</div>
             <div className="profile-socials">
-              <a href="#" aria-label="X">
+              <a href="#" aria-label={t('profileHeaderX')}>
                 <Icon name="twitter" />
               </a>
-              <a href="#" aria-label="GitHub">
+              <a href="#" aria-label={t('profileHeaderGithub')}>
                 <Icon name="github" />
               </a>
             </div>
@@ -31,15 +32,15 @@ export default function ProfileHeader() {
           <div className="profile-stats">
             <div className="profile-stat">
               <div className="stat-value">1,280</div>
-              <div className="stat-label">نقطة</div>
+              <div className="stat-label">{t('profileStatsPoints')}</div>
             </div>
             <div className="profile-stat">
               <div className="stat-value">12</div>
-              <div className="stat-label">مهمة مكتملة</div>
+              <div className="stat-label">{t('profileStatsTasks')}</div>
             </div>
             <div className="profile-stat">
               <div className="stat-value">4</div>
-              <div className="stat-label">شارة</div>
+              <div className="stat-label">{t('profileStatsBadges')}</div>
             </div>
           </div>
         </div>

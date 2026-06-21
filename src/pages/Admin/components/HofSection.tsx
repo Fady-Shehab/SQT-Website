@@ -1,4 +1,5 @@
 import { Icon } from "@/components";
+import { t } from "@/utils/strings";
 
 export default function HofSection() {
   return (
@@ -6,44 +7,44 @@ export default function HofSection() {
       <div className="section-toolbar">
         <div className="toolbar-left">
           <select id="hofSeason" className="select-input">
-            <option value="all-time">لكل الوقت</option>
-            <option value="this-month">هذا الشهر</option>
+            <option value="all-time">{t('hofSectionAllTime')}</option>
+            <option value="this-month">{t('hofSectionThisMonth')}</option>
           </select>
         </div>
         <button className="btn btn-outline" id="syncHofBtn">
           <Icon name="refresh" size={16} />
-          مزامنة النقاط
+          {t('hofSectionSync')}
         </button>
       </div>
       <div className="grid-two-cols">
         <div className="content-card">
-          <h2 className="card-title">إضافة نقاط يدوية</h2>
+          <h2 className="card-title">{t('hofSectionAddPoints')}</h2>
           <form id="addPointsForm">
             <div className="form-row">
               <div className="form-field half">
-                <label className="field-label">العضو</label>
+                <label className="field-label">{t('hofSectionMember')}</label>
                 <select id="pointUserId" className="select-input" required>
-                  <option value="">اختر...</option>
+                  <option value="">{t('hofSectionSelect')}</option>
                 </select>
               </div>
               <div className="form-field half">
-                <label className="field-label">النقاط</label>
-                <input type="number" id="pointAmount" className="field-input" placeholder="مثلاً: 50" required />
+                <label className="field-label">{t('hofSectionPoints')}</label>
+                <input type="number" id="pointAmount" className="field-input" placeholder={t('hofSectionPointsPlaceholder')} required />
               </div>
             </div>
             <div className="form-row">
               <div className="form-field full">
-                <label className="field-label">السبب</label>
-                <input type="text" id="pointReason" className="field-input" placeholder="لماذا؟" />
+                <label className="field-label">{t('hofSectionReason')}</label>
+                <input type="text" id="pointReason" className="field-input" placeholder={t('hofSectionReasonPlaceholder')} />
               </div>
             </div>
-            <button type="submit" className="btn btn-gold">إضافة</button>
+            <button type="submit" className="btn btn-gold">{t('hofSectionAdd')}</button>
           </form>
         </div>
         <div className="content-card">
-          <h2 className="card-title">آخر الإنجازات</h2>
+          <h2 className="card-title">{t('hofSectionRecent')}</h2>
           <ul className="mini-list" id="recentPoints">
-            <li>جارِ التحميل...</li>
+            <li>{t('hofSectionLoading')}</li>
           </ul>
         </div>
       </div>

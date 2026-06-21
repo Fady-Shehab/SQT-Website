@@ -1,3 +1,4 @@
+import { t } from "@/utils/strings";
 import { Button, Icon } from "@/components";
 
 export default function HeroSection() {
@@ -15,17 +16,18 @@ export default function HeroSection() {
       <div className="hero-content">
         <div className="hero-pill">
           <span className="hero-pill-dot" aria-hidden="true"></span>
-          فريق التكنولوجيا لإدارة شرق
+          {t('heroPillLabel')}
         </div>
 
         <div className="hero-title-wrap" id="hero-h1">
+          {/* eslint-disable-next-line sqt/no-inline-strings */}
           <span className="hero-label-ar">SHARQ TECH</span>
-          <span className="hero-word-sharq" aria-label="شرق">
-            شرق
+          <span className="hero-word-sharq" aria-label={t('heroTitle')}>
+            {t('heroTitle')}
           </span>
-          <span className="hero-tech-chip" aria-label="تك">
+          <span className="hero-tech-chip" aria-label={t('heroTechChip')}>
             <Icon name="code-brackets" size={14} />
-            تك
+            {t('heroTechChip')}
           </span>
         </div>
 
@@ -34,13 +36,12 @@ export default function HeroSection() {
         </div>
 
         <p className="hero-tagline">
-          من قلب الإسكندرية، نبني حلولاً تقنية أصيلة بأيدٍ مصرية وعقول طموحة
-          لا تعرف حدوداً — نُبدع، نُنجز، ونُثبت أن التميز يُصنع هنا.
+          {t('heroTagline')}
         </p>
 
         <div className="hero-actions">
-          <Button as="a" href="/team" variant="primary">تعرف على الفريق</Button>
-          <Button as="a" href="/projects" variant="secondary">استعرض المشاريع</Button>
+          <Button as="a" href="/team" variant="primary">{t('heroCtaTeam')}</Button>
+          <Button as="a" href="/projects" variant="secondary">{t('heroCtaProjects')}</Button>
         </div>
       </div>
 
